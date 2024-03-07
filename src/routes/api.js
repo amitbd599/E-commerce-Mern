@@ -8,7 +8,6 @@ const router = express.Router();
 // router.get("/CreateProductReview", ProductController.CreateProductReview);
 router.get("/ProductBrandList", ProductController.ProductBrandList);
 router.get("/ProductCategoryList", ProductController.ProductCategoryList);
-router.get("/ProductDetails", ProductController.ProductDetails);
 router.get(
   "/ProductListByBrand/:BrandID",
   ProductController.ProductListByBrand
@@ -18,7 +17,7 @@ router.get(
   ProductController.ProductListByCategory
 );
 router.get(
-  "/ProductListBySmiler/:Keyword",
+  "/ProductListBySmiler/:CategoryID",
   ProductController.ProductListBySmiler
 );
 router.get(

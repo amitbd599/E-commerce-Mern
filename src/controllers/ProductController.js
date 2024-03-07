@@ -39,7 +39,10 @@ exports.ProductListBySmiler = async (req, res) => {
   let result = await ListBySmilerService(req);
   return res.status(200).json(result);
 };
-exports.ProductListByKeyword = async (req, res) => {};
+exports.ProductListByKeyword = async (req, res) => {
+  let result = await ListByKeywordService(req);
+  return res.status(200).json(result);
+};
 
 exports.ProductDetails = async (req, res) => {
   let result = await ProductDetailsService(req);
