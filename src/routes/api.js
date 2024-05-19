@@ -53,7 +53,7 @@ router.post("/create-review-list", ProductController.CreateReview);
 router.get("/read-review-list", ProductController.ReadReview);
 router.post("/update-review-list/:reviewID", ProductController.UpdateReview);
 router.delete("/delete-review-list/:reviewID", ProductController.DeleteReview);
-router.get("/read-single-review/:reviewID", ProductController.ReadSingleReview);
+router.get("/read-single-review/:productID", ProductController.ReadSingleReview);
 
 // router.get("/ProductBrandList", ProductController.ProductBrandList);
 // router.get("/ProductCategoryList", ProductController.CreateProductBrandList);

@@ -559,33 +559,14 @@ const ProductListByRemarkService = async (req) => {
 
 const ReadSingleReviewService = async (req) => {
   try {
-    let ProductID = new ObjectId(req.params.ProductID);
-    let MatchStage = { $match: { productID: ProductID } };
-    let JoinWithProfile = {
-      $lookup: {
-        from: "profiles",
-        localField: "userID",
-        foreignField: "userID",
-        as: "profile",
-      },
-    };
+    let productID = new ObjectId(req.params.productID);
+    let MatchStage = { $match: { productID: productID } };
 
-    let UnwindProfileStage = {
-      $unwind: "$profile",
-    };
-    let projectionStage = {
-      $project: {
-        des: 1,
-        rating: 1,
-        "profile.cus_name": 1,
-      },
-    };
+
 
     let data = await ReviewModel.aggregate([
-      MatchStage,
-      JoinWithProfile,
-      UnwindProfileStage,
-      projectionStage,
+      MatchStage
+
     ]);
     return { status: true, data: data };
   } catch (error) {
@@ -596,7 +577,7 @@ const ReadSingleReviewService = async (req) => {
 const CreateReviewService = async (req) => {
   try {
     let ReqBody = req.body
-    const data = await ProductSliderModel.create(
+    const data = await ReviewModel.create(
       ReqBody
     );
     return { status: true, data: data };
@@ -607,7 +588,7 @@ const CreateReviewService = async (req) => {
 
 const ReadReviewService = async () => {
   try {
-    const data = await ProductSliderModel.find();
+    const data = await ReviewModel.find();
     return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -618,7 +599,7 @@ const UpdateReviewService = async (req) => {
   try {
     let sliderID = new ObjectId(req.params.sliderID);
     let ReqBody = req.body
-    const data = await ProductSliderModel.updateOne(
+    const data = await ReviewModel.updateOne(
       { _id: sliderID },
       ReqBody
     );
@@ -631,7 +612,7 @@ const UpdateReviewService = async (req) => {
 const DeleteReviewService = async (req) => {
   try {
     let sliderID = new ObjectId(req.params.sliderID);
-    const data = await ProductSliderModel.deleteOne(
+    const data = await ReviewModel.deleteOne(
       { _id: sliderID }
     );
     return { status: true, data: data };
