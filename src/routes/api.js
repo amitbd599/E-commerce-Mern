@@ -46,8 +46,6 @@ router.get("/product-list-by-keyword/:keyword", ProductController.ProductListByK
 router.get("/product-list-by-remark/:remark", ProductController.ProductListByRemark);
 
 
-
-
 //! Product review routes
 router.post("/create-review-list", ProductController.CreateReview);
 router.get("/read-review-list", ProductController.ReadReview);

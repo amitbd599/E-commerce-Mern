@@ -1,14 +1,5 @@
 const {
-  BrandListService,
-  CategoryListService,
-  SliderListService,
-  ListByBrandService,
-  ListByCategoryService,
-  ListBySmilerService,
-  ListByKeywordService,
-  ListByRemarkService,
   ProductDetailsService,
-  ReviewListService,
   CreateBrandListService,
   ReadBrandListService,
   UpdateBrandListService,
@@ -182,23 +173,3 @@ exports.ReadSingleReview = async (req, res) => {
 
 
 
-
-exports.ProductSliderList = async (req, res) => {
-  let result = await SliderListService();
-  return res.status(200).json(result);
-};
-
-
-
-exports.ProductListBySmiler = async (req, res) => {
-  let result = await ListBySmilerService(req);
-  return res.status(200).json(result);
-};
-
-
-
-
-exports.ProductReviewList = async (req, res) => {
-  let result = await ReviewListService(req);
-  return res.status(200).json(result);
-};
