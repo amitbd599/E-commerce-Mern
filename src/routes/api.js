@@ -3,6 +3,14 @@ const ProductController = require("../controllers/ProductController");
 // const UserController = require("../controllers/UserController");
 const router = express.Router();
 
+//! Product product routes
+router.post("/create-product", ProductController.CreateProduct);
+router.get("/read-product", ProductController.ReadProduct);
+router.post("/update-product/:productID", ProductController.UpdateProduct);
+router.delete("/delete-product/:productID", ProductController.DeleteProduct);
+router.get("/product-details/:productID", ProductController.ProductDetails);
+
+
 //! Product brand routes
 router.post("/create-brand-list", ProductController.CreateProductBrandList);
 router.get("/read-brand-list", ProductController.ReadProductBrandList);
@@ -27,7 +35,7 @@ router.delete("/delete-slider-list/:sliderID", ProductController.DeleteSliderLis
 
 
 //! Product List By Similar routes
-router.get("/product-list-by-similar/:keyword", ProductController.ProductListBySimilar);
+router.get("/product-list-by-similar/:categoryID", ProductController.ProductListBySimilar);
 
 
 //! Product List By keyword routes
@@ -38,8 +46,6 @@ router.get("/product-list-by-keyword/:keyword", ProductController.ProductListByK
 router.get("/product-list-by-remark/:remark", ProductController.ProductListByRemark);
 
 
-//! Product List By remark routes
-router.get("/product-details/:productID", ProductController.ProductDetails);
 
 
 //! Product review routes

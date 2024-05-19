@@ -9,6 +9,108 @@ const ReviewModel = require("../models/ReviewModel");
 const ObjectId = mongoose.Types.ObjectId;
 
 
+
+//! ProductService
+const CreateProductService = async (req) => {
+  try {
+    let ReqBody = req.body
+    const data = await ProductModel.create(
+      ReqBody
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+const ReadProductService = async () => {
+  try {
+    const data = await ProductModel.find();
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+const UpdateProductService = async (req) => {
+  try {
+    let productID = new ObjectId(req.params.productID);
+    let ReqBody = req.body
+    const data = await ProductModel.updateOne(
+      { _id: productID },
+      ReqBody
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+const DeleteProductService = async (req) => {
+  try {
+    let productID = new ObjectId(req.params.productID);
+    const data = await ProductModel.deleteOne(
+      { _id: productID }
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+const ProductDetailsService = async (req) => {
+  try {
+    let productID = new ObjectId(req.params.productID);
+    let MatchStage = { $match: { _id: productID } };
+
+    let JoinWithBrand = {
+      $lookup: {
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
+      },
+    };
+    let JoinWithCategory = {
+      $lookup: {
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+
+    let UnwindBrandStage = { $unwind: "$brand" };
+    let UnwindCategoryStage = { $unwind: "$category" };
+
+    let projectionStage = {
+      $project: {
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+
+    let data = await ProductModel.aggregate([
+      MatchStage,
+      JoinWithBrand,
+      JoinWithCategory,
+      UnwindBrandStage,
+      UnwindCategoryStage,
+      projectionStage,
+    ]);
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
 //! BrandListService 
 const CreateBrandListService = async (req) => {
   try {
@@ -33,10 +135,10 @@ const ReadBrandListService = async () => {
 
 const UpdateBrandListService = async (req) => {
   try {
-    let BrandID = new ObjectId(req.params.brandID);
+    let brandID = new ObjectId(req.params.brandID);
     let ReqBody = req.body
     const data = await BrandModel.updateOne(
-      { _id: BrandID },
+      { _id: brandID },
       ReqBody
     );
     return { status: true, data: data };
@@ -47,9 +149,9 @@ const UpdateBrandListService = async (req) => {
 
 const DeleteBrandListService = async (req) => {
   try {
-    let BrandID = new ObjectId(req.params.brandID);
+    let brandID = new ObjectId(req.params.brandID);
     const data = await BrandModel.deleteOne(
-      { _id: BrandID }
+      { _id: brandID }
     );
     return { status: true, data: data };
   } catch (error) {
@@ -57,9 +159,54 @@ const DeleteBrandListService = async (req) => {
   }
 };
 
-const ProductListByBrandService = async () => {
+const ProductListByBrandService = async (req) => {
   try {
-    const data = await ProductModel.find(); // working with....
+    let brandID = new ObjectId(req.params.brandID);
+    let MatchStage = {
+      $match: { brandID: brandID }
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
+      },
+    };
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+
+    let UnwindBrandStage = {
+      $unwind: "$brand"
+    }
+
+    let UnwindCategoryStage = {
+      $unwind: "$category"
+    }
+
+    let projectionStage = {
+      $project: {
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await ProductModel.aggregate(
+      [MatchStage, JoinWithBrandStage, JoinWithCategoryStage, UnwindBrandStage, UnwindCategoryStage, projectionStage]
+    );
     return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -114,9 +261,54 @@ const DeleteCategoryListService = async (req) => {
   }
 };
 
-const ProductListByCategoryService = async () => {
+const ProductListByCategoryService = async (req) => {
   try {
-    const data = await ProductModel.find(); // working with....
+    let categoryID = new ObjectId(req.params.categoryID);
+    let MatchStage = {
+      $match: { categoryID: categoryID }
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
+      },
+    };
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+
+    let UnwindBrandStage = {
+      $unwind: "$brand"
+    }
+
+    let UnwindCategoryStage = {
+      $unwind: "$category"
+    }
+
+    let projectionStage = {
+      $project: {
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await ProductModel.aggregate(
+      [MatchStage, JoinWithBrandStage, JoinWithCategoryStage, UnwindBrandStage, UnwindCategoryStage, projectionStage]
+    );
     return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -174,52 +366,16 @@ const DeleteSliderListService = async (req) => {
 };
 
 //! ProductListBySimilarService
-const ProductListBySimilarService = async () => {
-
+const ProductListBySimilarService = async (req) => {
   try {
-    let keyword = new ObjectId(req.params.keyword);
-    let ReqBody = req.body
-    const data = await ProductModel.find(); // working with.... 
-    return { status: true, data: data };
-  } catch (error) {
-    return { status: false, error: error.toString() };
-  }
-};
-
-//! ProductListByKeywordService
-const ProductListByKeywordService = async () => {
-
-  try {
-    let keyword = new ObjectId(req.params.keyword);
-    let ReqBody = req.body
-    const data = await ProductModel.find(); // working with.... 
-    return { status: true, data: data };
-  } catch (error) {
-    return { status: false, error: error.toString() };
-  }
-};
-
-//! ProductListByRemarkService
-const ProductListByRemarkService = async () => {
-
-  try {
-    let remark = new ObjectId(req.params.remark);
-    let ReqBody = req.body
-    const data = await ProductModel.find(); // working with.... 
-    return { status: true, data: data };
-  } catch (error) {
-    return { status: false, error: error.toString() };
-  }
-};
-
-
-//! ProductDetailsService
-const ProductDetailsService = async (req) => {
-  try {
-    let productID = new ObjectId(req.params.productID);
-    let MatchStage = { $match: { _id: productID } };
-
-    let JoinWithBrand = {
+    let categoryID = new ObjectId(req.params.categoryID);
+    let MatchStage = {
+      $match: { categoryID: categoryID }
+    };
+    let Limit = {
+      $limit: 20
+    }
+    let JoinWithBrandStage = {
       $lookup: {
         from: "brands",
         localField: "brandID",
@@ -227,7 +383,7 @@ const ProductDetailsService = async (req) => {
         as: "brand",
       },
     };
-    let JoinWithCategory = {
+    let JoinWithCategoryStage = {
       $lookup: {
         from: "catagories",
         localField: "categoryID",
@@ -235,17 +391,14 @@ const ProductDetailsService = async (req) => {
         as: "category",
       },
     };
-    let JoinWithProductDetail = {
-      $lookup: {
-        from: "productsdetails",
-        localField: "_id",
-        foreignField: "productID",
-        as: "details",
-      },
-    };
-    let UnwindBrandStage = { $unwind: "$brand" };
-    let UnwindCategoryStage = { $unwind: "$category" };
-    let UnwindProductDetailStage = { $unwind: "$details" };
+
+    let UnwindBrandStage = {
+      $unwind: "$brand"
+    }
+
+    let UnwindCategoryStage = {
+      $unwind: "$category"
+    }
 
     let projectionStage = {
       $project: {
@@ -261,22 +414,145 @@ const ProductDetailsService = async (req) => {
         updatedAt: 0,
       },
     };
-
-    let data = await ProductModel.aggregate([
-      MatchStage,
-      JoinWithBrand,
-      JoinWithCategory,
-      JoinWithProductDetail,
-      UnwindBrandStage,
-      UnwindCategoryStage,
-      UnwindProductDetailStage,
-      projectionStage,
-    ]);
+    const data = await ProductModel.aggregate(
+      [MatchStage, Limit, JoinWithBrandStage, JoinWithCategoryStage, UnwindBrandStage, UnwindCategoryStage, projectionStage]
+    );
     return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
 };
+
+//! ProductListByKeywordService
+const ProductListByKeywordService = async (req) => {
+  try {
+    let keyword = req.params.keyword;
+    let SearchRegex = {
+      $regex: keyword,
+      $options: "i",
+    }
+
+    let SearchParams = [
+      { title: SearchRegex },
+      { shortDes: SearchRegex },
+      { color: SearchRegex },
+      { des: SearchRegex },
+      { size: SearchRegex },
+      { remark: SearchRegex }
+    ]
+
+    let SearchStage = {
+      $or: SearchParams
+    }
+
+
+    let MatchStage = {
+      $match: SearchStage
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
+      },
+    };
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+
+    let UnwindBrandStage = {
+      $unwind: "$brand"
+    }
+
+    let UnwindCategoryStage = {
+      $unwind: "$category"
+    }
+
+    let projectionStage = {
+      $project: {
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await ProductModel.aggregate(
+      [MatchStage, JoinWithBrandStage, JoinWithCategoryStage, UnwindBrandStage, UnwindCategoryStage, projectionStage]
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+//! ProductListByRemarkService
+const ProductListByRemarkService = async (req) => {
+  try {
+    let remark = req.params.remark;
+    let MatchStage = {
+      $match: { remark: remark }
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
+      },
+    };
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+
+    let UnwindBrandStage = {
+      $unwind: "$brand"
+    }
+
+    let UnwindCategoryStage = {
+      $unwind: "$category"
+    }
+
+    let projectionStage = {
+      $project: {
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await ProductModel.aggregate(
+      [MatchStage, JoinWithBrandStage, JoinWithCategoryStage, UnwindBrandStage, UnwindCategoryStage, projectionStage]
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+
 
 
 //! ProductReviewService
@@ -646,6 +922,10 @@ module.exports = {
   ProductListBySimilarService,
   ProductListByKeywordService,
   ProductListByRemarkService,
+  CreateProductService,
+  ReadProductService,
+  UpdateProductService,
+  DeleteProductService,
   ProductDetailsService,
 
   CreateReviewService,

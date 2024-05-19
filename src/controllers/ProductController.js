@@ -31,7 +31,38 @@ const {
   UpdateReviewService,
   DeleteReviewService,
   ReadSingleReviewService,
+  CreateProductService,
+  ReadProductService,
+  UpdateProductService,
+  DeleteProductService,
 } = require("../services/ProductService");
+
+
+
+//! ProductList
+exports.CreateProduct = async (req, res) => {
+  let result = await CreateProductService(req);
+  return res.status(200).json(result);
+};
+exports.ReadProduct = async (req, res) => {
+  let result = await ReadProductService();
+  return res.status(200).json(result);
+};
+exports.UpdateProduct = async (req, res) => {
+  let result = await UpdateProductService(req);
+  return res.status(200).json(result);
+};
+exports.DeleteProduct = async (req, res) => {
+  let result = await DeleteProductService(req);
+  return res.status(200).json(result);
+};
+
+exports.ProductDetails = async (req, res) => {
+  let result = await ProductDetailsService(req);
+  return res.status(200).json(result);
+};
+
+
 
 
 //! ProductBrandList
@@ -53,7 +84,7 @@ exports.DeleteProductBrandList = async (req, res) => {
 };
 
 exports.ProductListByBrand = async (req, res) => {
-  let result = await ProductListByBrandService();
+  let result = await ProductListByBrandService(req);
   return res.status(200).json(result);
 };
 
@@ -78,7 +109,7 @@ exports.DeleteCategoryList = async (req, res) => {
 };
 
 exports.ProductListByCategory = async (req, res) => {
-  let result = await ProductListByCategoryService();
+  let result = await ProductListByCategoryService(req);
   return res.status(200).json(result);
 };
 
@@ -124,11 +155,6 @@ exports.ProductListByRemark = async (req, res) => {
 };
 
 
-//! ProductDetails
-exports.ProductDetails = async (req, res) => {
-  let result = await ProductDetailsService(req);
-  return res.status(200).json(result);
-};
 
 //! ProductReview
 exports.CreateReview = async (req, res) => {
@@ -162,19 +188,14 @@ exports.ProductSliderList = async (req, res) => {
   return res.status(200).json(result);
 };
 
-exports.ProductListByCategory = async (req, res) => {
-  let result = await ListByCategoryService(req);
-  return res.status(200).json(result);
-};
+
 
 exports.ProductListBySmiler = async (req, res) => {
   let result = await ListBySmilerService(req);
   return res.status(200).json(result);
 };
-exports.ProductListByKeyword = async (req, res) => {
-  let result = await ListByKeywordService(req);
-  return res.status(200).json(result);
-};
+
+
 
 
 exports.ProductReviewList = async (req, res) => {
