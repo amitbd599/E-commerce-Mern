@@ -1,49 +1,54 @@
-const { RegisterService, LoginService, ProfileUpdateService, ProfileReadService, LogoutService, EmailVerifyService, RecoverVerifyEmailService, RecoverVerifyOTPService, ResetPasswordService } = require("../services/AdminService");
+const { RegisterUserService, LoginUserService, ProfileUpdateUserService, ProfileReadUserService, LogoutUserService, EmailVerifyUserService, RecoverVerifyEmailUserService, RecoverVerifyOTPUserService, ResetPasswordUserService, ProfileCreateService } = require("../services/UserService.js");
 
 
 //! User Control
-exports.Register = async (req, res) => {
-  let result = await RegisterService(req);
+exports.RegisterUser = async (req, res) => {
+  let result = await RegisterUserService(req);
   return res.status(200).json(result);
 };
 
-exports.Login = async (req, res) => {
-  let result = await LoginService(req, res);
+exports.LoginUser = async (req, res) => {
+  let result = await LoginUserService(req, res);
   return res.status(200).json(result);
 };
 
-exports.ProfileUpdate = async (req, res) => {
-  let result = await ProfileUpdateService(req);
+exports.ProfileUpdateUser = async (req, res) => {
+  let result = await ProfileUpdateUserService(req);
   return res.status(200).json(result);
 };
 
-exports.ProfileRead = async (req, res) => {
-  let result = await ProfileReadService(req);
+exports.ProfileReadUser = async (req, res) => {
+  let result = await ProfileReadUserService(req);
   return res.status(200).json(result);
 };
 
-exports.Logout = async (req, res) => {
-  let result = await LogoutService(res);
+exports.LogoutUser = async (req, res) => {
+  let result = await LogoutUserService(res);
   return res.status(200).json(result);
 };
 
-exports.EmailVerify = async (req, res) => {
-  let result = await EmailVerifyService(req);
+exports.EmailVerifyUser = async (req, res) => {
+  let result = await EmailVerifyUserService(req);
   return res.status(200).json(result);
 };
 
-exports.RecoverVerifyEmail = async (req, res) => {
-  let result = await RecoverVerifyEmailService(req);
+exports.RecoverVerifyEmailUser = async (req, res) => {
+  let result = await RecoverVerifyEmailUserService(req);
   return res.status(200).json(result);
 };
 
-exports.RecoverVerifyOTP = async (req, res) => {
-  let result = await RecoverVerifyOTPService(req);
+exports.RecoverVerifyOTPUser = async (req, res) => {
+  let result = await RecoverVerifyOTPUserService(req);
   return res.status(200).json(result);
 };
 
-exports.ResetPassword = async (req, res) => {
-  let result = await ResetPasswordService(req);
+exports.ResetPasswordUser = async (req, res) => {
+  let result = await ResetPasswordUserService(req);
+  return res.status(200).json(result);
+};
+
+exports.ProfileCreate = async (req, res) => {
+  let result = await ProfileCreateService(req);
   return res.status(200).json(result);
 };
 

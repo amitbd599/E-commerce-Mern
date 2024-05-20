@@ -10,22 +10,25 @@ const router = express.Router();
 router.post("/register-admin", AdminController.RegisterAdmin);
 router.post("/login-admin", AdminController.LoginAdmin);
 router.get("/logout-admin", AdminController.LogoutAdmin);
-router.get("/profile-read-admin", AuthVerification, AdminController.AdminRead);
-router.post("/profile-update-admin", AuthVerification, AdminController.AdminUpdate);
+router.get("/read-admin", AuthVerification, AdminController.AdminRead);
+router.post("/update-admin", AuthVerification, AdminController.AdminUpdate);
 router.post("/forgot-password-admin/:email", AdminController.RecoverVerifyEmailAdmin);
 router.post("/otp-verify-admin/:email/:otp", AdminController.RecoverVerifyOTPAdmin);
 router.post("/reset-password-admin/:email/:otp", AdminController.ResetPasswordAdmin);
 
 
 //! User routes
-router.post("/register-user", UserController.Register);
-router.post("/login-user", UserController.Login);
-router.get("/logout-user", UserController.Logout);
-router.get("/profile-read-user", AuthVerification, UserController.ProfileRead);
-router.post("/profile-update-user", AuthVerification, UserController.ProfileUpdate);
-router.post("/forgot-password-user/:email", UserController.RecoverVerifyEmail);
-router.post("/otp-verify-user/:email/:otp", UserController.RecoverVerifyOTP);
-router.post("/reset-password-user/:email/:otp", UserController.ResetPassword);
+router.post("/register-user", UserController.RegisterUser);
+router.post("/login-user", UserController.LoginUser);
+router.get("/logout-user", UserController.LogoutUser);
+router.get("/profile-read-user", AuthVerification, UserController.ProfileReadUser);
+router.post("/profile-update-user", AuthVerification, UserController.ProfileUpdateUser);
+router.post("/forgot-password-user/:email", UserController.RecoverVerifyEmailUser);
+router.post("/otp-verify-user/:email/:otp", UserController.RecoverVerifyOTPUser);
+router.post("/reset-password-user/:email/:otp", UserController.ResetPasswordUser);
+
+
+router.post("/profile-create", UserController.ProfileCreate);
 
 
 //! Product product routes

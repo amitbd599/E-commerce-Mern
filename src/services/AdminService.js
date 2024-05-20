@@ -1,5 +1,4 @@
 const md5 = require("md5");
-const UserModel = require("../models/UserModel");
 const AdminModel = require("../models/AdminModel");
 const OTPModel = require("../models/OTPModel");
 const EmailSend = require("../utility/EmailHelper");
@@ -32,7 +31,6 @@ const LoginAdminService = async (req, res) => {
       { $project: { _id: 1, email: 1 } },
     ]);
 
-    console.log(data[0]["email"]);
     if (data.length > 0) {
       let token = EncodeToken(data[0]["email"]);
 
@@ -56,33 +54,23 @@ const LoginAdminService = async (req, res) => {
 
 const AdminUpdateService = async (req) => {
   let email = req.headers.email;
-  let password = md5(req.body.password);
-  let confirm_password = md5(req.body.confirm_password);
+  // let password = md5(req.body.password);
+  let password = req.body.password;
+
+  let reqBody = {
+    email: email,
+    password: password
+  }
 
   try {
-    let UserCount = await UserModel.aggregate([
-      { $match: { email, password } },
+    let data = await AdminModel.updateOne(
+      { email: email },
+      {
+        $set: reqBody
+      }
+    );
 
-    ]);
-
-    if (UserCount.length > 0) {
-      let data = await UserModel.updateOne(
-        { email: email },
-        {
-          $set: {
-            password: confirm_password,
-            confirm_password: confirm_password,
-            firstName: firstName,
-            lastName: lastName,
-            phone: phone,
-            img: img,
-          }
-        }
-      );
-      return { status: "success", data: data };
-    } else {
-      return { status: "error", data: "Email / password not match!" };
-    }
+    return { status: "success", data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -90,7 +78,6 @@ const AdminUpdateService = async (req) => {
 
 const AdminReadService = async (req) => {
   let email = req.headers.email;
-  console.log(email);
   try {
     let MatchStage = {
       $match: {
@@ -98,17 +85,13 @@ const AdminReadService = async (req) => {
       }
     };
 
-    let project = {
+    let Project = {
       $project: {
         email: 1,
-        firstName: 1,
-        lastName: 1,
-        img: 1,
-        phone: 1,
       }
     }
-    let data = await UserModel.aggregate([MatchStage, project]);
-    return { status: "success", data: data[0] };
+    let data = await AdminModel.aggregate([MatchStage, Project]);
+    return { status: "success", data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -124,7 +107,6 @@ const LogoutAdminService = async (res) => {
 
 };
 
-
 const EmailVerifyAdminService = async () => {
   try {
     return { status: "success" };
@@ -134,16 +116,18 @@ const EmailVerifyAdminService = async () => {
   }
 };
 
-const RecoverVerifyEmailAdminService = async () => {
+const RecoverVerifyEmailAdminService = async (req) => {
   let email = req.params.email;
   let otp = Math.floor(100000 + Math.random() * 900000);
 
   try {
     // Email Account Query
-    let UserCount = await UserModel.aggregate([
+    let UserCount = await AdminModel.aggregate([
       { $match: { email: email } },
       { $count: "total" },
     ]);
+
+    console.log(UserCount.length);
 
     if (UserCount.length > 0) {
       //Create OTP
@@ -205,7 +189,10 @@ const ResetPasswordAdminService = async (req) => {
   let email = req.params.email;
   let otp = req.params.otp;
   otp = parseInt(otp);
-  let reqBody = req.body;
+  let reqBody = {
+    email: email,
+    password: req.body.password //! working .....
+  };
   // reqBody.password = md5(req.body.password);
   try {
     let OTPUsedCount = await OTPModel.aggregate([
@@ -213,7 +200,7 @@ const ResetPasswordAdminService = async (req) => {
       { $count: "total" },
     ]);
     if (OTPUsedCount.length > 0) {
-      let PassUpdate = await UserModel.updateOne(reqBody);
+      let PassUpdate = await AdminModel.updateOne(reqBody);
       return { status: "success", data: PassUpdate };
     } else {
       return { status: "error", data: "Something is Wrong!" };

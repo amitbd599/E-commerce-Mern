@@ -21,4 +21,4 @@ const EmailSend = async (emailTo, emailText, emailSubject) => {
   return await transporter.sendMail(info);
 };
 
-module.exports = EmailSend;
+module.exports = EmailSend; 
