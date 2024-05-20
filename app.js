@@ -12,6 +12,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
+const dotENV = require("dotenv");
+dotENV.config();
 
 // let URL =
 //   "mongodb+srv://<username>:<password>@cluster0.fsp0qs4.mongodb.net/e-commerce?retryWrites=true&w=majority";

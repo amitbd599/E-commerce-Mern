@@ -20,6 +20,6 @@ const DataSchema = mongoose.Schema(
   }
 );
 
-const UserModel = mongoose.model("users", DataSchema);
+const AdminModel = mongoose.model("admins", DataSchema);
 
-module.exports = UserModel;
+module.exports = AdminModel;
