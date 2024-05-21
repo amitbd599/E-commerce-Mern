@@ -13,7 +13,6 @@ const RegisterUserService = async (req) => {
     let reqBody = req.body;
     // reqBody.password = md5(req.body.password);
     let data = await UserModel.create(reqBody);
-    console.log(!!data);
     if (!!data === true) {
       let innerReqBody = {
         userID: data._id,
@@ -40,7 +39,7 @@ const LoginUserService = async (req, res) => {
     ]);
 
     if (data.length > 0) {
-      let token = EncodeToken(data[0]["email"]);
+      let token_user = EncodeToken(data[0]["email"]);
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
@@ -50,8 +49,8 @@ const LoginUserService = async (req, res) => {
       };
 
       // Set cookie
-      res.cookie("token", token, options);
-      return { status: true, token: token, data: data[0] };
+      res.cookie("token_user", token_user, options);
+      return { status: true, token_user: token_user, data: data[0] };
     } else {
       return { status: "unauthorized", data: data };
     }
@@ -65,20 +64,51 @@ const ProfileUpdateUserService = async (req) => {
   // let password = md5(req.body.password);
   let password = req.body.password;
 
-  let reqBody = {
-    email: email,
-    password: password
+  let reqBodyUser = {
+    password
+  }
+
+  let reqBodyProfile = {
+    cus_add: req.body.cus_add,
+    cus_city: req.body.cus_city,
+    cus_country: req.body.cus_country,
+    cus_fax: req.body.cus_fax,
+    cus_name: req.body.cus_name,
+    cus_phone: req.body.cus_phone,
+    cus_postcode: req.body.cus_postcode,
+    cus_state: req.body.cus_state,
+    ship_add: req.body.ship_add,
+    ship_city: req.body.ship_city,
+    ship_country: req.body.ship_country,
+    ship_name: req.body.ship_name,
+    ship_phone: req.body.ship_phone,
+    ship_postcode: req.body.ship_postcode,
+    ship_state: req.body.ship_state,
   }
 
   try {
-    let data = await UserModel.updateOne(
+    let dataUser = await UserModel.updateOne(
       { email: email },
       {
-        $set: reqBody
+        $set: reqBodyUser
       }
     );
 
-    return { status: "success", data: data };
+    let findUser = await UserModel.aggregate(
+      [
+        { $match: { email: email } },
+        { $project: { _id: 1, email: 1 } }
+      ]
+    )
+
+    let dataProfile = await ProfileModel.updateOne(
+      { userID: findUser[0]._id },
+      {
+        $set: reqBodyProfile
+      }
+    );
+
+    return { status: "success", dataUser, dataProfile };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -116,7 +146,7 @@ const ProfileReadUserService = async (req) => {
 
 const LogoutUserService = async (res) => {
   try {
-    res.clearCookie('token');
+    res.clearCookie('token_user');
     return { status: "success" };
   } catch (error) {
     return { status: false, error: e.toString() };
@@ -144,7 +174,6 @@ const RecoverVerifyEmailUserService = async (req) => {
       { $count: "total" },
     ]);
 
-    console.log(UserCount.length);
 
     if (UserCount.length > 0) {
       //Create OTP
@@ -207,7 +236,6 @@ const ResetPasswordUserService = async (req) => {
   let otp = req.params.otp;
   otp = parseInt(otp);
   let reqBody = {
-    email: email,
     password: req.body.password //! working .....
   };
   // reqBody.password = md5(req.body.password);
@@ -218,6 +246,17 @@ const ResetPasswordUserService = async (req) => {
     ]);
     if (OTPUsedCount.length > 0) {
       let PassUpdate = await UserModel.updateOne(reqBody);
+      let OTPUpdate = await OTPModel.updateOne(
+        {
+          email,
+          otp,
+          status: 1,
+        },
+        {
+          otp: null,
+          status: 0,
+        }
+      );
       return { status: "success", data: PassUpdate };
     } else {
       return { status: "error", data: "Something is Wrong!" };
