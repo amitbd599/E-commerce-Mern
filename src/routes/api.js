@@ -2,6 +2,8 @@ const express = require("express");
 const ProductController = require("../controllers/ProductController");
 const AdminController = require("../controllers/AdminController");
 const UserController = require("../controllers/UserController");
+const WishListController = require("../controllers/WishListController");
+const CartListController = require("../controllers/CartListController");
 const AuthVerificationUser = require("../middlewares/AuthVerificationUser");
 const AuthVerificationAdmin = require("../middlewares/AuthVerificationAdmin");
 const router = express.Router();
@@ -82,6 +84,18 @@ router.post("/update-review-list/:reviewID", AuthVerificationAdmin, ProductContr
 router.delete("/delete-review-list/:reviewID", AuthVerificationAdmin, ProductController.DeleteReview);
 router.get("/read-single-review/:productID", AuthVerificationAdmin, ProductController.ReadSingleReview);
 
+
+//! Product wish routes
+router.post("/create-wish-list", AuthVerificationUser, WishListController.CreateWish);
+router.get("/read-wish-list", AuthVerificationUser, WishListController.ReadWish);
+router.delete("/delete-wish-list/:wishID", AuthVerificationUser, WishListController.DeleteWish);
+
+
+//! Cart routes
+router.post("/create-cart-list", AuthVerificationUser, CartListController.CreateCart);
+router.get("/read-cart-list", AuthVerificationUser, CartListController.ReadCart);
+router.post("/update-cart-list/:cartID", AuthVerificationUser, CartListController.UpdateCart);
+router.delete("/delete-cart-list/:cartID", AuthVerificationUser, CartListController.DeleteCart);
 
 
 module.exports = router;

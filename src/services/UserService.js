@@ -38,8 +38,9 @@ const LoginUserService = async (req, res) => {
       { $project: { _id: 1, email: 1 } },
     ]);
 
+
     if (data.length > 0) {
-      let token_user = EncodeToken(data[0]["email"]);
+      let token_user = EncodeToken(data[0]);
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
