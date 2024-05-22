@@ -4,6 +4,7 @@ const AdminController = require("../controllers/AdminController");
 const UserController = require("../controllers/UserController");
 const WishListController = require("../controllers/WishListController");
 const CartListController = require("../controllers/CartListController");
+const InvoiceController = require("../controllers/InvoiceController");
 const AuthVerificationUser = require("../middlewares/AuthVerificationUser");
 const AuthVerificationAdmin = require("../middlewares/AuthVerificationAdmin");
 const router = express.Router();
@@ -96,6 +97,17 @@ router.post("/create-cart-list", AuthVerificationUser, CartListController.Create
 router.get("/read-cart-list", AuthVerificationUser, CartListController.ReadCart);
 router.post("/update-cart-list/:cartID", AuthVerificationUser, CartListController.UpdateCart);
 router.delete("/delete-cart-list/:cartID", AuthVerificationUser, CartListController.DeleteCart);
+
+
+//! Invoice & Payment routes
+router.post("/create-invoice-list", AuthVerificationUser, InvoiceController.CreateInvoice);
+router.get("/invoice-list", AuthVerificationUser, InvoiceController.InvoiceList);
+router.get("/invoice-product-list/:invoiceID", AuthVerificationUser, InvoiceController.InvoiceProductList);
+router.post("/payment-success/:trxID", AuthVerificationUser, InvoiceController.PaymentSuccess);
+router.post("/payment-cancel/:trxID", AuthVerificationUser, InvoiceController.PaymentCancel);
+router.post("/payment-fail/:trxID", AuthVerificationUser, InvoiceController.PaymentFail);
+router.post("/payment-ipn/:trxID", AuthVerificationUser, InvoiceController.PaymentIPN);
+
 
 
 module.exports = router;
