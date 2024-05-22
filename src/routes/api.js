@@ -5,6 +5,7 @@ const UserController = require("../controllers/UserController");
 const WishListController = require("../controllers/WishListController");
 const CartListController = require("../controllers/CartListController");
 const InvoiceController = require("../controllers/InvoiceController");
+const FeaturesController = require("../controllers/FeaturesController");
 const AuthVerificationUser = require("../middlewares/AuthVerificationUser");
 const AuthVerificationAdmin = require("../middlewares/AuthVerificationAdmin");
 const router = express.Router();
@@ -80,10 +81,10 @@ router.get("/product-list-by-remark/:remark", AuthVerificationAdmin, ProductCont
 
 //! Product review routes
 router.post("/create-review-list", AuthVerificationAdmin, ProductController.CreateReview);
-router.get("/read-review-list", AuthVerificationAdmin, ProductController.ReadReview);
+router.get("/read-review-list",  ProductController.ReadReview);
 router.post("/update-review-list/:reviewID", AuthVerificationAdmin, ProductController.UpdateReview);
 router.delete("/delete-review-list/:reviewID", AuthVerificationAdmin, ProductController.DeleteReview);
-router.get("/read-single-review/:productID", AuthVerificationAdmin, ProductController.ReadSingleReview);
+router.get("/read-single-review/:productID",  ProductController.ReadSingleReview);
 
 
 //! Product wish routes
@@ -99,14 +100,21 @@ router.post("/update-cart-list/:cartID", AuthVerificationUser, CartListControlle
 router.delete("/delete-cart-list/:cartID", AuthVerificationUser, CartListController.DeleteCart);
 
 
+//! Features routes
+router.post("/create-features-list", FeaturesController.CreateFeatures);
+router.get("/read-features-list", FeaturesController.ReadFeatures);
+router.post("/update-features-list/:featuresID", FeaturesController.UpdateFeatures);
+router.delete("/delete-features-list/:featuresID", FeaturesController.DeleteFeatures);
+
+
 //! Invoice & Payment routes
 router.post("/create-invoice-list", AuthVerificationUser, InvoiceController.CreateInvoice);
 router.get("/invoice-list", AuthVerificationUser, InvoiceController.InvoiceList);
 router.get("/invoice-product-list/:invoiceID", AuthVerificationUser, InvoiceController.InvoiceProductList);
-router.post("/payment-success/:trxID", AuthVerificationUser, InvoiceController.PaymentSuccess);
-router.post("/payment-cancel/:trxID", AuthVerificationUser, InvoiceController.PaymentCancel);
-router.post("/payment-fail/:trxID", AuthVerificationUser, InvoiceController.PaymentFail);
-router.post("/payment-ipn/:trxID", AuthVerificationUser, InvoiceController.PaymentIPN);
+router.post("/payment-success/:trxID", InvoiceController.PaymentSuccess);
+router.post("/payment-cancel/:trxID", InvoiceController.PaymentCancel);
+router.post("/payment-fail/:trxID", InvoiceController.PaymentFail);
+router.post("/payment-ipn/:trxID", InvoiceController.PaymentIPN);
 
 
 

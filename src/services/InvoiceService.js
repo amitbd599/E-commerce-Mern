@@ -136,10 +136,10 @@ const CreateInvoiceService = async (req) => {
             form.append('total_amount', totalPayable.toString())
             form.append('currency', PaymentSetting.currency)
             form.append('tran_id', tran_id)
-            form.append('success_url', PaymentSetting.success_url)
-            form.append('fail_url', PaymentSetting.fail_url)
-            form.append('cancel_url', PaymentSetting.cancel_url)
-            form.append('ipn_url', PaymentSetting.ipn_url)
+            form.append('success_url', `${PaymentSetting.success_url}/${tran_id}`)
+            form.append('fail_url', `${PaymentSetting.fail_url}/${tran_id}`)
+            form.append('cancel_url', `${PaymentSetting.cancel_url}/${tran_id}`)
+            form.append('ipn_url', `${PaymentSetting.ipn_url}/${tran_id}`)
 
             // Customer Information
             form.append('cus_name', profile[0]?.cus_name)
@@ -182,8 +182,23 @@ const CreateInvoiceService = async (req) => {
     }
 };
 
+const PaymentSuccessService = async (req) => {
+    try {
+        let trxID = req.params.trxID
+
+        let data = await InvoiceModel.updateOne({ tran_id: trxID }, { payment_status: "success" })
+
+        return { status: true, data: data };
+    } catch (error) {
+        return { status: false, error: error.toString() };
+    }
+};
+
 const PaymentFailService = async (req) => {
     try {
+        let trxID = req.params.trxID
+
+        let data = await InvoiceModel.updateOne({ tran_id: trxID }, { payment_status: "fail" })
 
         return { status: true, data: data };
     } catch (error) {
@@ -193,6 +208,9 @@ const PaymentFailService = async (req) => {
 
 const PaymentCancelService = async (req) => {
     try {
+        let trxID = req.params.trxID
+
+        let data = await InvoiceModel.updateOne({ tran_id: trxID }, { payment_status: "cancel" })
 
         return { status: true, data: data };
     } catch (error) {
@@ -202,26 +220,23 @@ const PaymentCancelService = async (req) => {
 
 const PaymentIPNService = async (req) => {
     try {
-
+        let trxID = req.params.trxID
+        let status = req.body['status']
+        let data = await InvoiceModel.updateOne({ tran_id: trxID }, { payment_status: status })
         return { status: true, data: data };
     } catch (error) {
         return { status: false, error: error.toString() };
     }
 };
 
-const PaymentSuccessService = async (req) => {
-    try {
 
-        return { status: true, data: data };
-    } catch (error) {
-        return { status: false, error: error.toString() };
-    }
-};
 
 const InvoiceListService = async (req) => {
     try {
+        let user_id = req.headers.user_id
+        let invoice = await InvoiceModel.find({ userID: user_id })
 
-        return { status: true, data: data };
+        return { status: true, data: invoice };
     } catch (error) {
         return { status: false, error: error.toString() };
     }
@@ -229,8 +244,31 @@ const InvoiceListService = async (req) => {
 
 const InvoiceProductListService = async (req) => {
     try {
+        let user_id = new ObjectId(req.headers.user_id)
+        let invoice_id = new ObjectId(req.params.invoiceID)
 
-        return { status: true, data: data };
+        let matchStage = {
+            $match: {
+                userID: user_id, invoiceID: invoice_id
+            }
+        }
+
+        let joinStageWithProduct = {
+            $lookup: {
+                from: "products",
+                localField: "productID",
+                foreignField: "_id",
+                as: "product",
+            },
+        }
+
+        let unwindStage = { $unwind: "$product" };
+
+        let products = await InvoiceProductModel.aggregate([
+            matchStage, joinStageWithProduct, unwindStage
+        ])
+
+        return { status: true, data: products };
     } catch (error) {
         return { status: false, error: error.toString() };
     }
