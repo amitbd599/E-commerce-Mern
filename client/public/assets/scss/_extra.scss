@@ -1,0 +1,53 @@
+.hero-icon-next {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 9;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  -ms-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.hero-icon-prev {
+  position: absolute;
+  top: 50%;
+  left: auto;
+  right: 0;
+  z-index: 9;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  -ms-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.slideshow-section:hover .hero-icon-next,
+.slideshow-section:hover .hero-icon-prev {
+  opacity: 1;
+  visibility: visible;
+}
+
+.common-slider .slick-slide {
+  margin: 0;
+}
+
+.slick-current .img-thumb-wrapper {
+  outline: 0;
+}
+
+.product-gallery-vertical .img-thumb-wrapper {
+  margin-top: 8px;
+  margin-left: 8px;
+}
