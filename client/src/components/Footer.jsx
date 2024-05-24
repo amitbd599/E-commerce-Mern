@@ -130,7 +130,7 @@ const Footer = () => {
                                     <div className="footer-widget-inner">
                                         <h4 className="footer-logo">
                                             <a href="/">
-                                                <img src="assets/img/logo-accent.png" alt="bisum" />
+                                                <img src="https://spreethemesprevious.github.io/bisum/html/assets/img/logo-accent.png" alt="bisum" />
                                             </a>
                                         </h4>
                                         <div className="footer-newsletter">
