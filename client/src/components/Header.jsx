@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
     return (
@@ -20,459 +21,56 @@ const Header = () => {
                                     <ul className="main-menu list-unstyled justify-content-center">
                                         <li className="menu-list-item nav-item has-dropdown active">
                                             <div className="mega-menu-header">
-                                                <a className="nav-link" href="index.html">
+                                                <Link className="nav-link" to="/">
                                                     Home
-                                                </a>
-                                                <span className="open-submenu">
-                                                    <svg
-                                                        className="icon icon-dropdown"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={24}
-                                                        height={24}
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth={2}
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    >
-                                                        <polyline points="6 9 12 15 18 9" />
-                                                    </svg>
-                                                </span>
+                                                </Link>
+
                                             </div>
-                                            <div className="submenu-transform submenu-transform-desktop">
-                                                <ul className="submenu list-unstyled">
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="index.html"
-                                                        >
-                                                            Home 1
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="index-shoe.html"
-                                                        >
-                                                            Home 2
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="index-bag.html"
-                                                        >
-                                                            Home 3
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="index-tools.html"
-                                                        >
-                                                            Home 4
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+
                                         </li>
-                                        <li className="menu-list-item nav-item has-megamenu">
+                                        <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <a className="nav-link" href="collection-left-sidebar.html">
-                                                    Shop
-                                                </a>
-                                                <span className="open-submenu">
-                                                    <svg
-                                                        className="icon icon-dropdown"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={24}
-                                                        height={24}
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth={2}
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    >
-                                                        <polyline points="6 9 12 15 18 9" />
-                                                    </svg>
-                                                </span>
+                                                <Link className="nav-link" to="/about">
+                                                    About
+                                                </Link>
+
                                             </div>
-                                            <div className="submenu-transform submenu-transform-desktop">
-                                                <div className="container">
-                                                    <ul className="submenu megamenu-container list-unstyled">
-                                                        <li className="menu-list-item nav-item-sub">
-                                                            <div className="mega-menu-header">
-                                                                <a
-                                                                    className="nav-link-sub nav-text-sub megamenu-heading"
-                                                                    href="collection-left-sidebar.html"
-                                                                >
-                                                                    CATEGORY PAGES
-                                                                </a>
-                                                            </div>
-                                                            <div className="submenu-transform megamenu-transform">
-                                                                <ul className="megamenu list-unstyled">
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="collection-left-sidebar.html"
-                                                                        >
-                                                                            With Left Sidebar
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="collection-right-sidebar.html"
-                                                                        >
-                                                                            With Right Sidebar
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="collection-left-sidebar.html"
-                                                                        >
-                                                                            3 Column Layout
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="collection-without-sidebar.html"
-                                                                        >
-                                                                            4 Column Layout
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="collection-without-sidebar.html"
-                                                                        >
-                                                                            Without Sidebar
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                        <li className="menu-list-item nav-item-sub">
-                                                            <div className="mega-menu-header d-flex align-items-center justify-content-between">
-                                                                <a
-                                                                    className="nav-link-sub nav-text-sub megamenu-heading"
-                                                                    href="collection-right-sidebar.html"
-                                                                >
-                                                                    PRODUCT PAGES
-                                                                </a>
-                                                            </div>
-                                                            <div className="submenu-transform megamenu-transform">
-                                                                <ul className="megamenu list-unstyled">
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Simple Product
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Variable Product
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Sale Product
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Featured &amp; On Sale
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product-2.html"
-                                                                        >
-                                                                            Tab Inside
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                        <li className="menu-list-item nav-item-sub">
-                                                            <div className="mega-menu-header d-flex align-items-center justify-content-between">
-                                                                <a
-                                                                    className="nav-link-sub nav-text-sub megamenu-heading"
-                                                                    href="index.html"
-                                                                >
-                                                                    PRODUCT LAYOUTS
-                                                                </a>
-                                                            </div>
-                                                            <div className="submenu-transform megamenu-transform">
-                                                                <ul className="megamenu list-unstyled">
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product-2.html"
-                                                                        >
-                                                                            Grid Images
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Vertical Thumb
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Gallery Type
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Product Width Layout
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="menu-list-item nav-item-sub">
-                                                                        <a
-                                                                            className="nav-link-sub nav-text-sub"
-                                                                            href="product.html"
-                                                                        >
-                                                                            Sticky Gallery
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                        <li className="menu-list-item nav-item-sub">
-                                                            <div className="mega-menu-header d-flex align-items-center justify-content-between">
-                                                                <a
-                                                                    className="mega-menu-img nav-link-sub nav-text-sub"
-                                                                    href="collection-left-sidebar.html"
-                                                                >
-                                                                    <img
-                                                                        className="menu-img"
-                                                                        src="assets/img/menu/1.jpg"
-                                                                        alt="img"
-                                                                    />
-                                                                    <h2 className="img-menu-heading text_16 mt-2">
-                                                                        Featured Collection
-                                                                    </h2>
-                                                                    <div className="img-menu-action text_12 bg-transparent p-0">
-                                                                        <span>DISCOVER NOW</span>
-                                                                        <span>
-                                                                            <svg
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                width={30}
-                                                                                height={18}
-                                                                                fill="#000"
-                                                                                className="icon-right-long"
-                                                                                viewBox="0 0 16 16"
-                                                                            >
-                                                                                <path
-                                                                                    fillRule="evenodd"
-                                                                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                                                                                />
-                                                                            </svg>
-                                                                        </span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+
                                         </li>
-                                        <li className="menu-list-item nav-item has-dropdown">
+                                        <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <a className="nav-link" href="blog.html">
+                                                <Link className="nav-link" to="/blog">
                                                     Blog
-                                                </a>
-                                                <span className="open-submenu">
-                                                    <svg
-                                                        className="icon icon-dropdown"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={24}
-                                                        height={24}
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth={2}
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    >
-                                                        <polyline points="6 9 12 15 18 9" />
-                                                    </svg>
-                                                </span>
+                                                </Link>
+
                                             </div>
-                                            <div className="submenu-transform submenu-transform-desktop">
-                                                <ul className="submenu list-unstyled">
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="blog.html"
-                                                        >
-                                                            Blog
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="article.html"
-                                                        >
-                                                            Blog Details
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+
                                         </li>
-                                        <li className="menu-list-item nav-item has-dropdown">
+                                        <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <a className="nav-link" href="about-us.html">
-                                                    Pages
-                                                </a>
-                                                <span className="open-submenu">
-                                                    <svg
-                                                        className="icon icon-dropdown"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={24}
-                                                        height={24}
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth={2}
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    >
-                                                        <polyline points="6 9 12 15 18 9" />
-                                                    </svg>
-                                                </span>
+                                                <Link className="nav-link" to="/">
+                                                    Collection
+                                                </Link>
+
                                             </div>
-                                            <div className="submenu-transform submenu-transform-desktop">
-                                                <ul className="submenu list-unstyled">
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="about-us.html"
-                                                        >
-                                                            About Us
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="contact.html"
-                                                        >
-                                                            Contact
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="faq.html"
-                                                        >
-                                                            FAQ
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="404.html"
-                                                        >
-                                                            404 page
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="login.html"
-                                                        >
-                                                            Login
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="register.html"
-                                                        >
-                                                            Register
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="wishlist.html"
-                                                        >
-                                                            Wishlist
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="cart.html"
-                                                        >
-                                                            Cart
-                                                        </a>
-                                                    </li>
-                                                    <li className="menu-list-item nav-item-sub">
-                                                        <a
-                                                            className="nav-link-sub nav-text-sub"
-                                                            href="checkout.html"
-                                                        >
-                                                            Checkout
-                                                        </a>
-                                                    </li>
-                                                </ul>
+
+                                        </li>
+                                        <li className="menu-list-item nav-item has-dropdown ">
+                                            <div className="mega-menu-header">
+                                                <Link className="nav-link" to="/">
+                                                    Contact
+                                                </Link>
+
                                             </div>
+
                                         </li>
-                                        <li className="menu-list-item nav-item">
-                                            <a className="nav-link" href="contact.html">
-                                                Contact
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </nav>
                             </div>
                             <div className="col-lg-3 col-md-8 col-8">
                                 <div className="header-action d-flex align-items-center justify-content-end">
-                                    <a
-                                        className="header-action-item header-search"
-                                        href="javascript:void(0)"
-                                    >
-                                        <svg
-                                            className="icon icon-search"
-                                            width={20}
-                                            height={20}
-                                            viewBox="0 0 20 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M7.75 0.250183C11.8838 0.250183 15.25 3.61639 15.25 7.75018C15.25 9.54608 14.6201 11.1926 13.5625 12.4846L19.5391 18.4611L18.4609 19.5392L12.4844 13.5627C11.1924 14.6203 9.5459 15.2502 7.75 15.2502C3.61621 15.2502 0.25 11.884 0.25 7.75018C0.25 3.61639 3.61621 0.250183 7.75 0.250183ZM7.75 1.75018C4.42773 1.75018 1.75 4.42792 1.75 7.75018C1.75 11.0724 4.42773 13.7502 7.75 13.7502C11.0723 13.7502 13.75 11.0724 13.75 7.75018C13.75 4.42792 11.0723 1.75018 7.75 1.75018Z"
-                                                fill="black"
-                                            />
-                                        </svg>
-                                    </a>
+
                                     <a
                                         className="header-action-item header-wishlist ms-4 d-none d-lg-block"
                                         href="wishlist.html"
@@ -587,6 +185,445 @@ const Header = () => {
                 </div>
             </header>
             {/* header end */}
+            {/* drawer menu start */}
+            <div
+                className="offcanvas offcanvas-start d-flex d-lg-none"
+                tabIndex={-1}
+                id="drawer-menu"
+            >
+                <div className="offcanvas-wrapper">
+                    <div className="offcanvas-header border-btm-black">
+                        <h5 className="drawer-heading">Menu</h5>
+                        <button
+                            type="button"
+                            className="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                        />
+                    </div>
+                    <div className="offcanvas-body p-0 d-flex flex-column justify-content-between">
+                        <nav className="site-navigation">
+                            <ul className="main-menu list-unstyled">
+                                <li className="menu-list-item nav-item has-dropdown active">
+                                    <div className="mega-menu-header">
+                                        <Link className="nav-link active" to="/">
+                                            Home
+                                        </Link>
+
+                                    </div>
+
+                                </li>
+                                <li className="menu-list-item nav-item has-dropdown ">
+                                    <div className="mega-menu-header">
+                                        <Link className="nav-link active" to="/">
+                                            About
+                                        </Link>
+
+                                    </div>
+
+                                </li>
+                                <li className="menu-list-item nav-item has-dropdown ">
+                                    <div className="mega-menu-header">
+                                        <Link className="nav-link active" to="/">
+                                            Blog
+                                        </Link>
+
+                                    </div>
+
+                                </li>
+                                <li className="menu-list-item nav-item has-dropdown ">
+                                    <div className="mega-menu-header">
+                                        <Link className="nav-link active" to="/">
+                                            Collection
+                                        </Link>
+
+                                    </div>
+
+                                </li>
+                                <li className="menu-list-item nav-item has-dropdown ">
+                                    <div className="mega-menu-header">
+                                        <Link className="nav-link active" to="/">
+                                            Contact
+                                        </Link>
+
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <ul className="utility-menu list-unstyled">
+                            <li className="utilty-menu-item">
+                                <a className="announcement-text" href="tel:+1-078-2376">
+                                    <span className="utilty-icon-wrapper">
+                                        <svg
+                                            className="icon icon-phone"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width={24}
+                                            height={24}
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#000"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                        </svg>
+                                    </span>
+                                    Call: +1 078 2376
+                                </a>
+                            </li>
+                            <li className="utilty-menu-item">
+                                <a
+                                    className="announcement-login announcement-text"
+                                    href="login.html"
+                                >
+                                    <span className="utilty-icon-wrapper">
+                                        <svg
+                                            className="icon icon-user"
+                                            width={24}
+                                            height={24}
+                                            viewBox="0 0 10 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M5 0C3.07227 0 1.5 1.57227 1.5 3.5C1.5 4.70508 2.11523 5.77539 3.04688 6.40625C1.26367 7.17188 0 8.94141 0 11H1C1 8.78516 2.78516 7 5 7C7.21484 7 9 8.78516 9 11H10C10 8.94141 8.73633 7.17188 6.95312 6.40625C7.88477 5.77539 8.5 4.70508 8.5 3.5C8.5 1.57227 6.92773 0 5 0ZM5 1C6.38672 1 7.5 2.11328 7.5 3.5C7.5 4.88672 6.38672 6 5 6C3.61328 6 2.5 4.88672 2.5 3.5C2.5 2.11328 3.61328 1 5 1Z"
+                                                fill="#000"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span>Login</span>
+                                </a>
+                            </li>
+                            <li className="utilty-menu-item">
+                                <a
+                                    className="header-action-item header-wishlist"
+                                    href="wishlist.html"
+                                >
+                                    <span className="utilty-icon-wrapper">
+                                        <svg
+                                            className="icon icon-wishlist"
+                                            width={26}
+                                            height={22}
+                                            viewBox="0 0 26 22"
+                                            fill="#000"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M6.96429 0.000183105C3.12305 0.000183105 0 3.10686 0 6.84843C0 8.15388 0.602121 9.28455 1.16071 10.1014C1.71931 10.9181 2.29241 11.4425 2.29241 11.4425L12.3326 21.3439L13 22.0002L13.6674 21.3439L23.7076 11.4425C23.7076 11.4425 26 9.45576 26 6.84843C26 3.10686 22.877 0.000183105 19.0357 0.000183105C15.8474 0.000183105 13.7944 1.88702 13 2.68241C12.2056 1.88702 10.1526 0.000183105 6.96429 0.000183105ZM6.96429 1.82638C9.73912 1.82638 12.3036 4.48008 12.3036 4.48008L13 5.25051L13.6964 4.48008C13.6964 4.48008 16.2609 1.82638 19.0357 1.82638C21.8613 1.82638 24.1429 4.10557 24.1429 6.84843C24.1429 8.25732 22.4018 10.1584 22.4018 10.1584L13 19.4036L3.59821 10.1584C3.59821 10.1584 3.14844 9.73397 2.69866 9.07411C2.24888 8.41426 1.85714 7.55466 1.85714 6.84843C1.85714 4.10557 4.13867 1.82638 6.96429 1.82638Z"
+                                                fill="#000"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span>My wishlist</span>
+                                </a>
+                            </li>
+                            <li className="utilty-menu-item">
+                                <button
+                                    type="button"
+                                    className="currency-btn btn-reset"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    <img className="flag" src="assets/img/flag/usd.jpg" alt="img" />
+                                    <span>USD</span>
+                                    <span className="utilty-icon-wrapper">
+                                        <svg
+                                            className="icon icon-dropdown"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width={24}
+                                            height={24}
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#000"
+                                            strokeWidth={1}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <polyline points="6 9 12 15 18 9" />
+                                        </svg>
+                                    </span>
+                                </button>
+                                <ul className="currency-list dropdown-menu dropdown-menu-end px-2">
+                                    <li className="currency-list-item ">
+                                        <a className="currency-list-option" href="#" data-value="USD">
+                                            <img
+                                                className="flag"
+                                                src="assets/img/flag/usd.jpg"
+                                                alt="img"
+                                            />
+                                            <span>USD</span>
+                                        </a>
+                                    </li>
+                                    <li className="currency-list-item ">
+                                        <a className="currency-list-option" href="#" data-value="CAD">
+                                            <img
+                                                className="flag"
+                                                src="assets/img/flag/cad.jpg"
+                                                alt="img"
+                                            />
+                                            <span>CAD</span>
+                                        </a>
+                                    </li>
+                                    <li className="currency-list-item ">
+                                        <a className="currency-list-option" href="#" data-value="EUR">
+                                            <img
+                                                className="flag"
+                                                src="assets/img/flag/eur.jpg"
+                                                alt="img"
+                                            />
+                                            <span>EUR</span>
+                                        </a>
+                                    </li>
+                                    <li className="currency-list-item ">
+                                        <a className="currency-list-option" href="#" data-value="JPY">
+                                            <img
+                                                className="flag"
+                                                src="assets/img/flag/jpy.jpg"
+                                                alt="img"
+                                            />
+                                            <span>JPY</span>
+                                        </a>
+                                    </li>
+                                    <li className="currency-list-item ">
+                                        <a className="currency-list-option" href="#" data-value="GBP">
+                                            <img
+                                                className="flag"
+                                                src="assets/img/flag/gbp.jpg"
+                                                alt="img"
+                                            />
+                                            <span>GBP</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {/* drawer menu end */}
+
+            {/* drawer cart start */}
+            <div className="offcanvas offcanvas-end" tabIndex={-1} id="drawer-cart">
+                <div className="offcanvas-header border-btm-black">
+                    <h5 className="cart-drawer-heading text_16">Your Cart (04)</h5>
+                    <button
+                        type="button"
+                        className="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    />
+                </div>
+                <div className="offcanvas-body p-0">
+                    <div className="cart-content-area d-flex justify-content-between flex-column">
+                        <div className="minicart-loop custom-scrollbar">
+                            {/* minicart item */}
+                            <div className="minicart-item d-flex">
+                                <div className="mini-img-wrapper">
+                                    <img
+                                        className="mini-img"
+                                        src="assets/img/products/furniture/1.jpg"
+                                        alt="img"
+                                    />
+                                </div>
+                                <div className="product-info">
+                                    <h2 className="product-title">
+                                        <a href="#">Eliot Reversible Sectional</a>
+                                    </h2>
+                                    <p className="product-vendor">XS / Dove Gray</p>
+                                    <div className="misc d-flex align-items-end justify-content-between">
+                                        <div className="quantity d-flex align-items-center justify-content-between">
+                                            <button className="qty-btn dec-qty">
+                                                <img src="assets/img/icon/minus.svg" alt="minus" />
+                                            </button>
+                                            <input
+                                                className="qty-input"
+                                                type="number"
+                                                name="qty"
+                                                defaultValue={1}
+                                                min={0}
+                                            />
+                                            <button className="qty-btn inc-qty">
+                                                <img src="assets/img/icon/plus.svg" alt="plus" />
+                                            </button>
+                                        </div>
+                                        <div className="product-remove-area d-flex flex-column align-items-end">
+                                            <div className="product-price">$580.00</div>
+                                            <a href="#" className="product-remove">
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* minicart item */}
+                            <div className="minicart-item d-flex">
+                                <div className="mini-img-wrapper">
+                                    <img
+                                        className="mini-img"
+                                        src="assets/img/products/furniture/2.jpg"
+                                        alt="img"
+                                    />
+                                </div>
+                                <div className="product-info">
+                                    <h2 className="product-title">
+                                        <a href="#">Vita Lounge Chair</a>
+                                    </h2>
+                                    <p className="product-vendor">XS / Pink</p>
+                                    <div className="misc d-flex align-items-end justify-content-between">
+                                        <div className="quantity d-flex align-items-center justify-content-between">
+                                            <button className="qty-btn dec-qty">
+                                                <img src="assets/img/icon/minus.svg" alt="minus" />
+                                            </button>
+                                            <input
+                                                className="qty-input"
+                                                type="number"
+                                                name="qty"
+                                                defaultValue={1}
+                                                min={0}
+                                            />
+                                            <button className="qty-btn inc-qty">
+                                                <img src="assets/img/icon/plus.svg" alt="plus" />
+                                            </button>
+                                        </div>
+                                        <div className="product-remove-area d-flex flex-column align-items-end">
+                                            <div className="product-price">$580.00</div>
+                                            <a href="#" className="product-remove">
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* minicart item */}
+                            <div className="minicart-item d-flex">
+                                <div className="mini-img-wrapper">
+                                    <img
+                                        className="mini-img"
+                                        src="assets/img/products/furniture/3.jpg"
+                                        alt="img"
+                                    />
+                                </div>
+                                <div className="product-info">
+                                    <h2 className="product-title">
+                                        <a href="#">Sarno Dining Chair</a>
+                                    </h2>
+                                    <p className="product-vendor">XS / Dove Gray</p>
+                                    <div className="misc d-flex align-items-end justify-content-between">
+                                        <div className="quantity d-flex align-items-center justify-content-between">
+                                            <button className="qty-btn dec-qty">
+                                                <img src="assets/img/icon/minus.svg" alt="minus" />
+                                            </button>
+                                            <input
+                                                className="qty-input"
+                                                type="number"
+                                                name="qty"
+                                                defaultValue={1}
+                                                min={0}
+                                            />
+                                            <button className="qty-btn inc-qty">
+                                                <img src="assets/img/icon/plus.svg" alt="plus" />
+                                            </button>
+                                        </div>
+                                        <div className="product-remove-area d-flex flex-column align-items-end">
+                                            <div className="product-price">$580.00</div>
+                                            <a href="#" className="product-remove">
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* minicart item */}
+                            <div className="minicart-item d-flex">
+                                <div className="mini-img-wrapper">
+                                    <img
+                                        className="mini-img"
+                                        src="assets/img/products/furniture/4.jpg"
+                                        alt="img"
+                                    />
+                                </div>
+                                <div className="product-info">
+                                    <h2 className="product-title">
+                                        <a href="#">Vita Lounge Chair</a>
+                                    </h2>
+                                    <p className="product-vendor">XS / Dove Gray</p>
+                                    <div className="misc d-flex align-items-end justify-content-between">
+                                        <div className="quantity d-flex align-items-center justify-content-between">
+                                            <button className="qty-btn dec-qty">
+                                                <img src="assets/img/icon/minus.svg" alt="minus" />
+                                            </button>
+                                            <input
+                                                className="qty-input"
+                                                type="number"
+                                                name="qty"
+                                                defaultValue={1}
+                                                min={0}
+                                            />
+                                            <button className="qty-btn inc-qty">
+                                                <img src="assets/img/icon/plus.svg" alt="plus" />
+                                            </button>
+                                        </div>
+                                        <div className="product-remove-area d-flex flex-column align-items-end">
+                                            <div className="product-price">$580.00</div>
+                                            <a href="#" className="product-remove">
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="minicart-footer">
+                            <div className="minicart-calc-area">
+                                <div className="minicart-calc d-flex align-items-center justify-content-between">
+                                    <span className="cart-subtotal mb-0">Subtotal</span>
+                                    <span className="cart-subprice">$1548.00</span>
+                                </div>
+                                <p className="cart-taxes text-center my-4">
+                                    Taxes and shipping will be calculated at checkout.
+                                </p>
+                            </div>
+                            <div className="minicart-btn-area d-flex align-items-center justify-content-between">
+                                <a href="cart.html" className="minicart-btn btn-secondary">
+                                    View Cart
+                                </a>
+                                <a href="checkout.html" className="minicart-btn btn-primary">
+                                    Checkout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="cart-empty-area text-center py-5 d-none">
+                        <div className="cart-empty-icon pb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={70}
+                                height={70}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={1}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx={12} cy={12} r={10} />
+                                <path d="M16 16s-1.5-2-4-2-4 2-4 2" />
+                                <line x1={9} y1={9} x2="9.01" y2={9} />
+                                <line x1={15} y1={9} x2="15.01" y2={9} />
+                            </svg>
+                        </div>
+                        <p className="cart-empty">You have no items in your cart</p>
+                    </div>
+                </div>
+            </div>
+            {/* drawer cart end */}
+
+
+
+
         </>
 
     )
