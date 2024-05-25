@@ -1,30 +1,30 @@
-import React from 'react'
-import Announcement from '../components/Announcement'
-import Header from '../components/Header'
+import React, { useEffect } from 'react';
+import Announcement from '../components/Announcement';
+import Header from '../components/Header';
 
-import Footer from '../components/Footer'
-import Breadcrumb from '../components/Breadcrumb'
-import Products from '../components/Products'
+import Footer from '../components/Footer';
+import Breadcrumb from '../components/Breadcrumb';
+import Products from '../components/Products';
 
 const Product = () => {
-    return (
-        <>
-            {/* Announcement */}
-            <Announcement />
+  return (
+    <>
+      {/* Announcement */}
+      <Announcement />
 
-            {/* Header */}
-            <Header />
+      {/* Header */}
+      <Header />
 
-            {/* Breadcrumb */}
-            <Breadcrumb title={"ProductDetails"} />
+      {/* Breadcrumb */}
+      <Breadcrumb title={'ProductDetails'} />
 
-            {/* Products */}
-            <Products />
+      {/* Products */}
+      <Products />
 
-            {/* Footer */}
-            <Footer />
-        </>
-    )
-}
+      {/* Footer */}
+      <Footer />
+    </>
+  );
+};
 
-export default Product
+export default Product;

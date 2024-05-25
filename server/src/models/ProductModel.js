@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const DataSchema = mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -15,7 +15,7 @@ const DataSchema = mongoose.Schema(
     img7: { type: String },
     img8: { type: String },
     star: { type: String, required: true },
-    stock: { type: String, required: true },
+    stock: { type: Boolean, required: true },
     remark: { type: String, required: true },
     des: { type: String, required: true },
     color: { type: String, required: true },
@@ -26,9 +26,9 @@ const DataSchema = mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
-const ProductModel = mongoose.model("products", DataSchema);
+const ProductModel = mongoose.model('products', DataSchema);
 
 module.exports = ProductModel;

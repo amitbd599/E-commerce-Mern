@@ -133,3 +133,12 @@
 .nav-link.active {
   color: var(--secondary-color);
 }
+
+
+.filter-label input[type="radio" i] {
+  visibility: hidden;
+}
+
+.filter-color .filter-label input:checked + .filter-checkbox:after {
+  left: -4px;
+}

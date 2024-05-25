@@ -34,18 +34,31 @@ const ReadProductService = async (req) => {
           from: 'brands', // Name of the brand collection
           localField: 'brandID',
           foreignField: '_id',
-          as: 'brandDetails'
-        }
+          as: 'brandDetails',
+        },
       },
       {
-        $unwind: '$brandDetails' // Unwind the brand details to merge the fields
+        $unwind: '$brandDetails', // Unwind the brand details to merge the fields
+      },
+      {
+        $lookup: {
+          from: 'catagories', // Name of the brand collection
+          localField: 'categoryID',
+          foreignField: '_id',
+          as: 'catagoriesDetails',
+        },
+      },
+      {
+        $unwind: '$catagoriesDetails', // Unwind the brand details to merge the fields
       },
       {
         $facet: {
           data: [
             { $skip: skip },
             { $limit: limit },
-            { $project: { // Select fields to return, include brand name
+            {
+              $project: {
+                // Select fields to return, include brand name
                 _id: 1,
                 title: 1,
                 shortDes: 1,
@@ -68,32 +81,23 @@ const ReadProductService = async (req) => {
                 size: 1,
                 categoryID: 1,
                 brandID: 1,
-                'brandDetails.brandName': 1, // Include the brand name
+                'brandDetails.brandName': 1,
+                'catagoriesDetails.categoryName': 1,
                 createdAt: 1,
-                updatedAt: 1
-            } }
+                updatedAt: 1,
+              },
+            },
           ],
-          totalCount: [
-            { $count: "count" }
-          ]
-        }
+          totalCount: [{ $count: 'count' }],
+        },
       },
       {
         $project: {
           data: 1,
-          totalCount: { $arrayElemAt: ["$totalCount.count", 0] }
-        }
-      }
-    ];
-
-    let JoinWithBrand = {
-      $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brand',
+          totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        },
       },
-    };
+    ];
 
     const results = await ProductModel.aggregate(aggregatePipeline);
     const products = results[0].data;
@@ -428,12 +432,122 @@ const DeleteSliderListService = async (req) => {
   }
 };
 
-//! ProductListBySimilarService
-const ProductListBySimilarService = async (req) => {
+const ProductListBySimilarCategoryService = async (req) => {
   try {
     let categoryID = new ObjectId(req.params.categoryID);
+    const limit = parseInt(req.params.item);
+    const pageNo = parseInt(req.params.pageNo);
+
+    if (isNaN(limit) || isNaN(pageNo)) {
+      return res.status(400).json({ message: 'Invalid parameters' });
+    }
+
+    const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
+
+    let MatchingStage = { $match: { categoryID: categoryID } };
+    let JoinWithBrand = {
+      $lookup: {
+        from: 'brands',
+        localField: 'brandID',
+        foreignField: '_id',
+        as: 'brandDetails',
+      },
+    };
+    let UnwindBrand = {
+      $unwind: '$brandDetails',
+    };
+    let JoinWithCategory = {
+      $lookup: {
+        from: 'catagories',
+        localField: 'categoryID',
+        foreignField: '_id',
+        as: 'catagoriesDetails',
+      },
+    };
+
+    let UnwindCategory = {
+      $unwind: '$catagoriesDetails',
+    };
+
+    let data = {
+      $facet: {
+        data: [
+          { $skip: skip },
+          { $limit: limit },
+          {
+            $project: {
+              // Select fields to return, include brand name
+              _id: 1,
+              title: 1,
+              shortDes: 1,
+              price: 1,
+              discount: 1,
+              discountPrice: 1,
+              img1: 1,
+              img2: 1,
+              img3: 1,
+              img4: 1,
+              img5: 1,
+              img6: 1,
+              img7: 1,
+              img8: 1,
+              star: 1,
+              stock: 1,
+              remark: 1,
+              des: 1,
+              color: 1,
+              size: 1,
+              categoryID: 1,
+              brandID: 1,
+              'brandDetails.brandName': 1,
+              'catagoriesDetails.categoryName': 1,
+              createdAt: 1,
+              updatedAt: 1,
+            },
+          },
+        ],
+        totalCount: [{ $count: 'count' }],
+      },
+    };
+
+    let project = {
+      $project: {
+        data: 1,
+        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+      },
+    };
+
+    const results = await ProductModel.aggregate([
+      MatchingStage,
+      JoinWithBrand,
+      UnwindBrand,
+      JoinWithCategory,
+      UnwindCategory,
+      data,
+      project,
+    ]);
+    const products = results[0].data;
+    const totalDocuments = results[0].totalCount || 0;
+    const totalPages = Math.ceil(totalDocuments / limit);
+
+    return {
+      status: true,
+      totalDocuments: totalDocuments,
+      currentPage: pageNo,
+      totalPages: totalPages,
+      products: products,
+    };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+//! ProductListBySimilarBrandService
+const ProductListBySimilarBrandService = async (req) => {
+  try {
+    let brandID = new ObjectId(req.params.brandID);
     let MatchStage = {
-      $match: { categoryID: categoryID },
+      $match: { brandID: brandID },
     };
     let Limit = {
       $limit: 20,
@@ -630,6 +744,125 @@ const ProductListByRemarkService = async (req) => {
   }
 };
 
+//! ProductListByStockService
+const ProductListByStockService = async (req) => {
+  try {
+    let stock = req.params.stock;
+    let MatchStage = {
+      $match: { stock: JSON.parse(stock.toLowerCase()) },
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: 'brands',
+        localField: 'brandID',
+        foreignField: '_id',
+        as: 'brand',
+      },
+    };
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: 'catagories',
+        localField: 'categoryID',
+        foreignField: '_id',
+        as: 'category',
+      },
+    };
+
+    let UnwindBrandStage = {
+      $unwind: '$brand',
+    };
+
+    let UnwindCategoryStage = {
+      $unwind: '$category',
+    };
+
+    let projectionStage = {
+      $project: {
+        'brand._id': 0,
+        'category._id': 0,
+        'category.createdAt': 0,
+        'category.updatedAt': 0,
+        'brand.createdAt': 0,
+        'brand.updatedAt': 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await ProductModel.aggregate([
+      MatchStage,
+      JoinWithBrandStage,
+      JoinWithCategoryStage,
+      UnwindBrandStage,
+      UnwindCategoryStage,
+      projectionStage,
+    ]);
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+//! ProductListByColorService
+const ProductListByColorService = async (req) => {
+  try {
+    let color = req.params.color;
+    let MatchStage = {
+      $match: { color: color },
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: 'brands',
+        localField: 'brandID',
+        foreignField: '_id',
+        as: 'brand',
+      },
+    };
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: 'catagories',
+        localField: 'categoryID',
+        foreignField: '_id',
+        as: 'category',
+      },
+    };
+
+    let UnwindBrandStage = {
+      $unwind: '$brand',
+    };
+
+    let UnwindCategoryStage = {
+      $unwind: '$category',
+    };
+
+    let projectionStage = {
+      $project: {
+        'brand._id': 0,
+        'category._id': 0,
+        'category.createdAt': 0,
+        'category.updatedAt': 0,
+        'brand.createdAt': 0,
+        'brand.updatedAt': 0,
+        categoryID: 0,
+        brandID: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await ProductModel.aggregate([
+      MatchStage,
+      JoinWithBrandStage,
+      JoinWithCategoryStage,
+      UnwindBrandStage,
+      UnwindCategoryStage,
+      projectionStage,
+    ]);
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
 //! ProductReviewService
 const ReadSingleReviewService = async (req) => {
   try {
@@ -724,7 +957,10 @@ module.exports = {
   ReadSliderListService,
   UpdateSliderListService,
   DeleteSliderListService,
-  ProductListBySimilarService,
+  ProductListBySimilarCategoryService,
+  ProductListBySimilarBrandService,
+  ProductListByStockService,
+  ProductListByColorService,
   ProductListByKeywordService,
   ProductListByRemarkService,
   CreateProductService,

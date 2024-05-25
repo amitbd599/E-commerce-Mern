@@ -14,7 +14,6 @@ const {
   DeleteSliderListService,
   ProductListByBrandService,
   ProductListByCategoryService,
-  ProductListBySimilarService,
   ProductListByKeywordService,
   ProductListByRemarkService,
   CreateReviewService,
@@ -26,9 +25,11 @@ const {
   ReadProductService,
   UpdateProductService,
   DeleteProductService,
-} = require("../services/ProductService");
-
-
+  ProductListBySimilarCategoryService,
+  ProductListBySimilarBrandService,
+  ProductListByStockService,
+  ProductListByColorService,
+} = require('../services/ProductService');
 
 //! ProductList
 exports.CreateProduct = async (req, res) => {
@@ -53,9 +54,6 @@ exports.ProductDetails = async (req, res) => {
   return res.status(200).json(result);
 };
 
-
-
-
 //! ProductBrandList
 exports.CreateProductBrandList = async (req, res) => {
   let result = await CreateBrandListService(req);
@@ -78,8 +76,6 @@ exports.ProductListByBrand = async (req, res) => {
   let result = await ProductListByBrandService(req);
   return res.status(200).json(result);
 };
-
-
 
 //! ProductCategoryList
 exports.CreateCategoryList = async (req, res) => {
@@ -104,7 +100,6 @@ exports.ProductListByCategory = async (req, res) => {
   return res.status(200).json(result);
 };
 
-
 //! ProductSliderList
 
 exports.CreateSliderList = async (req, res) => {
@@ -124,13 +119,17 @@ exports.DeleteSliderList = async (req, res) => {
   return res.status(200).json(result);
 };
 
-
-//! ProductListBySimilar
-exports.ProductListBySimilar = async (req, res) => {
-  let result = await ProductListBySimilarService(req);
+//! ProductListBySimilarCategory
+exports.ProductListBySimilarCategory = async (req, res) => {
+  let result = await ProductListBySimilarCategoryService(req);
   return res.status(200).json(result);
 };
 
+//! ProductListBySimilar
+exports.ProductListBySimilarBrand = async (req, res) => {
+  let result = await ProductListBySimilarBrandService(req);
+  return res.status(200).json(result);
+};
 
 //! ProductListByKeyword
 exports.ProductListByKeyword = async (req, res) => {
@@ -138,14 +137,23 @@ exports.ProductListByKeyword = async (req, res) => {
   return res.status(200).json(result);
 };
 
-
 //! ProductListByRemark
 exports.ProductListByRemark = async (req, res) => {
   let result = await ProductListByRemarkService(req);
   return res.status(200).json(result);
 };
 
+//! ProductListByStock
+exports.ProductListByStock = async (req, res) => {
+  let result = await ProductListByStockService(req);
+  return res.status(200).json(result);
+};
 
+//! ProductListByColor
+exports.ProductListByColor = async (req, res) => {
+  let result = await ProductListByColorService(req);
+  return res.status(200).json(result);
+};
 
 //! ProductReview
 exports.CreateReview = async (req, res) => {
@@ -169,7 +177,3 @@ exports.ReadSingleReview = async (req, res) => {
   let result = await ReadSingleReviewService(req);
   return res.status(200).json(result);
 };
-
-
-
-
