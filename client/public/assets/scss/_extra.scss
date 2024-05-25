@@ -91,8 +91,6 @@
   border-radius: 0.25rem;
 }
 
-
-
 .testimonial-icon-prev .arrow-slider {
   left: -70px;
   opacity: 0;
@@ -119,9 +117,19 @@
   border-radius: 0.25rem;
 }
 
-
 .testimonial-slideshow:hover .testimonial-icon-next .arrow-slider,
 .testimonial-slideshow:hover .testimonial-icon-prev .arrow-slider {
   opacity: 1 !important;
   visibility: visible !important;
+}
+
+.icon-user {
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  margin-top: -3px;
+}
+
+.nav-link.active {
+  color: var(--secondary-color);
 }

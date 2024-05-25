@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Announcement = () => {
     return (
@@ -10,12 +11,12 @@ const Announcement = () => {
                         <div className="col-lg-3 d-lg-block d-none">
                             <div className="announcement-call-wrapper">
                                 <div className="announcement-call">
-                                    <a
+                                    <Link
                                         className="announcement-text text-white"
-                                        href="tel:+1-078-2376"
+                                        to="tel:+1-078-2376"
                                     >
                                         Call: +1 078 2376
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -29,9 +30,9 @@ const Announcement = () => {
                         <div className="col-lg-3 d-lg-block d-none">
                             <div className="announcement-meta-wrapper d-flex align-items-center justify-content-end">
                                 <div className="announcement-meta d-flex align-items-center">
-                                    <a
+                                    <Link
                                         className="announcement-login announcement-text text-white"
-                                        href="login.html"
+                                        to="/login"
                                     >
                                         <svg
                                             className="icon icon-user"
@@ -47,126 +48,9 @@ const Announcement = () => {
                                             />
                                         </svg>
                                         <span>Login</span>
-                                    </a>
-                                    <span className="separator-login d-flex px-3">
-                                        <svg
-                                            width={2}
-                                            height={9}
-                                            viewBox="0 0 2 9"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                opacity="0.4"
-                                                d="M1 0.5V8.5"
-                                                stroke="#FEFEFE"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    </span>
-                                    <div className="currency-wrapper">
-                                        <button
-                                            type="button"
-                                            className="currency-btn btn-reset text-white"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <img
-                                                className="flag"
-                                                src="assets/img/flag/usd.jpg"
-                                                alt="img"
-                                            />
-                                            <span>USD</span>
-                                            <span>
-                                                <svg
-                                                    className="icon icon-dropdown"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={24}
-                                                    height={24}
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="#fff"
-                                                    strokeWidth={1}
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                >
-                                                    <polyline points="6 9 12 15 18 9" />
-                                                </svg>
-                                            </span>
-                                        </button>
-                                        <ul className="currency-list dropdown-menu dropdown-menu-end px-2">
-                                            <li className="currency-list-item ">
-                                                <a
-                                                    className="currency-list-option"
-                                                    href="#"
-                                                    data-value="USD"
-                                                >
-                                                    <img
-                                                        className="flag"
-                                                        src="assets/img/flag/usd.jpg"
-                                                        alt="img"
-                                                    />
-                                                    <span>USD</span>
-                                                </a>
-                                            </li>
-                                            <li className="currency-list-item ">
-                                                <a
-                                                    className="currency-list-option"
-                                                    href="#"
-                                                    data-value="CAD"
-                                                >
-                                                    <img
-                                                        className="flag"
-                                                        src="assets/img/flag/cad.jpg"
-                                                        alt="img"
-                                                    />
-                                                    <span>CAD</span>
-                                                </a>
-                                            </li>
-                                            <li className="currency-list-item ">
-                                                <a
-                                                    className="currency-list-option"
-                                                    href="#"
-                                                    data-value="EUR"
-                                                >
-                                                    <img
-                                                        className="flag"
-                                                        src="assets/img/flag/eur.jpg"
-                                                        alt="img"
-                                                    />
-                                                    <span>EUR</span>
-                                                </a>
-                                            </li>
-                                            <li className="currency-list-item ">
-                                                <a
-                                                    className="currency-list-option"
-                                                    href="#"
-                                                    data-value="JPY"
-                                                >
-                                                    <img
-                                                        className="flag"
-                                                        src="assets/img/flag/jpy.jpg"
-                                                        alt="img"
-                                                    />
-                                                    <span>JPY</span>
-                                                </a>
-                                            </li>
-                                            <li className="currency-list-item ">
-                                                <a
-                                                    className="currency-list-option"
-                                                    href="#"
-                                                    data-value="GBP"
-                                                >
-                                                    <img
-                                                        className="flag"
-                                                        src="assets/img/flag/gbp.jpg"
-                                                        alt="img"
-                                                    />
-                                                    <span>GBP</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    </Link>
+
+
                                 </div>
                             </div>
                         </div>

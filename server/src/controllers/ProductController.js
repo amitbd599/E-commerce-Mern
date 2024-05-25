@@ -36,7 +36,7 @@ exports.CreateProduct = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.ReadProduct = async (req, res) => {
-  let result = await ReadProductService();
+  let result = await ReadProductService(req);
   return res.status(200).json(result);
 };
 exports.UpdateProduct = async (req, res) => {

@@ -38,10 +38,10 @@ router.post("/reset-password-user/:email/:otp", UserController.ResetPasswordUser
 
 //! Product product routes
 router.post("/create-product", AuthVerificationAdmin, ProductController.CreateProduct);
-router.get("/read-product", AuthVerificationAdmin, ProductController.ReadProduct);
+router.get("/read-product/:item/:pageNo", ProductController.ReadProduct);
 router.post("/update-product/:productID", AuthVerificationAdmin, ProductController.UpdateProduct);
 router.delete("/delete-product/:productID", AuthVerificationAdmin, ProductController.DeleteProduct);
-router.get("/product-details/:productID", AuthVerificationAdmin, ProductController.ProductDetails);
+router.get("/product-details/:productID",  ProductController.ProductDetails);
 
 
 //! Product brand routes

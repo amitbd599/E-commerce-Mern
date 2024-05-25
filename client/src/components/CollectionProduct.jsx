@@ -1,7 +1,12 @@
 import React from 'react'
 import Quickview from './Quickview'
+import ProductStore from '../store/ProductStore.js'
+import { Link } from 'react-router-dom'
 
 const CollectionProduct = ({ item }) => {
+
+    let {ProductList} = ProductStore()
+    console.log(ProductList);
 
     return (
         <>
@@ -14,8 +19,9 @@ const CollectionProduct = ({ item }) => {
                         </div>
                         <div className="row">
                             {
-                                [...Array(item)].map((item, index) =>
-                                    <div
+                                ProductList.map((item, index) =>
+                                    <>
+                                    <div key={index}
                                         className="col-lg-3 col-md-6 col-6"
                                         data-aos="fade-up"
                                         data-aos-duration={700}
@@ -25,23 +31,23 @@ const CollectionProduct = ({ item }) => {
                                                 <a className="hover-switch" href="collection-left-sidebar.html">
                                                     <img
                                                         className="secondary-img"
-                                                        src="assets/img/products/furniture/9.jpg"
+                                                        src={item?.img1}
                                                         alt="product-img"
                                                     />
                                                     <img
                                                         className="primary-img"
-                                                        src="assets/img/products/furniture/1.jpg"
+                                                        src={item?.img2}
                                                         alt="product-img"
                                                     />
                                                 </a>
                                                 <div className="product-badge">
                                                     <span className="badge-label badge-percentage rounded">
-                                                        -44%
+                                                     {item?.brandDetails?.brandName}
                                                     </span>
                                                 </div>
                                                 <div className="product-card-action product-card-action-2 justify-content-center">
-                                                    <a
-                                                        href="#quickview-modal"
+                                                    <Link
+                                                        to="#quickview-modal"
                                                         className="action-card action-quickview"
                                                         data-bs-toggle="modal"
                                                     >
@@ -57,8 +63,8 @@ const CollectionProduct = ({ item }) => {
                                                                 fill="#00234D"
                                                             />
                                                         </svg>
-                                                    </a>
-                                                    <a href="#" className="action-card action-wishlist">
+                                                    </Link>
+                                                    <Link to="#" className="action-card action-wishlist">
                                                         <svg
                                                             className="icon icon-wishlist"
                                                             width={26}
@@ -72,8 +78,8 @@ const CollectionProduct = ({ item }) => {
                                                                 fill="#00234D"
                                                             />
                                                         </svg>
-                                                    </a>
-                                                    <a href="#" className="action-card action-addtocart">
+                                                    </Link>
+                                                    <Link to="#" className="action-card action-addtocart">
                                                         <svg
                                                             className="icon icon-cart"
                                                             width={24}
@@ -87,42 +93,49 @@ const CollectionProduct = ({ item }) => {
                                                                 fill="#00234D"
                                                             />
                                                         </svg>
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                             <div className="product-card-details">
                                                 <ul className="color-lists list-unstyled d-flex align-items-center">
                                                     <li>
-                                                        <a
-                                                            href="javascript:void(0)"
+                                                        <Link
+                                                            to="javascript:void(0)"
                                                             className="color-swatch swatch-black active"
                                                         />
                                                     </li>
                                                     <li>
-                                                        <a
-                                                            href="javascript:void(0)"
+                                                        <Link
+                                                            to="javascript:void(0)"
                                                             className="color-swatch swatch-cyan"
                                                         />
                                                     </li>
                                                     <li>
-                                                        <a
-                                                            href="javascript:void(0)"
+                                                        <Link
+                                                            to="javascript:void(0)"
                                                             className="color-swatch swatch-purple"
                                                         />
                                                     </li>
                                                 </ul>
                                                 <h3 className="product-card-title">
-                                                    <a href="collection-left-sidebar.html">best wood furniture</a>
+                                                    <Link to={`/product-details/${item?._id}`}>
+                                                        {item?.title}
+                                                    </Link>
                                                 </h3>
                                                 <div className="product-card-price">
-                                                    <span className="card-price-regular">$1529</span>
+                                                    <span className="card-price-regular">${item?.price}</span>
                                                     <span className="card-price-compare text-decoration-line-through">
-                                                        $1759
+                                                        ${item?.discountPrice}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>)
+
+                                        
+                                    </div>
+                                    <Quickview item={item}/>
+                                    </>
+                                    )
                             }
 
 
@@ -132,16 +145,16 @@ const CollectionProduct = ({ item }) => {
                             data-aos="fade-up"
                             data-aos-duration={700}
                         >
-                            <a className="btn-primary" href="#">
+                            <Link className="btn-primary" to="/product">
                                 VIEW ALL
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
             {/* collection end */}
 
-            <Quickview />
+            
         </>
 
     )

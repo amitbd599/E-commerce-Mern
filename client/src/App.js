@@ -16,6 +16,8 @@ import Contact from './pages/Contact';
 import Wishlist from './pages/Wishlist';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Error from './pages/Error';
+import ScrollToTopButton from './components/ScrollToTopButton';
 function App() {
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTopButton />
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/about' element={<About />} />
@@ -38,6 +41,7 @@ function App() {
         <Route exact path='/contact' element={<Contact />} />
         <Route exact path='/login' element={<Login />} />
         <Route exact path='/register' element={<Register />} />
+        <Route path='*' element={<Error />} />
 
       </Routes>
 

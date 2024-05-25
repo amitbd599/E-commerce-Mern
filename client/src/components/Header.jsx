@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
     return (
@@ -11,55 +11,76 @@ const Header = () => {
                         <div className="row align-items-center">
                             <div className="col-lg-3 col-md-4 col-4">
                                 <div className="header-logo">
-                                    <a href="index.html" className="logo-main">
+                                    <NavLink to="/" className="logo-main">
                                         <img src="assets/img/logo.png" loading="lazy" alt="bisum" />
-                                    </a>
+                                    </NavLink>
                                 </div>
                             </div>
                             <div className="col-lg-6 d-lg-block d-none">
                                 <nav className="site-navigation">
                                     <ul className="main-menu list-unstyled justify-content-center">
-                                        <li className="menu-list-item nav-item has-dropdown active">
+                                        <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <Link className="nav-link" to="/">
+                                                <NavLink className={(navData) =>
+                                                    navData.isActive ? "nav-link active" : "nav-link"
+                                                } to="/">
                                                     Home
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
 
                                         </li>
                                         <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <Link className="nav-link" to="/about">
+                                                <NavLink className={(navData) =>
+                                                    navData.isActive ? "nav-link active" : "nav-link"
+                                                } to="/about">
                                                     About
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
 
                                         </li>
                                         <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <Link className="nav-link" to="/blog">
+                                                <NavLink className={(navData) =>
+                                                    navData.isActive ? "nav-link active" : "nav-link"
+                                                } to="/blog">
                                                     Blog
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
 
                                         </li>
                                         <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <Link className="nav-link" to="/">
+                                                <NavLink className={(navData) =>
+                                                    navData.isActive ? "nav-link active" : "nav-link"
+                                                } to="/faq">
+                                                    FAQ
+                                                </NavLink>
+
+                                            </div>
+
+                                        </li>
+                                        <li className="menu-list-item nav-item has-dropdown ">
+                                            <div className="mega-menu-header">
+                                                <NavLink className={(navData) =>
+                                                    navData.isActive ? "nav-link active" : "nav-link"
+                                                } to="/product">
                                                     Collection
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
 
                                         </li>
                                         <li className="menu-list-item nav-item has-dropdown ">
                                             <div className="mega-menu-header">
-                                                <Link className="nav-link" to="/">
+                                                <NavLink className={(navData) =>
+                                                    navData.isActive ? "nav-link active" : "nav-link"
+                                                } to="/contact">
                                                     Contact
-                                                </Link>
+                                                </NavLink>
 
                                             </div>
 
@@ -71,9 +92,9 @@ const Header = () => {
                             <div className="col-lg-3 col-md-8 col-8">
                                 <div className="header-action d-flex align-items-center justify-content-end">
 
-                                    <a
+                                    <Link
                                         className="header-action-item header-wishlist ms-4 d-none d-lg-block"
-                                        href="wishlist.html"
+                                        to="/wishlist"
                                     >
                                         <svg
                                             className="icon icon-wishlist"
@@ -88,10 +109,10 @@ const Header = () => {
                                                 fill="black"
                                             />
                                         </svg>
-                                    </a>
-                                    <a
+                                    </Link>
+                                    <Link
                                         className="header-action-item header-cart ms-4"
-                                        href="#drawer-cart"
+                                        to="#drawer-cart"
                                         data-bs-toggle="offcanvas"
                                     >
                                         <svg
@@ -107,10 +128,10 @@ const Header = () => {
                                                 fill="black"
                                             />
                                         </svg>
-                                    </a>
-                                    <a
+                                    </Link>
+                                    <Link
                                         className="header-action-item header-hamburger ms-4 d-lg-none"
-                                        href="#drawer-menu"
+                                        to="#drawer-menu"
                                         data-bs-toggle="offcanvas"
                                     >
                                         <svg
@@ -129,59 +150,12 @@ const Header = () => {
                                             <line x1={3} y1={6} x2={21} y2={6} />
                                             <line x1={3} y1={18} x2={21} y2={18} />
                                         </svg>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="search-wrapper">
-                        <div className="container">
-                            <form action="#" className="search-form d-flex align-items-center">
-                                <button
-                                    type="submit"
-                                    className="search-submit bg-transparent pl-0 text-start"
-                                >
-                                    <svg
-                                        className="icon icon-search"
-                                        width={20}
-                                        height={20}
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M7.75 0.250183C11.8838 0.250183 15.25 3.61639 15.25 7.75018C15.25 9.54608 14.6201 11.1926 13.5625 12.4846L19.5391 18.4611L18.4609 19.5392L12.4844 13.5627C11.1924 14.6203 9.5459 15.2502 7.75 15.2502C3.61621 15.2502 0.25 11.884 0.25 7.75018C0.25 3.61639 3.61621 0.250183 7.75 0.250183ZM7.75 1.75018C4.42773 1.75018 1.75 4.42792 1.75 7.75018C1.75 11.0724 4.42773 13.7502 7.75 13.7502C11.0723 13.7502 13.75 11.0724 13.75 7.75018C13.75 4.42792 11.0723 1.75018 7.75 1.75018Z"
-                                            fill="black"
-                                        />
-                                    </svg>
-                                </button>
-                                <div className="search-input mr-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Search your products..."
-                                        autoComplete="off"
-                                    />
-                                </div>
-                                <div className="search-close">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width={24}
-                                        height={24}
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="icon icon-close"
-                                    >
-                                        <line x1={18} y1={6} x2={6} y2={18} />
-                                        <line x1={6} y1={6} x2={18} y2={18} />
-                                    </svg>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+
                 </div>
             </header>
             {/* header end */}
@@ -204,47 +178,68 @@ const Header = () => {
                     <div className="offcanvas-body p-0 d-flex flex-column justify-content-between">
                         <nav className="site-navigation">
                             <ul className="main-menu list-unstyled">
-                                <li className="menu-list-item nav-item has-dropdown active">
+                                <li className="menu-list-item nav-item has-dropdown ">
                                     <div className="mega-menu-header">
-                                        <Link className="nav-link active" to="/">
+                                        <NavLink className={(navData) =>
+                                            navData.isActive ? "nav-link active" : "nav-link"
+                                        } to="/">
                                             Home
-                                        </Link>
+                                        </NavLink>
 
                                     </div>
 
                                 </li>
                                 <li className="menu-list-item nav-item has-dropdown ">
                                     <div className="mega-menu-header">
-                                        <Link className="nav-link active" to="/">
+                                        <NavLink className={(navData) =>
+                                            navData.isActive ? "nav-link active" : "nav-link"
+                                        } to="/about">
                                             About
-                                        </Link>
+                                        </NavLink>
 
                                     </div>
 
                                 </li>
                                 <li className="menu-list-item nav-item has-dropdown ">
                                     <div className="mega-menu-header">
-                                        <Link className="nav-link active" to="/">
+                                        <NavLink className={(navData) =>
+                                            navData.isActive ? "nav-link active" : "nav-link"
+                                        } to="/blog">
                                             Blog
-                                        </Link>
+                                        </NavLink>
 
                                     </div>
 
                                 </li>
                                 <li className="menu-list-item nav-item has-dropdown ">
                                     <div className="mega-menu-header">
-                                        <Link className="nav-link active" to="/">
+                                        <NavLink className={(navData) =>
+                                            navData.isActive ? "nav-link active" : "nav-link"
+                                        } to="/faq">
+                                            FAQ
+                                        </NavLink>
+
+                                    </div>
+
+                                </li>
+                                <li className="menu-list-item nav-item has-dropdown ">
+                                    <div className="mega-menu-header">
+                                        <NavLink className={(navData) =>
+                                            navData.isActive ? "nav-link active" : "nav-link"
+                                        } to="/product">
                                             Collection
-                                        </Link>
+                                        </NavLink>
 
                                     </div>
 
                                 </li>
                                 <li className="menu-list-item nav-item has-dropdown ">
                                     <div className="mega-menu-header">
-                                        <Link className="nav-link active" to="/">
+                                        <NavLink className={(navData) =>
+                                            navData.isActive ? "nav-link active" : "nav-link"
+                                        } to="/contact">
                                             Contact
-                                        </Link>
+                                        </NavLink>
 
                                     </div>
 
@@ -275,9 +270,9 @@ const Header = () => {
                                 </a>
                             </li>
                             <li className="utilty-menu-item">
-                                <a
+                                <Link
                                     className="announcement-login announcement-text"
-                                    href="login.html"
+                                    to="/login"
                                 >
                                     <span className="utilty-icon-wrapper">
                                         <svg
@@ -295,12 +290,12 @@ const Header = () => {
                                         </svg>
                                     </span>
                                     <span>Login</span>
-                                </a>
+                                </Link>
                             </li>
                             <li className="utilty-menu-item">
-                                <a
+                                <Link
                                     className="header-action-item header-wishlist"
-                                    href="wishlist.html"
+                                    to="/wishlist"
                                 >
                                     <span className="utilty-icon-wrapper">
                                         <svg
@@ -318,87 +313,9 @@ const Header = () => {
                                         </svg>
                                     </span>
                                     <span>My wishlist</span>
-                                </a>
+                                </Link>
                             </li>
-                            <li className="utilty-menu-item">
-                                <button
-                                    type="button"
-                                    className="currency-btn btn-reset"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <img className="flag" src="assets/img/flag/usd.jpg" alt="img" />
-                                    <span>USD</span>
-                                    <span className="utilty-icon-wrapper">
-                                        <svg
-                                            className="icon icon-dropdown"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width={24}
-                                            height={24}
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="#000"
-                                            strokeWidth={1}
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <polyline points="6 9 12 15 18 9" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <ul className="currency-list dropdown-menu dropdown-menu-end px-2">
-                                    <li className="currency-list-item ">
-                                        <a className="currency-list-option" href="#" data-value="USD">
-                                            <img
-                                                className="flag"
-                                                src="assets/img/flag/usd.jpg"
-                                                alt="img"
-                                            />
-                                            <span>USD</span>
-                                        </a>
-                                    </li>
-                                    <li className="currency-list-item ">
-                                        <a className="currency-list-option" href="#" data-value="CAD">
-                                            <img
-                                                className="flag"
-                                                src="assets/img/flag/cad.jpg"
-                                                alt="img"
-                                            />
-                                            <span>CAD</span>
-                                        </a>
-                                    </li>
-                                    <li className="currency-list-item ">
-                                        <a className="currency-list-option" href="#" data-value="EUR">
-                                            <img
-                                                className="flag"
-                                                src="assets/img/flag/eur.jpg"
-                                                alt="img"
-                                            />
-                                            <span>EUR</span>
-                                        </a>
-                                    </li>
-                                    <li className="currency-list-item ">
-                                        <a className="currency-list-option" href="#" data-value="JPY">
-                                            <img
-                                                className="flag"
-                                                src="assets/img/flag/jpy.jpg"
-                                                alt="img"
-                                            />
-                                            <span>JPY</span>
-                                        </a>
-                                    </li>
-                                    <li className="currency-list-item ">
-                                        <a className="currency-list-option" href="#" data-value="GBP">
-                                            <img
-                                                className="flag"
-                                                src="assets/img/flag/gbp.jpg"
-                                                alt="img"
-                                            />
-                                            <span>GBP</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
                 </div>

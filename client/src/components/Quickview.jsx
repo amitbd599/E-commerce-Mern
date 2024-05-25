@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
+import ProductStore from './../store/ProductStore.js';
 
-const Quickview = ({ show }) => {
+const Quickview = ({ item }) => {
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
 
@@ -38,19 +39,26 @@ const Quickview = ({ show }) => {
     };
 
     const images = [
-        'https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/32.jpg',
-        'https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/36.jpg',
-        'https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/32.jpg',
-        'https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/32.jpg',
-        'https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/32.jpg',
-        'https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/32.jpg',
+        item?.img1,
+        item?.img2,
+        item?.img3,
+        item?.img4,
+        item?.img5,
+        item?.img6,
+        item?.img7,
+        item?.img8,
+     
 
     ];
+
+    // Data Fetching
+
+
 
     return (
         <>
             {/* product quickview start */}
-            <div className={`modal fade ${show && "show"}`} tabIndex={-1} id="quickview-modal">
+            <div className={`modal fade `} tabIndex={-1} id="quickview-modal">
                 <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
                         <div className="modal-header border-0">

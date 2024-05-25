@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Announcement from '../components/Announcement'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
@@ -12,8 +12,21 @@ import SingleBanner from '../components/SingleBanner'
 import BlogItemsSlider from '../components/BlogItemsSlider'
 import Brand from '../components/Brand'
 import Footer from '../components/Footer'
+import FeatureStore from '../store/FeatureStore.js'
+import ProductStore from '../store/ProductStore.js'
 
 const Home = () => {
+
+    const {FeatureListRequest}  =  FeatureStore()
+    const {ProductListRequest_Feature}  =  ProductStore()
+
+    useEffect(()=>{
+        (async ()=>{
+           await FeatureListRequest()
+           await ProductListRequest_Feature()
+        })()
+    },[])
+
     return (
         <>
             {/* Announcement */}
