@@ -155,31 +155,31 @@ router.get(
 
 //! Product List By Similar brand routes
 router.get(
-  '/product-list-by-similar-brand/:brandID',
+  '/product-list-by-similar-brand/:brandID/:item/:pageNo',
   ProductController.ProductListBySimilarBrand,
 );
 
 //! Product List By keyword routes
 router.get(
-  '/product-list-by-keyword/:keyword',
+  '/product-list-by-keyword/:keyword/:item/:pageNo',
   ProductController.ProductListByKeyword,
 );
 
 //! Product List By remark routes
 router.get(
-  '/product-list-by-remark/:remark',
+  '/product-list-by-remark/:remark/:item/:pageNo',
   ProductController.ProductListByRemark,
 );
 
 //! Product List By stock routes
 router.get(
-  '/product-list-by-stock/:stock',
+  '/product-list-by-stock/:stock/:item/:pageNo',
   ProductController.ProductListByStock,
 );
 
 //! Product List By color routes
 router.get(
-  '/product-list-by-color/:color',
+  '/product-list-by-color/:color/:item/:pageNo',
   ProductController.ProductListByColor,
 );
 

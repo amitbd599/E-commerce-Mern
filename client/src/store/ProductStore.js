@@ -39,11 +39,11 @@ const ProductStore = create((set)=>({
     }
   },
 
-  RemarkList: [],
-  RemarkListRequest: async(remark)=>{
-    let res = await axios.get(apiUrl + "/product-list-by-remark/"+ remark )
+
+  RemarkListRequest: async(remark,item, pageNo)=>{
+    let res = await axios.get(apiUrl + "/product-list-by-remark/"+ remark + "/" + item + "/" + pageNo)
     if(res?.data?.status=== true){
-      set({RemarkList: res?.data?.data})
+      set({ProductList: res?.data})
     }
   },
 
@@ -57,26 +57,26 @@ const ProductStore = create((set)=>({
   },
 
 
-  SimilarBrandsListRequest: async(id)=>{
-    let res = await axios.get(apiUrl + "/product-list-by-similar-brand/"+ id )
+  SimilarBrandsListRequest: async(id, item, pageNo)=>{
+    let res = await axios.get(apiUrl + "/product-list-by-similar-brand/"+ id + "/" + item + "/" + pageNo)
     if(res?.data?.status=== true){
-      set({ProductList: res?.data?.data})
+      set({ProductList: res?.data})
     }
   },
 
  
-  SimilarStockListRequest: async(bool)=>{
-    let res = await axios.get(apiUrl + "/product-list-by-stock/"+ bool )
+  SimilarStockListRequest: async(bool, item, pageNo)=>{
+    let res = await axios.get(apiUrl + "/product-list-by-stock/"+ bool + "/" + item + "/" + pageNo )
     if(res?.data?.status=== true){
-      set({ProductList: res?.data?.data})
+      set({ProductList: res?.data})
     }
   },
 
 
-  SimilarColorListRequest: async(value)=>{
-    let res = await axios.get(apiUrl + "/product-list-by-color/"+ value )
+  SimilarColorListRequest: async(value, item, pageNo)=>{ 
+    let res = await axios.get(apiUrl + "/product-list-by-color/"+ value + "/" + item + "/" + pageNo )
     if(res?.data?.status=== true){
-      set({ProductList: res?.data?.data})
+      set({ProductList: res?.data})
     }
   },
 

@@ -12,7 +12,6 @@ const Products = () => {
     Products,
     BrandList,
     CategoryList,
-    RemarkList,
     ProductsRequest_Feature,
     ProductListRequest_Feature,
     BrandListRequest,
@@ -41,22 +40,22 @@ const Products = () => {
   };
 
   let brandsReqFun = async (id) => {
-    await SimilarBrandsListRequest(id);
+    await SimilarBrandsListRequest(id, 12, params.pageNo);
   };
 
   let remarkReqFun = async (value) => {
-    await RemarkListRequest(value);
+    await RemarkListRequest(value, 12, params.pageNo);
   };
 
   let stockReqFun = async (value) => {
-    await SimilarStockListRequest(value);
+    await SimilarStockListRequest(value, 12, params.pageNo);
   };
 
   let colorReqFun = async (value) => {
-    await SimilarColorListRequest(value);
+    await SimilarColorListRequest(value, 12, params.pageNo);
   };
 
-  console.log(ProductList);
+  console.log(ProductList?.totalDocuments);
 
   let handelClick = async (id) => {
     await ProductsRequest_Feature(id);
@@ -139,95 +138,8 @@ const Products = () => {
                   All products
                 </h2>
                 <p className="collection-counter text_16 mb-0 ms-2">
-                  (237 items)
+                  ({ProductList?.totalDocuments} items)
                 </p>
-              </div>
-              <div className="filter-sorting">
-                <div className="collection-sorting position-relative d-none d-lg-block">
-                  <div className="sorting-header text_16 d-flex align-items-center justify-content-end">
-                    <span className="sorting-title me-2">Sort by:</span>
-                    <span className="active-sorting">Featured</span>
-                    <span className="sorting-icon">
-                      <svg
-                        className="icon icon-down"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </span>
-                  </div>
-                  <ul className="sorting-lists list-unstyled m-0">
-                    <li>
-                      <a href="#" className="text_14">
-                        Featured
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Best Selling
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Alphabetically, A-Z
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Alphabetically, Z-A
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Price, low to high
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Price, high to low
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Date, old to new
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Date, new to old
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="filter-drawer-trigger mobile-filter d-flex align-items-center d-lg-none">
-                  <span className="mobile-filter-icon me-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="icon icon-filter"
-                    >
-                      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-                    </svg>
-                  </span>
-                  <span className="mobile-filter-heading">
-                    Filter and Sorting
-                  </span>
-                </div>
               </div>
             </div>
             <div className="collection-product-container">
@@ -353,15 +265,15 @@ const Products = () => {
                 ))}
               </div>
             </div>
-            <div className="pagination justify-content-center mt-100">
+            <div className="pagination d-flex justify-content-center mt-100">
               <ReactPaginate
-                className="flex gap-2"
+                className="d-flex"
                 previousLabel="<"
                 nextLabel=">"
-                activeLinkClassName=""
-                pageLinkClassName=""
-                previousLinkClassName=""
-                nextLinkClassName=""
+                activeLinkClassName="active_link"
+                pageLinkClassName="page_link"
+                previousLinkClassName="previous_link"
+                nextLinkClassName="next_link"
                 breakLabel="..."
                 pageCount={TotalData / 12}
                 initialPage={params.pageNo - 1}
@@ -375,83 +287,6 @@ const Products = () => {
           {/* sidebar start */}
           <div className="col-lg-3 col-md-12 col-12">
             <div className="collection-filter filter-drawer">
-              {/* Sort by */}
-              <div className="filter-widget d-lg-none">
-                <div
-                  className="filter-header faq-heading heading_18 d-flex align-items-center justify-content-between border-bottom"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#filter-mobile-sort"
-                >
-                  <span>
-                    <span className="sorting-title me-2">Sort by:</span>
-                    <span className="active-sorting">Featured</span>
-                  </span>
-                  <span className="faq-heading-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#000"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="icon icon-down"
-                    >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </span>
-                </div>
-                <div
-                  id="filter-mobile-sort"
-                  className="accordion-collapse collapse show"
-                >
-                  <ul className="sorting-lists-mobile list-unstyled m-0">
-                    <li>
-                      <a href="#" className="text_14">
-                        Featured
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Best Selling
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Alphabetically, A-Z
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Alphabetically, Z-A
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Price, low to high
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Price, high to low
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Date, old to new
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text_14">
-                        Date, new to old
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
               {/* Categories */}
               <div className="filter-widget">
                 <div

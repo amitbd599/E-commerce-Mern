@@ -142,3 +142,47 @@
 .filter-color .filter-label input:checked + .filter-checkbox:after {
   left: -4px;
 }
+
+.pagination ul {
+list-style: none;
+display: flex;
+gap: 20px;
+}
+
+.pagination ul li a {
+  font-weight: 500;
+  font-size: 20px;
+  color: #000000;
+  line-height: 1;
+  width: 40px;
+  height: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.pagination ul li .previous_link {
+  font-size: 22px;
+
+}
+.pagination ul li .next_link {
+  font-size: 22px;
+
+}
+
+.pagination ul li a:hover {
+  color: var(--secondary-color);
+
+}
+
+.pagination ul li a.active_link {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--secondary-color);
+
+}
