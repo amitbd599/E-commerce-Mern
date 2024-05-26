@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
 import Products from '../components/Products';
 
-const Product = () => {
+const ProductByCategories = () => {
   return (
     <>
       {/* Announcement */}
@@ -16,7 +16,7 @@ const Product = () => {
       <Header />
 
       {/* Breadcrumb */}
-      <Breadcrumb title={'Product all'} />
+      <Breadcrumb title={'Product filter by categories'} />
 
       {/* Products */}
       <Products />
@@ -27,4 +27,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default ProductByCategories;

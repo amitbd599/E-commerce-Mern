@@ -51,7 +51,6 @@ const ProductStore = create((set)=>({
   SimilarCategoryListRequest: async(id, item, pageNo)=>{
     let res = await axios.get(apiUrl + "/product-list-by-similar-category/"+ id + "/" + item + "/" + pageNo)
     if(res?.data?.status=== true){
-      console.log(res?.data);
       set({ProductList: res?.data})
     }
   },

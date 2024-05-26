@@ -4,7 +4,7 @@ import ProductStore from '../store/ProductStore';
 import Slider from 'react-slick';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-const Products = () => {
+const ProductsByCategoryInner = () => {
   const navigate = useNavigate();
   const params = useParams();
   let {
@@ -23,90 +23,54 @@ const Products = () => {
     SimilarColorListRequest,
   } = ProductStore();
 
-  let [title, setTitle] = useState('All Products');
   useEffect(() => {
     (async () => {
-      if (!!params.categoriesID === true) {
-        await SimilarCategoryListRequest(
-          params.categoriesID,
-          12,
-          params.pageNo,
-        );
-      } else if (!!params.brandsID === true) {
-        await SimilarBrandsListRequest(params.brandsID, 12, params.pageNo);
-      } else if (!!params.remark === true) {
-        await RemarkListRequest(params.remark, 12, params.pageNo);
-      } else if (!!params.stock === true) {
-        await RemarkListRequest(params.stock, 12, params.pageNo);
-      } else if (!!params.color === true) {
-        await RemarkListRequest(params.color, 12, params.pageNo);
-      } else {
-        await ProductListRequest_Feature(12, params.pageNo);
-      }
-
+      await ProductListRequest_Feature(12, params.pageNo);
       await BrandListRequest();
       await CategoryListRequest();
     })();
   }, []);
 
-  useEffect(() => {
-    if (!!params.categoriesID === true) {
-      setTitle('Product filter by category');
-    } else if (!!params.brandsID === true) {
-      setTitle('Product filter by brand');
-    } else if (!!params.remark === true) {
-      setTitle('Product filter by remark');
-    } else if (!!params.stock === true) {
-      setTitle('Product filter by stock');
-    } else if (!!params.color === true) {
-      setTitle('Product filter by color');
-    }
-  }, []);
-
   let allProductReqFun = async () => {
-    navigate(`/product-all/1`);
     await ProductListRequest_Feature(12, params.pageNo);
-    setTitle('All products');
+    navigate(`/product-all/1`);
   };
 
   let categoriesReqFun = async (id) => {
     await SimilarCategoryListRequest(id, 12, params.pageNo);
-    navigate(`/product-by-categories/${id}/1`);
-    setTitle('Product filter by category');
+    navigate(`/product-by-categories/1`);
   };
 
   let brandsReqFun = async (id) => {
     await SimilarBrandsListRequest(id, 12, params.pageNo);
-    navigate(`/product-by-brands/${id}/1`);
-    setTitle('Product filter by brand');
+    navigate(`/product-by-brands/1`);
   };
 
   let remarkReqFun = async (value) => {
     await RemarkListRequest(value, 12, params.pageNo);
-    navigate(`/product-by-remark/${value}/1`);
-    setTitle('Product filter by remark');
+    navigate(`/product-by-remark/1`);
   };
 
   let stockReqFun = async (value) => {
     await SimilarStockListRequest(value, 12, params.pageNo);
-    navigate(`/product-by-stock/${value}/1`);
-    setTitle('Product filter by stock');
+    navigate(`/product-by-stock/1`);
   };
 
   let colorReqFun = async (value) => {
     await SimilarColorListRequest(value, 12, params.pageNo);
-    navigate(`/product-by-color/${value}/1`);
-    setTitle('Product filter by color');
+    navigate(`/product-by-color/1`);
   };
+
+  console.log(ProductList?.totalDocuments);
 
   let handelClick = async (id) => {
     await ProductsRequest_Feature(id);
   };
 
   const handelPageClick = async (event) => {
-    // let pageNo = event.selected;
-    // await ProductListRequest_Feature(12, pageNo + 1);
-    // navigate(`/product-all/${pageNo + 1}`);
+    let pageNo = event.selected;
+    await SimilarCategoryListRequest(12, pageNo + 1);
+    navigate(`/product-all/${pageNo + 1}`);
   };
 
   const TotalData = ProductList?.totalDocuments;
@@ -168,7 +132,6 @@ const Products = () => {
 
     return <div>{stars}</div>;
   };
-
   return (
     <div className="collection mt-100">
       <div className="container">
@@ -177,7 +140,9 @@ const Products = () => {
           <div className="col-lg-9 col-md-12 col-12">
             <div className="filter-sort-wrapper d-flex justify-content-between flex-wrap">
               <div className="collection-title-wrap d-flex align-items-end">
-                <h2 className="collection-title heading_24 mb-0">{title}</h2>
+                <h2 className="collection-title heading_24 mb-0">
+                  All products
+                </h2>
                 <p className="collection-counter text_16 mb-0 ms-2">
                   ({ProductList?.totalDocuments} items)
                 </p>
@@ -362,14 +327,12 @@ const Products = () => {
                       <label className="filter-label">
                         <input
                           type="radio"
-                          id="All"
+                          id="all"
                           name="Filter"
-                          value="30"
-                          checked={!!params.categoriesID === false && true}
-                          onClick={allProductReqFun}
+                          onChange={() => allProductReqFun()}
                         />
                         <span className="filter-checkbox rounded me-2" />
-                        <span className="filter-text">All Category</span>
+                        <span className="filter-text">All Categories</span>
                       </label>
                     </li>
                     {CategoryList.slice(0, 10).map((item, index) => (
@@ -380,7 +343,6 @@ const Products = () => {
                             id={`index${index}`}
                             name="Filter"
                             value={item?._id}
-                            checked={params.categoriesID === item?._id && true}
                             onChange={() => categoriesReqFun(item?._id)}
                           />
                           <span className="filter-checkbox rounded me-2" />
@@ -424,6 +386,20 @@ const Products = () => {
                   className="accordion-collapse collapse show"
                 >
                   <ul className="filter-lists list-unstyled mb-0">
+                    <li className="filter-item">
+                      <label className="filter-label">
+                        <input
+                          type="radio"
+                          id="All"
+                          name="Filter"
+                          value="30"
+                          onChange={() => allProductReqFun()}
+                        />
+                        <span className="filter-checkbox rounded me-2" />
+                        <span className="filter-text">All Brands</span>
+                      </label>
+                    </li>
+
                     {BrandList.slice(0, 10).map((item, index) => (
                       <li className="filter-item" key={index}>
                         <label className="filter-label">
@@ -433,7 +409,6 @@ const Products = () => {
                             name="Filter"
                             value={item?._id}
                             onChange={() => brandsReqFun(item?._id)}
-                            checked={params.brandsID === item?._id && true}
                           />
                           <span className="filter-checkbox rounded me-2" />
                           <span className="filter-text">{item?.brandName}</span>
@@ -482,7 +457,6 @@ const Products = () => {
                           name="Filter"
                           value="new"
                           onChange={() => remarkReqFun('new')}
-                          checked={params.remark === 'new' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                         <span className="filter-text">New</span>
@@ -496,7 +470,6 @@ const Products = () => {
                           name="Filter"
                           value="old"
                           onChange={() => remarkReqFun('old')}
-                          checked={params.remark === 'old' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                         <span className="filter-text">Old</span>
@@ -544,7 +517,6 @@ const Products = () => {
                           name="Filter"
                           value="true"
                           onChange={() => stockReqFun('true')}
-                          checked={params.stock === 'true' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                         <span className="filter-text">In Stock</span>
@@ -558,7 +530,6 @@ const Products = () => {
                           name="Filter"
                           value="false"
                           onChange={() => stockReqFun('false')}
-                          checked={params.stock === 'false' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                         Out of Stock
@@ -606,7 +577,6 @@ const Products = () => {
                           name="Filter"
                           value="blue"
                           onChange={() => colorReqFun('blue')}
-                          checked={params.color === 'blue' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -619,7 +589,6 @@ const Products = () => {
                           name="Filter"
                           value="red"
                           onChange={() => colorReqFun('red')}
-                          checked={params.color === 'red' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -632,7 +601,6 @@ const Products = () => {
                           name="Filter"
                           value="green"
                           onChange={() => colorReqFun('green')}
-                          checked={params.color === 'green' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -645,7 +613,6 @@ const Products = () => {
                           name="Filter"
                           value="purple"
                           onChange={() => colorReqFun('purple')}
-                          checked={params.color === 'purple' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -658,7 +625,6 @@ const Products = () => {
                           name="Filter"
                           value="gold"
                           onChange={() => colorReqFun('gold')}
-                          checked={params.color === 'gold' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -671,7 +637,6 @@ const Products = () => {
                           name="Filter"
                           value="pink"
                           onChange={() => colorReqFun('pink')}
-                          checked={params.color === 'pink' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -684,7 +649,6 @@ const Products = () => {
                           name="Filter"
                           value="orange"
                           onChange={() => colorReqFun('orange')}
-                          checked={params.color === 'orange' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -697,7 +661,6 @@ const Products = () => {
                           name="Filter"
                           value="aqua"
                           onChange={() => colorReqFun('aqua')}
-                          checked={params.color === 'aqua' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -710,7 +673,6 @@ const Products = () => {
                           name="Filter"
                           value="brown"
                           onChange={() => colorReqFun('brown')}
-                          checked={params.color === 'brown' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -723,7 +685,6 @@ const Products = () => {
                           name="Filter"
                           value="bisque"
                           onChange={() => colorReqFun('bisque')}
-                          checked={params.color === 'bisque' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -736,7 +697,6 @@ const Products = () => {
                           name="Filter"
                           value="grey"
                           onChange={() => colorReqFun('grey')}
-                          checked={params.color === 'grey' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                       </label>
@@ -916,4 +876,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductsByCategoryInner;

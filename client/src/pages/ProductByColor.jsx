@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Announcement from '../components/Announcement';
 import Header from '../components/Header';
 
@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
 import Products from '../components/Products';
 
-const Product = () => {
+const ProductByColor = () => {
   return (
     <>
       {/* Announcement */}
@@ -16,7 +16,7 @@ const Product = () => {
       <Header />
 
       {/* Breadcrumb */}
-      <Breadcrumb title={'Product all'} />
+      <Breadcrumb title={'Product filter by color'} />
 
       {/* Products */}
       <Products />
@@ -27,4 +27,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default ProductByColor;

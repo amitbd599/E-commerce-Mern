@@ -35,7 +35,12 @@ function App() {
         <Route exact path='/cart' element={<Cart />} />
         <Route exact path='/checkout' element={<Checkout />} />
         <Route exact path='/faq' element={<Faq />} />
-        <Route exact path='/product/:cat/:pageNo' element={<Product />} />
+        <Route exact path='/product-all/:pageNo' element={<Product />} />
+        <Route exact path='/product-by-categories/:categoriesID/:pageNo' element={<Product />} />
+        <Route exact path='/product-by-brands/:brandsID/:pageNo' element={<Product />} />
+        <Route exact path='/product-by-remark/:remark/:pageNo' element={<Product />} />
+        <Route exact path='/product-by-stock/:stock/:pageNo' element={<Product />} />
+        <Route exact path='/product-by-color/:color/:pageNo' element={<Product />} />
         <Route exact path='/product-details/:id' element={<ProductDetails />} />
         <Route exact path='/wishlist' element={<Wishlist />} />
         <Route exact path='/contact' element={<Contact />} />
