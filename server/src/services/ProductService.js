@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const BrandModel = require('../models/BrandModel');
-const CategoryModel = require('../models/CategoryModel');
-const ProductSliderModel = require('../models/ProductSliderModel');
-const ProductModel = require('../models/ProductModel');
-const ReviewModel = require('../models/ReviewModel');
+const mongoose = require("mongoose");
+const BrandModel = require("../models/BrandModel");
+const CategoryModel = require("../models/CategoryModel");
+const ProductSliderModel = require("../models/ProductSliderModel");
+const ProductModel = require("../models/ProductModel");
+const ReviewModel = require("../models/ReviewModel");
 const ObjectId = mongoose.Types.ObjectId;
 
 //! ProductService
@@ -23,7 +23,7 @@ const ReadProductService = async (req) => {
     const pageNo = parseInt(req.params.pageNo); // Current page number
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -31,25 +31,25 @@ const ReadProductService = async (req) => {
     const aggregatePipeline = [
       {
         $lookup: {
-          from: 'brands', // Name of the brand collection
-          localField: 'brandID',
-          foreignField: '_id',
-          as: 'brandDetails',
+          from: "brands", // Name of the brand collection
+          localField: "brandID",
+          foreignField: "_id",
+          as: "brandDetails",
         },
       },
       {
-        $unwind: '$brandDetails', // Unwind the brand details to merge the fields
+        $unwind: "$brandDetails", // Unwind the brand details to merge the fields
       },
       {
         $lookup: {
-          from: 'catagories', // Name of the brand collection
-          localField: 'categoryID',
-          foreignField: '_id',
-          as: 'catagoriesDetails',
+          from: "catagories", // Name of the brand collection
+          localField: "categoryID",
+          foreignField: "_id",
+          as: "catagoriesDetails",
         },
       },
       {
-        $unwind: '$catagoriesDetails', // Unwind the brand details to merge the fields
+        $unwind: "$catagoriesDetails", // Unwind the brand details to merge the fields
       },
       {
         $facet: {
@@ -81,20 +81,20 @@ const ReadProductService = async (req) => {
                 size: 1,
                 categoryID: 1,
                 brandID: 1,
-                'brandDetails.brandName': 1,
-                'catagoriesDetails.categoryName': 1,
+                "brandDetails.brandName": 1,
+                "catagoriesDetails.categoryName": 1,
                 createdAt: 1,
                 updatedAt: 1,
               },
             },
           ],
-          totalCount: [{ $count: 'count' }],
+          totalCount: [{ $count: "count" }],
         },
       },
       {
         $project: {
           data: 1,
-          totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+          totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
         },
       },
     ];
@@ -143,32 +143,32 @@ const ProductDetailsService = async (req) => {
 
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brand',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
       },
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'category',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
       },
     };
 
-    let UnwindBrandStage = { $unwind: '$brand' };
-    let UnwindCategoryStage = { $unwind: '$category' };
+    let UnwindBrandStage = { $unwind: "$brand" };
+    let UnwindCategoryStage = { $unwind: "$category" };
 
     let projectionStage = {
       $project: {
-        'brand._id': 0,
-        'category._id': 0,
-        'category.createdAt': 0,
-        'category.updatedAt': 0,
-        'brand.createdAt': 0,
-        'brand.updatedAt': 0,
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
         categoryID: 0,
         brandID: 0,
         createdAt: 0,
@@ -239,37 +239,37 @@ const ProductListByBrandService = async (req) => {
     };
     let JoinWithBrandStage = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brand',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
       },
     };
     let JoinWithCategoryStage = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'category',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
       },
     };
 
     let UnwindBrandStage = {
-      $unwind: '$brand',
+      $unwind: "$brand",
     };
 
     let UnwindCategoryStage = {
-      $unwind: '$category',
+      $unwind: "$category",
     };
 
     let projectionStage = {
       $project: {
-        'brand._id': 0,
-        'category._id': 0,
-        'category.createdAt': 0,
-        'category.updatedAt': 0,
-        'brand.createdAt': 0,
-        'brand.updatedAt': 0,
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
         categoryID: 0,
         brandID: 0,
         createdAt: 0,
@@ -339,37 +339,37 @@ const ProductListByCategoryService = async (req) => {
     };
     let JoinWithBrandStage = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brand',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
       },
     };
     let JoinWithCategoryStage = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'category',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
       },
     };
 
     let UnwindBrandStage = {
-      $unwind: '$brand',
+      $unwind: "$brand",
     };
 
     let UnwindCategoryStage = {
-      $unwind: '$category',
+      $unwind: "$category",
     };
 
     let projectionStage = {
       $project: {
-        'brand._id': 0,
-        'category._id': 0,
-        'category.createdAt': 0,
-        'category.updatedAt': 0,
-        'brand.createdAt': 0,
-        'brand.updatedAt': 0,
+        "brand._id": 0,
+        "category._id": 0,
+        "category.createdAt": 0,
+        "category.updatedAt": 0,
+        "brand.createdAt": 0,
+        "brand.updatedAt": 0,
         categoryID: 0,
         brandID: 0,
         createdAt: 0,
@@ -439,7 +439,7 @@ const ProductListBySimilarCategoryService = async (req) => {
     const pageNo = parseInt(req.params.pageNo);
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -447,26 +447,26 @@ const ProductListBySimilarCategoryService = async (req) => {
     let MatchingStage = { $match: { categoryID: categoryID } };
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brandDetails',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brandDetails",
       },
     };
     let UnwindBrand = {
-      $unwind: '$brandDetails',
+      $unwind: "$brandDetails",
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'catagoriesDetails',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "catagoriesDetails",
       },
     };
 
     let UnwindCategory = {
-      $unwind: '$catagoriesDetails',
+      $unwind: "$catagoriesDetails",
     };
 
     let data = {
@@ -499,21 +499,21 @@ const ProductListBySimilarCategoryService = async (req) => {
               size: 1,
               categoryID: 1,
               brandID: 1,
-              'brandDetails.brandName': 1,
-              'catagoriesDetails.categoryName': 1,
+              "brandDetails.brandName": 1,
+              "catagoriesDetails.categoryName": 1,
               createdAt: 1,
               updatedAt: 1,
             },
           },
         ],
-        totalCount: [{ $count: 'count' }],
+        totalCount: [{ $count: "count" }],
       },
     };
 
     let project = {
       $project: {
         data: 1,
-        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
       },
     };
 
@@ -550,7 +550,7 @@ const ProductListBySimilarBrandService = async (req) => {
     const pageNo = parseInt(req.params.pageNo);
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -558,26 +558,26 @@ const ProductListBySimilarBrandService = async (req) => {
     let MatchingStage = { $match: { brandID: brandID } };
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brandDetails',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brandDetails",
       },
     };
     let UnwindBrand = {
-      $unwind: '$brandDetails',
+      $unwind: "$brandDetails",
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'catagoriesDetails',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "catagoriesDetails",
       },
     };
 
     let UnwindCategory = {
-      $unwind: '$catagoriesDetails',
+      $unwind: "$catagoriesDetails",
     };
 
     let data = {
@@ -610,21 +610,21 @@ const ProductListBySimilarBrandService = async (req) => {
               size: 1,
               categoryID: 1,
               brandID: 1,
-              'brandDetails.brandName': 1,
-              'catagoriesDetails.categoryName': 1,
+              "brandDetails.brandName": 1,
+              "catagoriesDetails.categoryName": 1,
               createdAt: 1,
               updatedAt: 1,
             },
           },
         ],
-        totalCount: [{ $count: 'count' }],
+        totalCount: [{ $count: "count" }],
       },
     };
 
     let project = {
       $project: {
         data: 1,
-        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
       },
     };
 
@@ -661,7 +661,7 @@ const ProductListByKeywordService = async (req) => {
     const pageNo = parseInt(req.params.pageNo);
     let SearchRegex = {
       $regex: keyword,
-      $options: 'i',
+      $options: "i",
     };
     let SearchParams = [
       { title: SearchRegex },
@@ -677,7 +677,7 @@ const ProductListByKeywordService = async (req) => {
     };
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -685,26 +685,26 @@ const ProductListByKeywordService = async (req) => {
     let MatchingStage = { $match: SearchStage };
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brandDetails',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brandDetails",
       },
     };
     let UnwindBrand = {
-      $unwind: '$brandDetails',
+      $unwind: "$brandDetails",
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'catagoriesDetails',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "catagoriesDetails",
       },
     };
 
     let UnwindCategory = {
-      $unwind: '$catagoriesDetails',
+      $unwind: "$catagoriesDetails",
     };
 
     let data = {
@@ -737,21 +737,21 @@ const ProductListByKeywordService = async (req) => {
               size: 1,
               categoryID: 1,
               brandID: 1,
-              'brandDetails.brandName': 1,
-              'catagoriesDetails.categoryName': 1,
+              "brandDetails.brandName": 1,
+              "catagoriesDetails.categoryName": 1,
               createdAt: 1,
               updatedAt: 1,
             },
           },
         ],
-        totalCount: [{ $count: 'count' }],
+        totalCount: [{ $count: "count" }],
       },
     };
 
     let project = {
       $project: {
         data: 1,
-        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
       },
     };
 
@@ -788,7 +788,7 @@ const ProductListByRemarkService = async (req) => {
     const pageNo = parseInt(req.params.pageNo);
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -796,26 +796,26 @@ const ProductListByRemarkService = async (req) => {
     let MatchingStage = { $match: { remark: remark } };
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brandDetails',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brandDetails",
       },
     };
     let UnwindBrand = {
-      $unwind: '$brandDetails',
+      $unwind: "$brandDetails",
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'catagoriesDetails',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "catagoriesDetails",
       },
     };
 
     let UnwindCategory = {
-      $unwind: '$catagoriesDetails',
+      $unwind: "$catagoriesDetails",
     };
 
     let data = {
@@ -848,21 +848,21 @@ const ProductListByRemarkService = async (req) => {
               size: 1,
               categoryID: 1,
               brandID: 1,
-              'brandDetails.brandName': 1,
-              'catagoriesDetails.categoryName': 1,
+              "brandDetails.brandName": 1,
+              "catagoriesDetails.categoryName": 1,
               createdAt: 1,
               updatedAt: 1,
             },
           },
         ],
-        totalCount: [{ $count: 'count' }],
+        totalCount: [{ $count: "count" }],
       },
     };
 
     let project = {
       $project: {
         data: 1,
-        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
       },
     };
 
@@ -899,7 +899,7 @@ const ProductListByStockService = async (req) => {
     const pageNo = parseInt(req.params.pageNo);
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -907,26 +907,26 @@ const ProductListByStockService = async (req) => {
     let MatchingStage = { $match: { stock: JSON.parse(stock.toLowerCase()) } };
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brandDetails',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brandDetails",
       },
     };
     let UnwindBrand = {
-      $unwind: '$brandDetails',
+      $unwind: "$brandDetails",
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'catagoriesDetails',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "catagoriesDetails",
       },
     };
 
     let UnwindCategory = {
-      $unwind: '$catagoriesDetails',
+      $unwind: "$catagoriesDetails",
     };
 
     let data = {
@@ -959,21 +959,21 @@ const ProductListByStockService = async (req) => {
               size: 1,
               categoryID: 1,
               brandID: 1,
-              'brandDetails.brandName': 1,
-              'catagoriesDetails.categoryName': 1,
+              "brandDetails.brandName": 1,
+              "catagoriesDetails.categoryName": 1,
               createdAt: 1,
               updatedAt: 1,
             },
           },
         ],
-        totalCount: [{ $count: 'count' }],
+        totalCount: [{ $count: "count" }],
       },
     };
 
     let project = {
       $project: {
         data: 1,
-        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
       },
     };
 
@@ -1065,7 +1065,7 @@ const ProductListByColorService = async (req) => {
     const pageNo = parseInt(req.params.pageNo);
 
     if (isNaN(limit) || isNaN(pageNo)) {
-      return res.status(400).json({ message: 'Invalid parameters' });
+      return res.status(400).json({ message: "Invalid parameters" });
     }
 
     const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
@@ -1073,26 +1073,26 @@ const ProductListByColorService = async (req) => {
     let MatchingStage = { $match: { color: color } };
     let JoinWithBrand = {
       $lookup: {
-        from: 'brands',
-        localField: 'brandID',
-        foreignField: '_id',
-        as: 'brandDetails',
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brandDetails",
       },
     };
     let UnwindBrand = {
-      $unwind: '$brandDetails',
+      $unwind: "$brandDetails",
     };
     let JoinWithCategory = {
       $lookup: {
-        from: 'catagories',
-        localField: 'categoryID',
-        foreignField: '_id',
-        as: 'catagoriesDetails',
+        from: "catagories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "catagoriesDetails",
       },
     };
 
     let UnwindCategory = {
-      $unwind: '$catagoriesDetails',
+      $unwind: "$catagoriesDetails",
     };
 
     let data = {
@@ -1125,21 +1125,21 @@ const ProductListByColorService = async (req) => {
               size: 1,
               categoryID: 1,
               brandID: 1,
-              'brandDetails.brandName': 1,
-              'catagoriesDetails.categoryName': 1,
+              "brandDetails.brandName": 1,
+              "catagoriesDetails.categoryName": 1,
               createdAt: 1,
               updatedAt: 1,
             },
           },
         ],
-        totalCount: [{ $count: 'count' }],
+        totalCount: [{ $count: "count" }],
       },
     };
 
     let project = {
       $project: {
         data: 1,
-        totalCount: { $arrayElemAt: ['$totalCount.count', 0] },
+        totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
       },
     };
 
@@ -1175,22 +1175,23 @@ const ReadSingleReviewService = async (req) => {
     let MatchStage = { $match: { productID: productID } };
     let JoinWithProfileStage = {
       $lookup: {
-        from: 'profiles',
-        localField: 'userID',
-        foreignField: 'userID',
-        as: 'profiles',
+        from: "profiles",
+        localField: "userID",
+        foreignField: "userID",
+        as: "profiles",
       },
     };
 
     let UnwindProfileStage = {
-      $unwind: '$profiles',
+      $unwind: "$profiles",
     };
 
     let projectionStage = {
       $project: {
         des: 1,
         rating: 1,
-        'profiles.cus_name': 1,
+        createdAt: 1,
+        "profiles.cus_name": 1,
         _id: 0,
       },
     };

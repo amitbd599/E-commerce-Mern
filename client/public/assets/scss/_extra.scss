@@ -134,7 +134,6 @@
   color: var(--secondary-color);
 }
 
-
 .filter-label input[type="radio" i] {
   visibility: hidden;
 }
@@ -144,9 +143,9 @@
 }
 
 .pagination ul {
-list-style: none;
-display: flex;
-gap: 20px;
+  list-style: none;
+  display: flex;
+  gap: 20px;
 }
 
 .pagination ul li a {
@@ -168,21 +167,117 @@ gap: 20px;
 }
 .pagination ul li .previous_link {
   font-size: 22px;
-
 }
 .pagination ul li .next_link {
   font-size: 22px;
-
 }
 
 .pagination ul li a:hover {
   color: var(--secondary-color);
-
 }
 
 .pagination ul li a.active_link {
   font-weight: 500;
   font-size: 18px;
   color: var(--secondary-color);
+}
 
+.brands_collection {
+  margin-top: 100px;
+  .wrap {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    .item {
+      background: #fff4f6;
+      padding: 30px;
+      border-radius: 10px;
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+.item_nav__menu {
+  margin-top: 20px;
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    li {
+      button {
+        padding: 12px 24px;
+        border-radius: 10px;
+        background: var(--primary-color);
+        color: #fff;
+        transition: all 0.3s linear;
+        &.active {
+          background: var(--secondary-color);
+        }
+      }
+    }
+  }
+}
+
+.banner {
+  margin-top: 80px;
+}
+
+.review {
+  border: 1px solid #ddd;
+  padding: 40px 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 30px;
+    .inner__review {
+      display: flex;
+      align-items: start;
+      gap: 20px;
+    }
+    .inner__text {
+      h3 {
+        font-size: 22px;
+      }
+      .review__star {
+        display: flex;
+        justify-content: space-between;
+        .star {
+          display: flex;
+          gap: 6px;
+          svg {
+            font-size: 20px;
+            color: #efce4a;
+          }
+        }
+      }
+      .time {
+        font-size: 14px;
+        color: #a3a3a3;
+      }
+      .review__text {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.logout_btn {
+  background: transparent;
 }

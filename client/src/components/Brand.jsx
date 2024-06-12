@@ -18,18 +18,20 @@ const Brand = () => {
           <div className="container">
             <div className="brand-logo-container overflow-hidden">
               <div className="scroll-horizontal row align-items-center flex-nowrap">
-                {BrandList.slice(0, 6).map((item, index) => (
-                  <div
-                    key={index}
-                    className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6"
-                    data-aos="fade-up"
-                    data-aos-duration={700}
-                  >
-                    <span className="brand-logo d-flex align-items-center justify-content-center">
-                      <img src={item?.brandImg} alt="img" />
-                    </span>
-                  </div>
-                ))}
+                {BrandList !== null
+                  ? BrandList.slice(0, 6).map((item, index) => (
+                      <div
+                        key={index}
+                        className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6"
+                        data-aos="fade-up"
+                        data-aos-duration={700}
+                      >
+                        <span className="brand-logo d-flex align-items-center justify-content-center">
+                          <img src={item?.brandImg} alt="img" />
+                        </span>
+                      </div>
+                    ))
+                  : 'No brand product available.'}
               </div>
             </div>
           </div>

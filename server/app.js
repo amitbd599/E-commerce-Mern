@@ -28,11 +28,16 @@ mongoose
   });
 
 app.use(cookieParser());
-app.use(cors());
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.Origin_HOST,
+  })
+);
 
 app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -23,7 +23,7 @@ const Header = () => {
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
-                            navData.isActive ? 'nav-link active' : 'nav-link'
+                            navData.isActive ? "nav-link active" : "nav-link"
                           }
                           to="/"
                         >
@@ -35,7 +35,7 @@ const Header = () => {
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
-                            navData.isActive ? 'nav-link active' : 'nav-link'
+                            navData.isActive ? "nav-link active" : "nav-link"
                           }
                           to="/about"
                         >
@@ -47,7 +47,7 @@ const Header = () => {
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
-                            navData.isActive ? 'nav-link active' : 'nav-link'
+                            navData.isActive ? "nav-link active" : "nav-link"
                           }
                           to="/blog"
                         >
@@ -59,7 +59,7 @@ const Header = () => {
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
-                            navData.isActive ? 'nav-link active' : 'nav-link'
+                            navData.isActive ? "nav-link active" : "nav-link"
                           }
                           to="/faq"
                         >
@@ -71,9 +71,9 @@ const Header = () => {
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
-                            navData.isActive ? 'nav-link active' : 'nav-link'
+                            navData.isActive ? "nav-link active" : "nav-link"
                           }
-                          to="/product/all"
+                          to="/product-all/1"
                         >
                           Collection
                         </NavLink>
@@ -83,7 +83,7 @@ const Header = () => {
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
-                            navData.isActive ? 'nav-link active' : 'nav-link'
+                            navData.isActive ? "nav-link active" : "nav-link"
                           }
                           to="/contact"
                         >
@@ -185,7 +185,7 @@ const Header = () => {
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
-                        navData.isActive ? 'nav-link active' : 'nav-link'
+                        navData.isActive ? "nav-link active" : "nav-link"
                       }
                       to="/"
                     >
@@ -197,7 +197,7 @@ const Header = () => {
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
-                        navData.isActive ? 'nav-link active' : 'nav-link'
+                        navData.isActive ? "nav-link active" : "nav-link"
                       }
                       to="/about"
                     >
@@ -209,7 +209,7 @@ const Header = () => {
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
-                        navData.isActive ? 'nav-link active' : 'nav-link'
+                        navData.isActive ? "nav-link active" : "nav-link"
                       }
                       to="/blog"
                     >
@@ -221,7 +221,7 @@ const Header = () => {
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
-                        navData.isActive ? 'nav-link active' : 'nav-link'
+                        navData.isActive ? "nav-link active" : "nav-link"
                       }
                       to="/faq"
                     >
@@ -233,7 +233,7 @@ const Header = () => {
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
-                        navData.isActive ? 'nav-link active' : 'nav-link'
+                        navData.isActive ? "nav-link active" : "nav-link"
                       }
                       to="/product/all"
                     >
@@ -245,7 +245,7 @@ const Header = () => {
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
-                        navData.isActive ? 'nav-link active' : 'nav-link'
+                        navData.isActive ? "nav-link active" : "nav-link"
                       }
                       to="/contact"
                     >

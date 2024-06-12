@@ -4,6 +4,8 @@ import ProductStore from '../store/ProductStore';
 import Slider from 'react-slick';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import ImgSkeleton from '../skeleton/ImgSkeleton';
+import SkeletonBar from '../skeleton/SkeletonBar';
 const Products = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -104,9 +106,27 @@ const Products = () => {
   };
 
   const handelPageClick = async (event) => {
-    // let pageNo = event.selected;
-    // await ProductListRequest_Feature(12, pageNo + 1);
-    // navigate(`/product-all/${pageNo + 1}`);
+    let pageNo = event.selected;
+
+    if (!!params.categoriesID === true) {
+      await SimilarCategoryListRequest(params.categoriesID, 12, pageNo + 1);
+      navigate(`/product-by-categories/${params.categoriesID}/${pageNo + 1}`);
+    } else if (!!params.brandsID === true) {
+      await SimilarBrandsListRequest(params.brandsID, 12, pageNo + 1);
+      navigate(`/product-by-brands/${params.brandsID}/${pageNo + 1}`);
+    } else if (!!params.remark === true) {
+      await RemarkListRequest(params.remark, 12, pageNo + 1);
+      navigate(`/product-by-remark/${params.remark}/${pageNo + 1}`);
+    } else if (!!params.stock === true) {
+      await RemarkListRequest(params.stock, 12, pageNo + 1);
+      navigate(`/product-by-stock/${params.stock}/${pageNo + 1}`);
+    } else if (!!params.color === true) {
+      await RemarkListRequest(params.color, 12, pageNo + 1);
+      navigate(`/product-by-color/${params.color}/${pageNo + 1}`);
+    } else {
+      await ProductListRequest_Feature(12, pageNo + 1);
+      navigate(`/product-all/${pageNo + 1}`);
+    }
   };
 
   const TotalData = ProductList?.totalDocuments;
@@ -185,144 +205,166 @@ const Products = () => {
             </div>
             <div className="collection-product-container">
               <div className="row">
-                {ProductList?.products?.slice(0, 12).map((item, index) => (
-                  <div
-                    key={index}
-                    className="col-lg-3 col-md-6 col-6"
-                    data-aos="fade-up"
-                    data-aos-duration={700}
-                  >
-                    <div className="product-card">
-                      <div className="product-card-img">
-                        <a
-                          className="hover-switch"
-                          href="collection-left-sidebar.html"
-                        >
-                          <img
-                            className="secondary-img"
-                            src={item?.img1}
-                            alt="product-img"
-                          />
-                          <img
-                            className="primary-img"
-                            src={item?.img2}
-                            alt="product-img"
-                          />
-                        </a>
-                        <div className="product-badge">
-                          <span className="badge-label badge-percentage rounded">
-                            {item?.brandDetails?.brandName}
-                          </span>
-                        </div>
-                        <div className="product-card-action product-card-action-2 justify-content-center">
-                          <Link
-                            onClick={() => handelClick(item?._id)}
-                            to="#quickview-modal"
-                            className="action-card action-quickview"
-                            data-bs-toggle="modal"
-                          >
-                            <svg
-                              width={26}
-                              height={26}
-                              viewBox="0 0 26 26"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                {ProductList !== null
+                  ? ProductList?.products?.map((item, index) => (
+                      <div
+                        key={index}
+                        className="col-lg-3 col-md-6 col-6"
+                        data-aos="fade-up"
+                        data-aos-duration={700}
+                      >
+                        <div className="product-card">
+                          <div className="product-card-img">
+                            <a
+                              className="hover-switch"
+                              href="collection-left-sidebar.html"
                             >
-                              <path
-                                d="M10 0C15.5117 0 20 4.48828 20 10C20 12.3945 19.1602 14.5898 17.75 16.3125L25.7188 24.2812L24.2812 25.7188L16.3125 17.75C14.5898 19.1602 12.3945 20 10 20C4.48828 20 0 15.5117 0 10C0 4.48828 4.48828 0 10 0ZM10 2C5.57031 2 2 5.57031 2 10C2 14.4297 5.57031 18 10 18C14.4297 18 18 14.4297 18 10C18 5.57031 14.4297 2 10 2ZM11 6V9H14V11H11V14H9V11H6V9H9V6H11Z"
-                                fill="#00234D"
+                              <img
+                                className="secondary-img"
+                                src={item?.img1}
+                                alt="product-img"
                               />
-                            </svg>
-                          </Link>
-                          <Link to="#" className="action-card action-wishlist">
-                            <svg
-                              className="icon icon-wishlist"
-                              width={26}
-                              height={22}
-                              viewBox="0 0 26 22"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M6.96429 0.000183105C3.12305 0.000183105 0 3.10686 0 6.84843C0 8.15388 0.602121 9.28455 1.16071 10.1014C1.71931 10.9181 2.29241 11.4425 2.29241 11.4425L12.3326 21.3439L13 22.0002L13.6674 21.3439L23.7076 11.4425C23.7076 11.4425 26 9.45576 26 6.84843C26 3.10686 22.877 0.000183105 19.0357 0.000183105C15.8474 0.000183105 13.7944 1.88702 13 2.68241C12.2056 1.88702 10.1526 0.000183105 6.96429 0.000183105ZM6.96429 1.82638C9.73912 1.82638 12.3036 4.48008 12.3036 4.48008L13 5.25051L13.6964 4.48008C13.6964 4.48008 16.2609 1.82638 19.0357 1.82638C21.8613 1.82638 24.1429 4.10557 24.1429 6.84843C24.1429 8.25732 22.4018 10.1584 22.4018 10.1584L13 19.4036L3.59821 10.1584C3.59821 10.1584 3.14844 9.73397 2.69866 9.07411C2.24888 8.41426 1.85714 7.55466 1.85714 6.84843C1.85714 4.10557 4.13867 1.82638 6.96429 1.82638Z"
-                                fill="#00234D"
+                              <img
+                                className="primary-img"
+                                src={item?.img2}
+                                alt="product-img"
                               />
-                            </svg>
-                          </Link>
-                          <Link to="#" className="action-card action-addtocart">
-                            <svg
-                              className="icon icon-cart"
-                              width={24}
-                              height={26}
-                              viewBox="0 0 24 26"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M12 0.000183105C9.25391 0.000183105 7 2.25409 7 5.00018V6.00018H2.0625L2 6.93768L1 24.9377L0.9375 26.0002H23.0625L23 24.9377L22 6.93768L21.9375 6.00018H17V5.00018C17 2.25409 14.7461 0.000183105 12 0.000183105ZM12 2.00018C13.6562 2.00018 15 3.34393 15 5.00018V6.00018H9V5.00018C9 3.34393 10.3438 2.00018 12 2.00018ZM3.9375 8.00018H7V11.0002H9V8.00018H15V11.0002H17V8.00018H20.0625L20.9375 24.0002H3.0625L3.9375 8.00018Z"
-                                fill="#00234D"
-                              />
-                            </svg>
-                          </Link>
+                            </a>
+                            <div className="product-badge">
+                              <span className="badge-label badge-percentage rounded">
+                                {item?.brandDetails?.brandName}
+                              </span>
+                            </div>
+                            <div className="product-card-action product-card-action-2 justify-content-center">
+                              <Link
+                                onClick={() => handelClick(item?._id)}
+                                to="#quickview-modal"
+                                className="action-card action-quickview"
+                                data-bs-toggle="modal"
+                              >
+                                <svg
+                                  width={26}
+                                  height={26}
+                                  viewBox="0 0 26 26"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M10 0C15.5117 0 20 4.48828 20 10C20 12.3945 19.1602 14.5898 17.75 16.3125L25.7188 24.2812L24.2812 25.7188L16.3125 17.75C14.5898 19.1602 12.3945 20 10 20C4.48828 20 0 15.5117 0 10C0 4.48828 4.48828 0 10 0ZM10 2C5.57031 2 2 5.57031 2 10C2 14.4297 5.57031 18 10 18C14.4297 18 18 14.4297 18 10C18 5.57031 14.4297 2 10 2ZM11 6V9H14V11H11V14H9V11H6V9H9V6H11Z"
+                                    fill="#00234D"
+                                  />
+                                </svg>
+                              </Link>
+                              <Link
+                                to="#"
+                                className="action-card action-wishlist"
+                              >
+                                <svg
+                                  className="icon icon-wishlist"
+                                  width={26}
+                                  height={22}
+                                  viewBox="0 0 26 22"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M6.96429 0.000183105C3.12305 0.000183105 0 3.10686 0 6.84843C0 8.15388 0.602121 9.28455 1.16071 10.1014C1.71931 10.9181 2.29241 11.4425 2.29241 11.4425L12.3326 21.3439L13 22.0002L13.6674 21.3439L23.7076 11.4425C23.7076 11.4425 26 9.45576 26 6.84843C26 3.10686 22.877 0.000183105 19.0357 0.000183105C15.8474 0.000183105 13.7944 1.88702 13 2.68241C12.2056 1.88702 10.1526 0.000183105 6.96429 0.000183105ZM6.96429 1.82638C9.73912 1.82638 12.3036 4.48008 12.3036 4.48008L13 5.25051L13.6964 4.48008C13.6964 4.48008 16.2609 1.82638 19.0357 1.82638C21.8613 1.82638 24.1429 4.10557 24.1429 6.84843C24.1429 8.25732 22.4018 10.1584 22.4018 10.1584L13 19.4036L3.59821 10.1584C3.59821 10.1584 3.14844 9.73397 2.69866 9.07411C2.24888 8.41426 1.85714 7.55466 1.85714 6.84843C1.85714 4.10557 4.13867 1.82638 6.96429 1.82638Z"
+                                    fill="#00234D"
+                                  />
+                                </svg>
+                              </Link>
+                              <Link
+                                to="#"
+                                className="action-card action-addtocart"
+                              >
+                                <svg
+                                  className="icon icon-cart"
+                                  width={24}
+                                  height={26}
+                                  viewBox="0 0 24 26"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M12 0.000183105C9.25391 0.000183105 7 2.25409 7 5.00018V6.00018H2.0625L2 6.93768L1 24.9377L0.9375 26.0002H23.0625L23 24.9377L22 6.93768L21.9375 6.00018H17V5.00018C17 2.25409 14.7461 0.000183105 12 0.000183105ZM12 2.00018C13.6562 2.00018 15 3.34393 15 5.00018V6.00018H9V5.00018C9 3.34393 10.3438 2.00018 12 2.00018ZM3.9375 8.00018H7V11.0002H9V8.00018H15V11.0002H17V8.00018H20.0625L20.9375 24.0002H3.0625L3.9375 8.00018Z"
+                                    fill="#00234D"
+                                  />
+                                </svg>
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="product-card-details">
+                            <ul className="color-lists list-unstyled d-flex align-items-center">
+                              <li>
+                                <Link
+                                  to="javascript:void(0)"
+                                  className="color-swatch swatch-black active"
+                                />
+                              </li>
+                              <li>
+                                <Link
+                                  to="javascript:void(0)"
+                                  className="color-swatch swatch-cyan"
+                                />
+                              </li>
+                              <li>
+                                <Link
+                                  to="javascript:void(0)"
+                                  className="color-swatch swatch-purple"
+                                />
+                              </li>
+                            </ul>
+                            <h3 className="product-card-title">
+                              <Link to={`/product-details/${item?._id}`}>
+                                {item?.title}
+                              </Link>
+                            </h3>
+                            <div className="product-card-price">
+                              <span className="card-price-regular">
+                                ${item?.price}
+                              </span>
+                              <span className="card-price-compare text-decoration-line-through">
+                                ${item?.discountPrice}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div className="product-card-details">
-                        <ul className="color-lists list-unstyled d-flex align-items-center">
-                          <li>
-                            <Link
-                              to="javascript:void(0)"
-                              className="color-swatch swatch-black active"
-                            />
-                          </li>
-                          <li>
-                            <Link
-                              to="javascript:void(0)"
-                              className="color-swatch swatch-cyan"
-                            />
-                          </li>
-                          <li>
-                            <Link
-                              to="javascript:void(0)"
-                              className="color-swatch swatch-purple"
-                            />
-                          </li>
-                        </ul>
-                        <h3 className="product-card-title">
-                          <Link to={`/product-details/${item?._id}`}>
-                            {item?.title}
-                          </Link>
-                        </h3>
-                        <div className="product-card-price">
-                          <span className="card-price-regular">
-                            ${item?.price}
-                          </span>
-                          <span className="card-price-compare text-decoration-line-through">
-                            ${item?.discountPrice}
-                          </span>
-                        </div>
+                    ))
+                  : [...Array(20)].map((item, index) => (
+                      <div
+                        key={index}
+                        className="col-lg-3 col-md-6 col-6"
+                        data-aos="fade-up"
+                        data-aos-duration={700}
+                      >
+                        <ImgSkeleton key={index} />
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
               </div>
             </div>
-            <div className="pagination d-flex justify-content-center mt-100">
-              <ReactPaginate
-                className="d-flex"
-                previousLabel="<"
-                nextLabel=">"
-                activeLinkClassName="active_link"
-                pageLinkClassName="page_link"
-                previousLinkClassName="previous_link"
-                nextLinkClassName="next_link"
-                breakLabel="..."
-                pageCount={TotalData / 12}
-                initialPage={params.pageNo - 1}
-                pageRangeDisplayed={3}
-                onPageChange={handelPageClick}
-                type="button"
-              />
-            </div>
+
+            {TotalData > 12 ? (
+              <div className="pagination d-flex justify-content-center mt-100">
+                <ReactPaginate
+                  className="d-flex"
+                  previousLabel="<"
+                  nextLabel=">"
+                  activeLinkClassName="active_link"
+                  pageLinkClassName="page_link"
+                  previousLinkClassName="previous_link"
+                  nextLinkClassName="next_link"
+                  breakLabel="..."
+                  pageCount={TotalData / 12}
+                  initialPage={params.pageNo - 1}
+                  pageRangeDisplayed={3}
+                  onPageChange={handelPageClick}
+                  type="button"
+                />
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           {/* product area end */}
           {/* sidebar start */}
@@ -372,24 +414,30 @@ const Products = () => {
                         <span className="filter-text">All Category</span>
                       </label>
                     </li>
-                    {CategoryList.slice(0, 10).map((item, index) => (
-                      <li className="filter-item" key={index}>
-                        <label className="filter-label">
-                          <input
-                            type="radio"
-                            id={`index${index}`}
-                            name="Filter"
-                            value={item?._id}
-                            checked={params.categoriesID === item?._id && true}
-                            onChange={() => categoriesReqFun(item?._id)}
-                          />
-                          <span className="filter-checkbox rounded me-2" />
-                          <span className="filter-text">
-                            {item?.categoryName}
-                          </span>
-                        </label>
-                      </li>
-                    ))}
+                    {CategoryList !== null ? (
+                      CategoryList.slice(0, 10).map((item, index) => (
+                        <li className="filter-item" key={index}>
+                          <label className="filter-label">
+                            <input
+                              type="radio"
+                              id={`index${index}`}
+                              name="Filter"
+                              value={item?._id}
+                              checked={
+                                params.categoriesID === item?._id && true
+                              }
+                              onChange={() => categoriesReqFun(item?._id)}
+                            />
+                            <span className="filter-checkbox rounded me-2" />
+                            <span className="filter-text">
+                              {item?.categoryName}
+                            </span>
+                          </label>
+                        </li>
+                      ))
+                    ) : (
+                      <SkeletonBar count={10} width={200} />
+                    )}
                   </ul>
                 </div>
               </div>
@@ -424,22 +472,28 @@ const Products = () => {
                   className="accordion-collapse collapse show"
                 >
                   <ul className="filter-lists list-unstyled mb-0">
-                    {BrandList.slice(0, 10).map((item, index) => (
-                      <li className="filter-item" key={index}>
-                        <label className="filter-label">
-                          <input
-                            type="radio"
-                            id={`index${index}`}
-                            name="Filter"
-                            value={item?._id}
-                            onChange={() => brandsReqFun(item?._id)}
-                            checked={params.brandsID === item?._id && true}
-                          />
-                          <span className="filter-checkbox rounded me-2" />
-                          <span className="filter-text">{item?.brandName}</span>
-                        </label>
-                      </li>
-                    ))}
+                    {BrandList !== null ? (
+                      BrandList?.slice(0, 10).map((item, index) => (
+                        <li className="filter-item" key={index}>
+                          <label className="filter-label">
+                            <input
+                              type="radio"
+                              id={`index${index}`}
+                              name="Filter"
+                              value={item?._id}
+                              onChange={() => brandsReqFun(item?._id)}
+                              checked={params.brandsID === item?._id && true}
+                            />
+                            <span className="filter-checkbox rounded me-2" />
+                            <span className="filter-text">
+                              {item?.brandName}
+                            </span>
+                          </label>
+                        </li>
+                      ))
+                    ) : (
+                      <SkeletonBar count={10} width={200} />
+                    )}
                   </ul>
                 </div>
               </div>
@@ -478,11 +532,11 @@ const Products = () => {
                       <label className="filter-label">
                         <input
                           type="radio"
-                          id="new"
+                          id="New"
                           name="Filter"
-                          value="new"
-                          onChange={() => remarkReqFun('new')}
-                          checked={params.remark === 'new' && true}
+                          value="New"
+                          onChange={() => remarkReqFun('New')}
+                          checked={params.remark === 'New' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
                         <span className="filter-text">New</span>
@@ -492,14 +546,42 @@ const Products = () => {
                       <label className="filter-label">
                         <input
                           type="radio"
-                          id="old"
+                          id="Trading"
                           name="Filter"
-                          value="old"
-                          onChange={() => remarkReqFun('old')}
-                          checked={params.remark === 'old' && true}
+                          value="Trading"
+                          onChange={() => remarkReqFun('Trading')}
+                          checked={params.remark === 'Trading' && true}
                         />
                         <span className="filter-checkbox rounded me-2" />
-                        <span className="filter-text">Old</span>
+                        <span className="filter-text">Trading</span>
+                      </label>
+                    </li>
+                    <li className="filter-item">
+                      <label className="filter-label">
+                        <input
+                          type="radio"
+                          id="Top"
+                          name="Filter"
+                          value="Top"
+                          onChange={() => remarkReqFun('Top')}
+                          checked={params.remark === 'Top' && true}
+                        />
+                        <span className="filter-checkbox rounded me-2" />
+                        <span className="filter-text">Top</span>
+                      </label>
+                    </li>
+                    <li className="filter-item">
+                      <label className="filter-label">
+                        <input
+                          type="radio"
+                          id="Special"
+                          name="Filter"
+                          value="Special"
+                          onChange={() => remarkReqFun('Special')}
+                          checked={params.remark === 'Special' && true}
+                        />
+                        <span className="filter-checkbox rounded me-2" />
+                        <span className="filter-text">Special</span>
                       </label>
                     </li>
                   </ul>

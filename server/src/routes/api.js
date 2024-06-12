@@ -131,11 +131,7 @@ router.post(
   AuthVerificationAdmin,
   ProductController.CreateSliderList,
 );
-router.get(
-  '/read-slider-list',
-  AuthVerificationAdmin,
-  ProductController.ReadSliderList,
-);
+router.get('/read-slider-list', ProductController.ReadSliderList);
 router.post(
   '/update-slider-list/:sliderID',
   AuthVerificationAdmin,

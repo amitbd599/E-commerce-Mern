@@ -14,14 +14,24 @@ import Brand from '../components/Brand';
 import Footer from '../components/Footer';
 import FeatureStore from '../store/FeatureStore.js';
 import ProductStore from '../store/ProductStore.js';
+import SliderStore from '../store/SliderStore.js';
+import BrandsInner from '../components/BrandsInner.jsx';
+import ReviewStore from '../store/ReviewStore.js';
 
 const Home = () => {
   const { FeatureListRequest } = FeatureStore();
-  const { ProductListRequest_Feature } = ProductStore();
+  const { ProductListRequest_Feature, CategoryListRequest, BrandListRequest } =
+    ProductStore();
+  const { SliderListRequest } = SliderStore();
+  const { ReviewListRequest } = ReviewStore();
 
   useEffect(() => {
     (async () => {
       await FeatureListRequest();
+      await SliderListRequest();
+      await CategoryListRequest();
+      await BrandListRequest();
+      await ReviewListRequest();
       await ProductListRequest_Feature(8, 1);
     })();
   }, []);
@@ -37,6 +47,9 @@ const Home = () => {
       {/* Hero */}
       <Hero />
 
+      {/* BrandsInner */}
+      <BrandsInner />
+
       {/* TrustedBadge */}
       <TrustedBadge />
 
@@ -50,19 +63,19 @@ const Home = () => {
       <ShopByCategory />
 
       {/* VideoSection */}
-      <VideoSection />
+      {/* <VideoSection /> */}
 
       {/* Testimonial */}
-      <Testimonial />
+      {/* <Testimonial /> */}
 
       {/* SingleBanner */}
       <SingleBanner />
 
       {/* BlogItems */}
-      <BlogItemsSlider item={8} />
+      {/* <BlogItemsSlider item={8} /> */}
 
       {/* Brand */}
-      <Brand />
+      {/* <Brand /> */}
 
       {/* Footer */}
       <Footer />

@@ -7,7 +7,7 @@ const EmailSend = require("../utility/EmailHelper");
 const { EncodeToken } = require("../utility/TokenHelper");
 const ObjectId = mongoose.Types.ObjectId;
 
-//! User Service 
+//! User Service
 const RegisterUserService = async (req) => {
   try {
     let reqBody = req.body;
@@ -16,14 +16,12 @@ const RegisterUserService = async (req) => {
     if (!!data === true) {
       let innerReqBody = {
         userID: data._id,
-      }
+      };
       let profile = await ProfileModel.create(innerReqBody);
-      return { status: "success", data: profile };
+      return { status: true, data: profile };
     } else {
-      return { status: "success", data: data };
+      return { status: false, data: data };
     }
-
-
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -38,13 +36,12 @@ const LoginUserService = async (req, res) => {
       { $project: { _id: 1, email: 1 } },
     ]);
 
-
     if (data.length > 0) {
       let token_user = EncodeToken(data[0]);
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
         secure: true,
       };
@@ -66,8 +63,8 @@ const ProfileUpdateUserService = async (req) => {
   let password = req.body.password;
 
   let reqBodyUser = {
-    password
-  }
+    password,
+  };
 
   let reqBodyProfile = {
     cus_add: req.body.cus_add,
@@ -85,27 +82,25 @@ const ProfileUpdateUserService = async (req) => {
     ship_phone: req.body.ship_phone,
     ship_postcode: req.body.ship_postcode,
     ship_state: req.body.ship_state,
-  }
+  };
 
   try {
     let dataUser = await UserModel.updateOne(
       { email: email },
       {
-        $set: reqBodyUser
+        $set: reqBodyUser,
       }
     );
 
-    let findUser = await UserModel.aggregate(
-      [
-        { $match: { email: email } },
-        { $project: { _id: 1, email: 1 } }
-      ]
-    )
+    let findUser = await UserModel.aggregate([
+      { $match: { email: email } },
+      { $project: { _id: 1, email: 1 } },
+    ]);
 
     let dataProfile = await ProfileModel.updateOne(
       { userID: findUser[0]._id },
       {
-        $set: reqBodyProfile
+        $set: reqBodyProfile,
       }
     );
 
@@ -122,7 +117,7 @@ const ProfileReadUserService = async (req) => {
     let MatchStage = {
       $match: {
         email,
-      }
+      },
     };
     let JoinWithProfileStage = {
       $lookup: {
@@ -131,14 +126,18 @@ const ProfileReadUserService = async (req) => {
         foreignField: "userID",
         as: "profile",
       },
-    }
+    };
 
     let Project = {
       $project: {
         password: 0,
-      }
-    }
-    let data = await UserModel.aggregate([MatchStage, JoinWithProfileStage, Project]);
+      },
+    };
+    let data = await UserModel.aggregate([
+      MatchStage,
+      JoinWithProfileStage,
+      Project,
+    ]);
     return { status: "success", data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -147,18 +146,16 @@ const ProfileReadUserService = async (req) => {
 
 const LogoutUserService = async (res) => {
   try {
-    res.clearCookie('token_user');
-    return { status: "success" };
+    res.clearCookie("token_user");
+    return { status: true };
   } catch (error) {
     return { status: false, error: e.toString() };
   }
-
 };
 
 const EmailVerifyUserService = async () => {
   try {
     return { status: "success" };
-
   } catch (e) {
     return { status: false, error: e.toString() };
   }
@@ -175,13 +172,13 @@ const RecoverVerifyEmailUserService = async (req) => {
       { $count: "total" },
     ]);
 
-
     if (UserCount.length > 0) {
       //Create OTP
       let CreateOTP = await OTPModel.updateOne(
         { email: email },
         {
-          otp, status: 0
+          otp,
+          status: 0,
         },
         { upsert: true, new: true }
       );
@@ -231,13 +228,12 @@ const RecoverVerifyOTPUserService = async (req) => {
   }
 };
 
-
 const ResetPasswordUserService = async (req) => {
   let email = req.params.email;
   let otp = req.params.otp;
   otp = parseInt(otp);
   let reqBody = {
-    password: req.body.password //! working .....
+    password: req.body.password, //! working .....
   };
   // reqBody.password = md5(req.body.password);
   try {
@@ -267,7 +263,14 @@ const ResetPasswordUserService = async (req) => {
   }
 };
 
-
 module.exports = {
-  RegisterUserService, LoginUserService, ProfileUpdateUserService, ProfileReadUserService, LogoutUserService, EmailVerifyUserService, RecoverVerifyEmailUserService, RecoverVerifyOTPUserService, ResetPasswordUserService,
+  RegisterUserService,
+  LoginUserService,
+  ProfileUpdateUserService,
+  ProfileReadUserService,
+  LogoutUserService,
+  EmailVerifyUserService,
+  RecoverVerifyEmailUserService,
+  RecoverVerifyOTPUserService,
+  ResetPasswordUserService,
 };

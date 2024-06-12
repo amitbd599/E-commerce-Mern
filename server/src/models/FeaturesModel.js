@@ -5,13 +5,12 @@ const DataSchema = mongoose.Schema(
     sub_title: { type: String, required: true },
     button_title: { type: String, required: true },
     button_link: { type: String, required: true },
-    slide_img_big: { type: String, required: true },
-    slide_img_small: { type: String, required: true },
+    img: { type: String, required: true },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 const FeatureModel = mongoose.model("features", DataSchema);

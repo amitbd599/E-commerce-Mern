@@ -1,13 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import App from './App';
-import './index.scss';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import "./index.scss";
+import reportWebVitals from "./reportWebVitals";
+import { ToastContainer } from "react-toastify";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    ></ToastContainer>
     <App />
   </>
 );
