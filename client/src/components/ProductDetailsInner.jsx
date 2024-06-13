@@ -9,16 +9,18 @@ import {
   FaLinkedinIn,
   FaMinus,
   FaPlus,
-  FaRegHeart,
   FaRegStar,
   FaStar,
   FaTwitter,
 } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SkeletonBar from "../skeleton/SkeletonBar";
 import ImgSkeleton from "../skeleton/ImgSkeleton";
 import Select from "react-select";
+import CartStore from "../store/CartStore";
+import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
 const ProductDetailsInner = () => {
+  let { isCartSubmit, CartListRequest } = CartStore();
   let {
     ReviewsListRequest,
     ReviewsList,
@@ -27,7 +29,9 @@ const ProductDetailsInner = () => {
   } = ProductStore();
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
-  const [review, setReview] = useState(null);
+  let [selectedOptionColor, setSelectedOptionColor] = useState("");
+  let [selectedOptionSize, setSelectedOptionSize] = useState("");
+  let [qty, setQty] = useState(1);
   const { id } = useParams();
   useEffect(() => {
     (async () => {
@@ -121,10 +125,6 @@ const ProductDetailsInner = () => {
     ],
   };
 
-  let reviewHandel = () => {
-    setReview(!review);
-  };
-
   const largeSliderSettings = {
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -182,9 +182,6 @@ const ProductDetailsInner = () => {
     );
   };
 
-  let [selectedOptionColor, setSelectedOptionColor] = useState(null);
-  let [selectedOptionSize, setSelectedOptionSize] = useState(null);
-  let [qty, setQty] = useState(1);
   let options_color = ProductDetails?.color.split(",").map((item, i) => {
     return { value: item, label: item };
   });
@@ -192,6 +189,39 @@ const ProductDetailsInner = () => {
   let options_size = ProductDetails?.size.split(",").map((item, i) => {
     return { value: item, label: item };
   });
+
+  let submitCartData = async () => {
+    let color = selectedOptionColor;
+    let size = selectedOptionSize;
+    let productID = ProductDetails?._id;
+
+    console.log({ color, size, qty, productID });
+
+    if (IsEmpty(color)) {
+      ErrorToast("Please select color!");
+      return;
+    } else if (IsEmpty(size)) {
+      ErrorToast("Please select size!");
+      return;
+    } else if (IsEmpty(qty)) {
+      ErrorToast("Please select quantity!");
+      return;
+    } else {
+      let reqBody = {
+        color: color,
+        size: size,
+        qty: qty.toString(),
+        productID: productID,
+      };
+      await CartListRequest(reqBody).then((res) => {
+        if (res) {
+          SuccessToast("Product add success!");
+        } else {
+          ErrorToast("Something went wrong!");
+        }
+      });
+    }
+  };
 
   return (
     <>
@@ -313,27 +343,41 @@ const ProductDetailsInner = () => {
                       </button>
                     </div>
                   </div>
-                  <form className="product-form" action="#">
+                  <div className="product-form">
                     <div className="product-form-buttons d-flex align-items-center justify-content-between mt-4">
-                      <button
-                        type="submit"
-                        className="position-relative btn-atc btn-add-to-cart loader"
-                      >
-                        ADD TO CART
-                      </button>
-                      <a href="wishlist.html" className="product-wishlist">
-                        <FaRegHeart />
-                      </a>
+                      {isCartSubmit === true ? (
+                        <button
+                          type="submit"
+                          disabled
+                          className="position-relative disable__btn btn-atc btn-add-to-cart loader"
+                        >
+                          <div className="d-flex justify-content-center">
+                            <div className="spinner-border" role="status">
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      ) : (
+                        <button
+                          onClick={submitCartData}
+                          type="submit"
+                          className="position-relative btn-atc btn-add-to-cart loader"
+                        >
+                          ADD TO CART
+                        </button>
+                      )}
                     </div>
                     <div className="buy-it-now-btn mt-2">
                       <button
                         type="submit"
                         className="position-relative btn-atc btn-buyit-now"
                       >
-                        BUY IT NOW
+                        ADD TO WISH LIST
                       </button>
                     </div>
-                  </form>
+                  </div>
 
                   <div className="share-area mt-4 d-flex align-items-center">
                     <strong className="label mb-1 d-block">Share:</strong>
@@ -529,9 +573,9 @@ const ProductDetailsInner = () => {
                           >
                             QUICKVIEW
                           </a>
-                          <a href="#" className="addtocart-btn btn-primary">
+                          <Link to="#" className="addtocart-btn btn-primary">
                             ADD TO CART
-                          </a>
+                          </Link>
                         </div>
                         <a
                           href="wishlist.html"

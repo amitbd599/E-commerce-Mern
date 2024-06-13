@@ -104,7 +104,7 @@ const ProfileUpdateUserService = async (req) => {
       }
     );
 
-    return { status: "success", dataUser, dataProfile };
+    return { status: true, dataUser, dataProfile };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -138,7 +138,7 @@ const ProfileReadUserService = async (req) => {
       JoinWithProfileStage,
       Project,
     ]);
-    return { status: "success", data: data };
+    return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
   }

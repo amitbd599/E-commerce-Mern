@@ -281,3 +281,62 @@
 .logout_btn {
   background: transparent;
 }
+
+.profile {
+  padding: 120px 0;
+  .tab__btn {
+    .nav-pills {
+      display: grid;
+      gap: 10px;
+      .nav-link {
+        padding: 14px 20px;
+        color: #fff;
+        background: var(--primary-color);
+        &.active {
+          background: var(--secondary-color);
+        }
+      }
+    }
+  }
+  .inner__tab {
+    .view {
+      padding: 30px;
+      border: 1px solid #f3f4f6;
+      border-radius: 10px;
+      .wrapper {
+        margin-bottom: 20px;
+        h3 {
+          margin-bottom: 10px;
+          font-size: 20px;
+        }
+      }
+      &.information {
+        .label {
+          width: 100%;
+          display: block;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 1.69;
+          letter-spacing: 0.25px;
+          color: #333333;
+        }
+        input {
+          width: 100%;
+          padding: 0 16px;
+          height: 40px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          outline: none !important;
+          box-shadow: none !important;
+          border-radius: 4px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+.btn-add-to-cart {
+  max-width: 100%;
+}
+.disable__btn {
+  cursor: not-allowed !important;
+}

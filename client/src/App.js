@@ -18,6 +18,7 @@ import Register from "./pages/Register";
 import Error from "./pages/Error";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./pages/Profile";
 function App() {
   useEffect(() => {
     AOS.init();
@@ -40,7 +41,15 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route exact path="/checkout" element={<Checkout />} />
+        <Route
+          exact
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
         <Route exact path="/faq" element={<Faq />} />
         <Route exact path="/product-all/:pageNo" element={<Product />} />
         <Route
@@ -69,7 +78,24 @@ function App() {
           element={<Product />}
         />
         <Route exact path="/product-details/:id" element={<ProductDetails />} />
-        <Route exact path="/wishlist" element={<Wishlist />} />
+        <Route
+          exact
+          path="/wishlist"
+          element={
+            <PrivateRoute>
+              <Wishlist />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />

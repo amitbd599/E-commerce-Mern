@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-
 let EmailRegx = /\S+@\S+\.\S+/;
 
 class FormHelper {
