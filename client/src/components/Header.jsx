@@ -380,76 +380,83 @@ const Header = () => {
         </div>
         <div className="offcanvas-body p-0">
           <div className="cart-content-area d-flex justify-content-between flex-column">
-            <div className="minicart-loop custom-scrollbar">
-              {CartList?.reverse()?.map((item, index) => (
-                <div className="minicart-item d-flex" key={index}>
-                  <div className="mini-img-wrapper">
-                    <img
-                      className="mini-img"
-                      src={item?.product?.img1}
-                      alt="img"
-                    />
-                  </div>
-                  <div className="product-info">
-                    <h2 className="product-title">
-                      <Link to={`/product-details/${item?.productID}`}>
-                        {item?.product?.title}
-                      </Link>
-                    </h2>
-                    <p className="product-vendor">Color: {item?.color}</p>
-                    <p className="product-vendor">Size: {item?.size}</p>
-                    <div className="misc d-flex mt-2 align-items-end justify-content-between">
-                      <div className="quantity d-flex align-items-center justify-content-between">
-                        <button
-                          className="qty-btn dec-qty"
-                          onClick={() => {
-                            if (parseInt(item?.qty) > 1) {
+            {CartList?.length > 0 ? (
+              <div className="minicart-loop custom-scrollbar">
+                {CartList?.reverse()?.map((item, index) => (
+                  <div className="minicart-item d-flex" key={index}>
+                    <div className="mini-img-wrapper">
+                      <img
+                        className="mini-img"
+                        src={item?.product?.img1}
+                        alt="img"
+                      />
+                    </div>
+                    <div className="product-info">
+                      <h2 className="product-title">
+                        <Link to={`/product-details/${item?.productID}`}>
+                          {item?.product?.title}
+                        </Link>
+                      </h2>
+                      <p className="product-vendor">Color: {item?.color}</p>
+                      <p className="product-vendor">Size: {item?.size}</p>
+                      <div className="misc d-flex mt-2 align-items-end justify-content-between">
+                        <div className="quantity d-flex align-items-center justify-content-between">
+                          <button
+                            className="qty-btn dec-qty"
+                            onClick={() => {
+                              if (parseInt(item?.qty) > 1) {
+                                updateCartList(
+                                  item?._id,
+                                  item?.productID,
+                                  parseInt(item?.qty) - 1
+                                );
+                              }
+                            }}
+                          >
+                            <img src="/assets/img/icon/minus.svg" alt="minus" />
+                          </button>
+                          <input
+                            className="qty-input"
+                            type="number"
+                            name="qty"
+                            value={parseInt(item?.qty)}
+                          />
+                          <button
+                            className="qty-btn inc-qty"
+                            onClick={() => {
                               updateCartList(
                                 item?._id,
                                 item?.productID,
-                                parseInt(item?.qty) - 1
+                                parseInt(item?.qty) + 1
                               );
-                            }
-                          }}
-                        >
-                          <img src="assets/img/icon/minus.svg" alt="minus" />
-                        </button>
-                        <input
-                          className="qty-input"
-                          type="number"
-                          name="qty"
-                          value={parseInt(item?.qty)}
-                        />
-                        <button
-                          className="qty-btn inc-qty"
-                          onClick={() => {
-                            updateCartList(
-                              item?._id,
-                              item?.productID,
-                              parseInt(item?.qty) + 1
-                            );
-                          }}
-                        >
-                          <img src="assets/img/icon/plus.svg" alt="plus" />
-                        </button>
-                      </div>
-                      <div className="product-remove-area d-flex flex-column align-items-end">
-                        <div className="product-price">
-                          ${item?.qty * parseInt(item?.product?.price)}
+                            }}
+                          >
+                            <img src="/assets/img/icon/plus.svg" alt="plus" />
+                          </button>
                         </div>
-                        <Link
-                          to="#"
-                          className="product-remove"
-                          onClick={deleteCartList(item?._id)}
-                        >
-                          Remove
-                        </Link>
+                        <div className="product-remove-area d-flex flex-column align-items-end">
+                          <div className="product-price">
+                            ${item?.qty * parseInt(item?.product?.price)}
+                          </div>
+                          <Link
+                            to="#"
+                            className="product-remove"
+                            onClick={() => deleteCartList(item?._id)}
+                          >
+                            Remove
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="minicart-loop custom-scrollbar ps-4 mt-4">
+                <p>No product added 🚫</p>
+              </div>
+            )}
+
             <div className="minicart-footer">
               <div className="minicart-calc-area">
                 <div className="minicart-calc d-flex align-items-center justify-content-between">

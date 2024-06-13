@@ -195,8 +195,6 @@ const ProductDetailsInner = () => {
     let size = selectedOptionSize;
     let productID = ProductDetails?._id;
 
-    console.log({ color, size, qty, productID });
-
     if (IsEmpty(color)) {
       ErrorToast("Please select color!");
       return;

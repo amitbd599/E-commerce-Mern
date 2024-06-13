@@ -61,7 +61,7 @@ const CartStore = create((set) => ({
   CartListDeleteRequest: async (id) => {
     try {
       set({ isCartSubmit: true });
-      let res = await axios.post(apiUrl + "/delete-cart-list/" + id, {
+      let res = await axios.delete(apiUrl + "/delete-cart-list/" + id, {
         withCredentials: true,
       });
 
