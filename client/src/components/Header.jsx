@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import CartStore from "../store/CartStore";
+import UserStore from "../store/UserStore";
 
 const Header = () => {
+  let {
+    CartList,
+    CartListGetRequest,
+    CartListUpdateRequest,
+    CartListDeleteRequest,
+  } = CartStore();
+  let { isLogin } = UserStore();
+
+  useEffect(() => {
+    (async () => {
+      if (isLogin()) {
+        await CartListGetRequest();
+      }
+    })();
+  }, []);
+
+  let updateCartList = async (id, productID, qtyItem) => {
+    await CartListUpdateRequest(id, productID, qtyItem).then(async (res) => {
+      if (res) {
+        await CartListGetRequest();
+      }
+    });
+  };
+
+  let deleteCartList = async (id) => {
+    await CartListDeleteRequest(id).then(async (res) => {
+      if (res) {
+        await CartListGetRequest();
+      }
+    });
+  };
   return (
     <>
       {/* header start */}
@@ -132,6 +165,9 @@ const Header = () => {
                         fill="black"
                       />
                     </svg>
+                    <span className="header-wishlist-count">
+                      {isLogin() ? CartList?.length : "0"}
+                    </span>
                   </Link>
                   <Link
                     className="header-action-item header-hamburger ms-4 d-lg-none"
@@ -332,7 +368,9 @@ const Header = () => {
       {/* drawer cart start */}
       <div className="offcanvas offcanvas-end" tabIndex={-1} id="drawer-cart">
         <div className="offcanvas-header border-btm-black">
-          <h5 className="cart-drawer-heading text_16">Your Cart (04)</h5>
+          <h5 className="cart-drawer-heading text_16">
+            Your Cart ({CartList?.length})
+          </h5>
           <button
             type="button"
             className="btn-close text-reset"
@@ -343,177 +381,99 @@ const Header = () => {
         <div className="offcanvas-body p-0">
           <div className="cart-content-area d-flex justify-content-between flex-column">
             <div className="minicart-loop custom-scrollbar">
-              {/* minicart item */}
-              <div className="minicart-item d-flex">
-                <div className="mini-img-wrapper">
-                  <img
-                    className="mini-img"
-                    src="assets/img/products/furniture/1.jpg"
-                    alt="img"
-                  />
-                </div>
-                <div className="product-info">
-                  <h2 className="product-title">
-                    <a href="#">Eliot Reversible Sectional</a>
-                  </h2>
-                  <p className="product-vendor">XS / Dove Gray</p>
-                  <div className="misc d-flex align-items-end justify-content-between">
-                    <div className="quantity d-flex align-items-center justify-content-between">
-                      <button className="qty-btn dec-qty">
-                        <img src="assets/img/icon/minus.svg" alt="minus" />
-                      </button>
-                      <input
-                        className="qty-input"
-                        type="number"
-                        name="qty"
-                        defaultValue={1}
-                        min={0}
-                      />
-                      <button className="qty-btn inc-qty">
-                        <img src="assets/img/icon/plus.svg" alt="plus" />
-                      </button>
-                    </div>
-                    <div className="product-remove-area d-flex flex-column align-items-end">
-                      <div className="product-price">$580.00</div>
-                      <a href="#" className="product-remove">
-                        Remove
-                      </a>
+              {CartList?.reverse()?.map((item, index) => (
+                <div className="minicart-item d-flex" key={index}>
+                  <div className="mini-img-wrapper">
+                    <img
+                      className="mini-img"
+                      src={item?.product?.img1}
+                      alt="img"
+                    />
+                  </div>
+                  <div className="product-info">
+                    <h2 className="product-title">
+                      <Link to={`/product-details/${item?.productID}`}>
+                        {item?.product?.title}
+                      </Link>
+                    </h2>
+                    <p className="product-vendor">Color: {item?.color}</p>
+                    <p className="product-vendor">Size: {item?.size}</p>
+                    <div className="misc d-flex mt-2 align-items-end justify-content-between">
+                      <div className="quantity d-flex align-items-center justify-content-between">
+                        <button
+                          className="qty-btn dec-qty"
+                          onClick={() => {
+                            if (parseInt(item?.qty) > 1) {
+                              updateCartList(
+                                item?._id,
+                                item?.productID,
+                                parseInt(item?.qty) - 1
+                              );
+                            }
+                          }}
+                        >
+                          <img src="assets/img/icon/minus.svg" alt="minus" />
+                        </button>
+                        <input
+                          className="qty-input"
+                          type="number"
+                          name="qty"
+                          value={parseInt(item?.qty)}
+                        />
+                        <button
+                          className="qty-btn inc-qty"
+                          onClick={() => {
+                            updateCartList(
+                              item?._id,
+                              item?.productID,
+                              parseInt(item?.qty) + 1
+                            );
+                          }}
+                        >
+                          <img src="assets/img/icon/plus.svg" alt="plus" />
+                        </button>
+                      </div>
+                      <div className="product-remove-area d-flex flex-column align-items-end">
+                        <div className="product-price">
+                          ${item?.qty * parseInt(item?.product?.price)}
+                        </div>
+                        <Link
+                          to="#"
+                          className="product-remove"
+                          onClick={deleteCartList(item?._id)}
+                        >
+                          Remove
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              {/* minicart item */}
-              <div className="minicart-item d-flex">
-                <div className="mini-img-wrapper">
-                  <img
-                    className="mini-img"
-                    src="assets/img/products/furniture/2.jpg"
-                    alt="img"
-                  />
-                </div>
-                <div className="product-info">
-                  <h2 className="product-title">
-                    <a href="#">Vita Lounge Chair</a>
-                  </h2>
-                  <p className="product-vendor">XS / Pink</p>
-                  <div className="misc d-flex align-items-end justify-content-between">
-                    <div className="quantity d-flex align-items-center justify-content-between">
-                      <button className="qty-btn dec-qty">
-                        <img src="assets/img/icon/minus.svg" alt="minus" />
-                      </button>
-                      <input
-                        className="qty-input"
-                        type="number"
-                        name="qty"
-                        defaultValue={1}
-                        min={0}
-                      />
-                      <button className="qty-btn inc-qty">
-                        <img src="assets/img/icon/plus.svg" alt="plus" />
-                      </button>
-                    </div>
-                    <div className="product-remove-area d-flex flex-column align-items-end">
-                      <div className="product-price">$580.00</div>
-                      <a href="#" className="product-remove">
-                        Remove
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* minicart item */}
-              <div className="minicart-item d-flex">
-                <div className="mini-img-wrapper">
-                  <img
-                    className="mini-img"
-                    src="assets/img/products/furniture/3.jpg"
-                    alt="img"
-                  />
-                </div>
-                <div className="product-info">
-                  <h2 className="product-title">
-                    <a href="#">Sarno Dining Chair</a>
-                  </h2>
-                  <p className="product-vendor">XS / Dove Gray</p>
-                  <div className="misc d-flex align-items-end justify-content-between">
-                    <div className="quantity d-flex align-items-center justify-content-between">
-                      <button className="qty-btn dec-qty">
-                        <img src="assets/img/icon/minus.svg" alt="minus" />
-                      </button>
-                      <input
-                        className="qty-input"
-                        type="number"
-                        name="qty"
-                        defaultValue={1}
-                        min={0}
-                      />
-                      <button className="qty-btn inc-qty">
-                        <img src="assets/img/icon/plus.svg" alt="plus" />
-                      </button>
-                    </div>
-                    <div className="product-remove-area d-flex flex-column align-items-end">
-                      <div className="product-price">$580.00</div>
-                      <a href="#" className="product-remove">
-                        Remove
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* minicart item */}
-              <div className="minicart-item d-flex">
-                <div className="mini-img-wrapper">
-                  <img
-                    className="mini-img"
-                    src="assets/img/products/furniture/4.jpg"
-                    alt="img"
-                  />
-                </div>
-                <div className="product-info">
-                  <h2 className="product-title">
-                    <a href="#">Vita Lounge Chair</a>
-                  </h2>
-                  <p className="product-vendor">XS / Dove Gray</p>
-                  <div className="misc d-flex align-items-end justify-content-between">
-                    <div className="quantity d-flex align-items-center justify-content-between">
-                      <button className="qty-btn dec-qty">
-                        <img src="assets/img/icon/minus.svg" alt="minus" />
-                      </button>
-                      <input
-                        className="qty-input"
-                        type="number"
-                        name="qty"
-                        defaultValue={1}
-                        min={0}
-                      />
-                      <button className="qty-btn inc-qty">
-                        <img src="assets/img/icon/plus.svg" alt="plus" />
-                      </button>
-                    </div>
-                    <div className="product-remove-area d-flex flex-column align-items-end">
-                      <div className="product-price">$580.00</div>
-                      <a href="#" className="product-remove">
-                        Remove
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
             <div className="minicart-footer">
               <div className="minicart-calc-area">
                 <div className="minicart-calc d-flex align-items-center justify-content-between">
                   <span className="cart-subtotal mb-0">Subtotal</span>
-                  <span className="cart-subprice">$1548.00</span>
+                  <span className="cart-subprice">
+                    $
+                    {CartList?.reduce(
+                      (sum, item) =>
+                        sum + item?.qty * parseInt(item?.product?.price),
+                      0
+                    )}
+                  </span>
                 </div>
                 <p className="cart-taxes text-center my-4">
                   Taxes and shipping will be calculated at checkout.
                 </p>
               </div>
-              <div className="minicart-btn-area d-flex align-items-center justify-content-between">
-                <a href="cart.html" className="minicart-btn btn-secondary">
+              <div
+                data-bs-dismiss="offcanvas"
+                className="minicart-btn-area d-flex align-items-center justify-content-between"
+              >
+                <Link to="/cart" className="minicart-btn btn-secondary">
                   View Cart
-                </a>
+                </Link>
                 <a href="checkout.html" className="minicart-btn btn-primary">
                   Checkout
                 </a>

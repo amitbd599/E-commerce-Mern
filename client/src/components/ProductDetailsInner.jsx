@@ -20,7 +20,7 @@ import Select from "react-select";
 import CartStore from "../store/CartStore";
 import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
 const ProductDetailsInner = () => {
-  let { isCartSubmit, CartListRequest } = CartStore();
+  let { isCartSubmit, CartListRequest, CartListGetRequest } = CartStore();
   let {
     ReviewsListRequest,
     ReviewsList,
@@ -213,8 +213,10 @@ const ProductDetailsInner = () => {
         qty: qty.toString(),
         productID: productID,
       };
-      await CartListRequest(reqBody).then((res) => {
+
+      await CartListRequest(reqBody).then(async (res) => {
         if (res) {
+          await CartListGetRequest();
           SuccessToast("Product add success!");
         } else {
           ErrorToast("Something went wrong!");

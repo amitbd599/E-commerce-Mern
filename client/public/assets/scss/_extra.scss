@@ -340,3 +340,36 @@
 .disable__btn {
   cursor: not-allowed !important;
 }
+
+.header-action-item {
+  position: relative;
+  .header-wishlist-count {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 600;
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    top: 11px;
+    left: 11px;
+  }
+}
+
+.product-info {
+  position: relative;
+  .product-vendor {
+    margin: 0;
+    margin-bottom: 2px;
+  }
+  .product-remove-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
