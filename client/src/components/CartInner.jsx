@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import CartStore from "../store/CartStore";
 import { Link } from "react-router-dom";
+import { DeleteAlert, SuccessToast } from "../helper/helper";
 
 const CartInner = () => {
   let {
@@ -30,17 +31,19 @@ const CartInner = () => {
   );
 
   let deleteCartList = async (id) => {
-    await CartListDeleteRequest(id).then(async (res) => {
+    DeleteAlert(CartListDeleteRequest, id).then(async (res) => {
       if (res) {
+        SuccessToast("Cart deleted successfully.");
         await CartListGetRequest();
       }
     });
   };
+
   return (
     <div className="cart-page mt-100">
       <div className="container">
         <div className="cart-page-wrapper">
-          {CartList.length > 0 ? (
+          {CartList?.length > 0 ? (
             <div className="row">
               <div className="col-lg-7 col-md-12 col-12">
                 <table className="cart-table w-100">

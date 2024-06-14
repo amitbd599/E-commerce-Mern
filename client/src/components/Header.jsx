@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import CartStore from "../store/CartStore";
 import UserStore from "../store/UserStore";
+import WishListStore from "../store/WishListStore";
 
 const Header = () => {
   let {
@@ -10,12 +11,14 @@ const Header = () => {
     CartListUpdateRequest,
     CartListDeleteRequest,
   } = CartStore();
+  let { WishList, WishListGetRequest } = WishListStore();
   let { isLogin } = UserStore();
 
   useEffect(() => {
     (async () => {
       if (isLogin()) {
         await CartListGetRequest();
+        await WishListGetRequest();
       }
     })();
   }, []);
@@ -35,6 +38,8 @@ const Header = () => {
       }
     });
   };
+
+  console.log(WishList);
   return (
     <>
       {/* header start */}
@@ -146,6 +151,9 @@ const Header = () => {
                         fill="black"
                       />
                     </svg>
+                    <span className="header-wishlist-count">
+                      {isLogin() ? WishList?.length : "0"}
+                    </span>
                   </Link>
                   <Link
                     className="header-action-item header-cart ms-4"

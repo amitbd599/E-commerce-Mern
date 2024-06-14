@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 let EmailRegx = /\S+@\S+\.\S+/;
 
 class FormHelper {
@@ -54,6 +55,25 @@ class FormHelper {
       window.location.href = "/login";
     }
   }
+
+  DeleteAlert(apiFun, id) {
+    console.log(apiFun, id);
+    return Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return apiFun(id).then((result) => {
+          return result;
+        });
+      }
+    });
+  }
 }
 export const {
   IsEmpty,
@@ -66,4 +86,5 @@ export const {
   setEmail,
   getEmail,
   unAuthorize,
+  DeleteAlert,
 } = new FormHelper();

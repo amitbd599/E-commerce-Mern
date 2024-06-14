@@ -18,6 +18,7 @@ import ImgSkeleton from "../skeleton/ImgSkeleton";
 import SkeletonBar from "../skeleton/SkeletonBar";
 import CartStore from "../store/CartStore";
 import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
+import WishListStore from "../store/WishListStore";
 const Products = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -37,6 +38,7 @@ const Products = () => {
     SimilarColorListRequest,
   } = ProductStore();
   let { isCartSubmit, CartListRequest, CartListGetRequest } = CartStore();
+  let { WishListRequest, WishListGetRequest } = WishListStore();
 
   let [title, setTitle] = useState("All Products");
   useEffect(() => {
@@ -160,6 +162,15 @@ const Products = () => {
 
   let handelClick = async (id) => {
     await ProductDetailsRequest(id);
+  };
+
+  let handelWishList = async (productID) => {
+    await WishListRequest({ productID }).then(async (res) => {
+      if (res) {
+        SuccessToast("Wishlist Product add success!");
+        await WishListGetRequest();
+      }
+    });
   };
 
   const handelPageClick = async (event) => {
@@ -299,6 +310,7 @@ const Products = () => {
                                 </svg>
                               </Link>
                               <Link
+                                onClick={() => handelWishList(item?._id)}
                                 to="#"
                                 className="action-card action-wishlist"
                               >
