@@ -9,8 +9,32 @@ const CreateCartService = async (req) => {
     let user_id = req.headers.user_id;
     let ReqBody = req.body;
     ReqBody.userID = user_id;
-    const data = await CartModel.create(ReqBody);
-    return { status: true, data: data };
+
+    // Find existing cart
+    let existingCart = await CartModel.findOne({
+      userID: user_id,
+      productID: ReqBody.productID,
+      color: ReqBody.color,
+      size: ReqBody.size,
+    });
+
+    if (!!existingCart) {
+      let newReqBody = {
+        userID: user_id,
+        productID: ReqBody.productID,
+        color: ReqBody.color,
+        size: ReqBody.size,
+        qty: parseInt(existingCart.qty) + parseInt(ReqBody.qty),
+      };
+      const updateData = await CartModel.updateOne(
+        { _id: existingCart._id, userID: existingCart.userID },
+        { $set: newReqBody }
+      );
+      return { status: true, updateData: updateData };
+    } else {
+      const data = await CartModel.create(ReqBody);
+      return { status: true, data: data };
+    }
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -20,6 +44,7 @@ const UpdateCartService = async (req) => {
   try {
     let user_id = new ObjectId(req.headers.user_id);
     let cartID = new ObjectId(req.params.cartID);
+
     let reqBody = req.body;
     const data = await CartModel.updateOne(
       { _id: cartID, userID: user_id },

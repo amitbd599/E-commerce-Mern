@@ -4,8 +4,7 @@ const OTPModel = require("../models/OTPModel");
 const EmailSend = require("../utility/EmailHelper");
 const { EncodeToken } = require("../utility/TokenHelper");
 
-
-//! Admin Service 
+//! Admin Service
 const RegisterAdminService = async (req) => {
   try {
     let reqBody = req.body;
@@ -59,14 +58,14 @@ const AdminUpdateService = async (req) => {
 
   let reqBody = {
     email: email,
-    password: password
-  }
+    password: password,
+  };
 
   try {
     let data = await AdminModel.updateOne(
       { email: email },
       {
-        $set: reqBody
+        $set: reqBody,
       }
     );
 
@@ -82,14 +81,14 @@ const AdminReadService = async (req) => {
     let MatchStage = {
       $match: {
         email,
-      }
+      },
     };
 
     let Project = {
       $project: {
         email: 1,
-      }
-    }
+      },
+    };
     let data = await AdminModel.aggregate([MatchStage, Project]);
     return { status: "success", data: data };
   } catch (error) {
@@ -99,18 +98,16 @@ const AdminReadService = async (req) => {
 
 const LogoutAdminService = async (res) => {
   try {
-    res.clearCookie('token_admin');
+    res.clearCookie("token_admin");
     return { status: "success" };
   } catch (error) {
     return { status: false, error: e.toString() };
   }
-
 };
 
 const EmailVerifyAdminService = async () => {
   try {
     return { status: "success" };
-
   } catch (e) {
     return { status: false, error: e.toString() };
   }
@@ -127,14 +124,13 @@ const RecoverVerifyEmailAdminService = async (req) => {
       { $count: "total" },
     ]);
 
-    console.log(UserCount.length);
-
     if (UserCount.length > 0) {
       //Create OTP
       let CreateOTP = await OTPModel.updateOne(
         { email: email },
         {
-          otp, status: 0
+          otp,
+          status: 0,
         },
         { upsert: true, new: true }
       );
@@ -184,14 +180,13 @@ const RecoverVerifyOTPAdminService = async (req) => {
   }
 };
 
-
 const ResetPasswordAdminService = async (req) => {
   let email = req.params.email;
   let otp = req.params.otp;
   otp = parseInt(otp);
   let reqBody = {
     email: email,
-    password: req.body.password //! working .....
+    password: req.body.password, //! working .....
   };
   // reqBody.password = md5(req.body.password);
   try {
@@ -210,7 +205,14 @@ const ResetPasswordAdminService = async (req) => {
   }
 };
 
-
 module.exports = {
-  RegisterAdminService, LoginAdminService, AdminReadService, LogoutAdminService, EmailVerifyAdminService, RecoverVerifyEmailAdminService, RecoverVerifyOTPAdminService, ResetPasswordAdminService, AdminUpdateService
+  RegisterAdminService,
+  LoginAdminService,
+  AdminReadService,
+  LogoutAdminService,
+  EmailVerifyAdminService,
+  RecoverVerifyEmailAdminService,
+  RecoverVerifyOTPAdminService,
+  ResetPasswordAdminService,
+  AdminUpdateService,
 };

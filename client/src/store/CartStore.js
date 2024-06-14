@@ -6,6 +6,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const CartStore = create((set) => ({
   isCartSubmit: false,
   CartList: null,
+  InvoiceList: [],
 
   //! create-cart-list
   CartListRequest: async (reqBody) => {
@@ -43,7 +44,7 @@ const CartStore = create((set) => ({
       set({ isCartSubmit: true });
       let res = await axios.post(
         apiUrl + "/update-cart-list/" + id,
-        { qty: qty.toString() },
+        { qty: qty },
         {
           withCredentials: true,
         }
@@ -70,6 +71,40 @@ const CartStore = create((set) => ({
       unAuthorize(e.response.status);
     } finally {
       set({ isCartSubmit: false });
+    }
+  },
+
+  // create invoice
+
+  CreateInvoiceRequest: async () => {
+    try {
+      set({ isCartSubmit: true });
+      let res = await axios.post(
+        apiUrl + "/create-invoice-list",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      // window.location.href = res?.data?.data?.GatewayPageURL;
+    } catch (e) {
+      unAuthorize(e.response.status);
+    } finally {
+      set({ isCartSubmit: false });
+    }
+  },
+
+  // get invoice list
+  InvoiceListGetRequest: async () => {
+    try {
+      let res = await axios.get(apiUrl + "/invoice-list", {
+        withCredentials: true,
+      });
+      if (res?.data?.status === true) {
+        set({ InvoiceList: res?.data?.data });
+      }
+    } catch (e) {
+      unAuthorize(e.response.status);
     }
   },
 }));

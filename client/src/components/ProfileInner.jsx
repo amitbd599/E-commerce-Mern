@@ -2,17 +2,22 @@ import React, { useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import UserStore from "../store/UserStore";
 import { ErrorToast, SuccessToast } from "../helper/helper";
+import CartStore from "../store/CartStore";
+import { Link } from "react-router-dom";
 const OrderInner = () => {
   let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
     UserStore();
 
+  let { InvoiceListGetRequest, InvoiceList } = CartStore();
+
   useEffect(() => {
     (async () => {
       await ProfileDetailsRequest();
+      await InvoiceListGetRequest();
     })();
   }, []);
 
-  console.log(ProfileDetails?.profile);
+  console.log(InvoiceList);
 
   let {
     cus_addRef,
@@ -34,25 +39,73 @@ const OrderInner = () => {
 
   const columns = [
     {
-      name: "Title",
-      selector: (row) => row.title,
+      name: "Invoice ID",
+      selector: (row) => row._id,
+      width: "150px",
     },
     {
-      name: "Year",
-      selector: (row) => row.year,
+      name: "Customer Name",
+      selector: (row) => row?.cus_details?.[0]?.Name,
+      sortable: true,
+      wrap: true,
+      width: "200px",
     },
-  ];
+    {
+      name: "Tran id",
+      selector: (row) => row?.tran_id,
+      sortable: true,
+      wrap: true,
+      width: "200px",
+    },
+    {
+      name: "deliver_status",
+      selector: (row) => row?.deliver_status,
+      sortable: true,
+      wrap: true,
+      width: "200px",
+    },
+    {
+      name: "payment_status",
+      selector: (row) => row?.payment_status,
+      sortable: true,
+      wrap: true,
+      width: "200px",
+    },
+    {
+      name: "Total",
+      selector: (row) => row?.total,
+      sortable: true,
+      wrap: true,
+      width: "200px",
+    },
+    {
+      name: "Action",
+      with: "500px",
 
-  const data = [
-    {
-      id: 1,
-      title: "Beetlejuice",
-      year: "1988",
-    },
-    {
-      id: 2,
-      title: "Ghostbusters",
-      year: "1984",
+      selector: (row) => (
+        <div className="flex gap-4 ">
+          <FaDownload
+            className="p-1 cursor-pointer text-[25px]"
+            // onClick={() => downloadPdf(row.invoiceID)}
+          />
+          <Link to={`/update?id=${row.invoiceID}`}>
+            <FaPenToSquare className="p-1 cursor-pointer text-[25px]" />
+          </Link>
+
+          <FaExpand
+            className="p-1 cursor-pointer text-[25px]"
+            // onClick={() => viewPdf(row.invoiceID)}
+          />
+          <FaPrint
+            className="p-1 cursor-pointer text-[25px]"
+            // onClick={() => printPdf(row.invoiceID)}
+          />
+          <FaTrashCan
+            className="p-1 cursor-pointer text-[25px]"
+            // onClick={() => deleteItem(row.invoiceID)}
+          />
+        </div>
+      ),
     },
   ];
 
@@ -191,7 +244,11 @@ const OrderInner = () => {
                 >
                   <div className="view order">
                     <div className="wrapper">
-                      <DataTable columns={columns} data={data} pagination />
+                      <DataTable
+                        columns={columns}
+                        data={InvoiceList}
+                        pagination
+                      />
                     </div>
                   </div>
                 </div>

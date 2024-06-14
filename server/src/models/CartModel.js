@@ -6,7 +6,7 @@ const DataSchema = mongoose.Schema(
 
     color: { type: String, required: true },
     price: { type: String },
-    qty: { type: String, required: true },
+    qty: { type: Number, required: true },
     size: { type: String, required: true },
   },
   {

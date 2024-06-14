@@ -109,7 +109,7 @@ const Products = () => {
       let reqBody = {
         color: color,
         size: size,
-        qty: qty.toString(),
+        qty: qty,
         productID: productID,
       };
 

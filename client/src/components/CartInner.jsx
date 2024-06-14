@@ -9,6 +9,7 @@ const CartInner = () => {
     CartListGetRequest,
     CartListUpdateRequest,
     CartListDeleteRequest,
+    CreateInvoiceRequest,
   } = CartStore();
 
   useEffect(() => {
@@ -37,6 +38,10 @@ const CartInner = () => {
         await CartListGetRequest();
       }
     });
+  };
+
+  let checkoutControl = async () => {
+    await CreateInvoiceRequest();
   };
 
   return (
@@ -160,12 +165,12 @@ const CartInner = () => {
                       Shipping &amp; taxes calculated at checkout
                     </p>
                     <div className="d-flex justify-content-center mt-4">
-                      <a
-                        href="checkout.html"
+                      <span
+                        onClick={checkoutControl}
                         className="position-relative btn-primary text-uppercase"
                       >
-                        Procced to checkout
-                      </a>
+                        Proceed to checkout
+                      </span>
                     </div>
                   </div>
                 </div>

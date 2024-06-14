@@ -208,7 +208,7 @@ const ProductDetailsInner = () => {
       let reqBody = {
         color: color,
         size: size,
-        qty: qty.toString(),
+        qty: qty,
         productID: productID,
       };
 
