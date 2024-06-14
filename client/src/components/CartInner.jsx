@@ -27,7 +27,14 @@ const CartInner = () => {
   };
 
   let subTotal = CartList?.reduce(
-    (sum, item) => sum + item?.qty * parseInt(item?.product?.price),
+    (sum, item) =>
+      sum +
+      item?.qty *
+        parseInt(
+          item?.product?.discount === true
+            ? item?.product?.discountPrice
+            : item?.product?.price
+        ),
     0
   );
 
@@ -134,7 +141,13 @@ const CartInner = () => {
                         </td>
                         <td className="cart-item-price text-end">
                           <div className="product-price">
-                            ${item?.qty * parseInt(item?.product?.price)}
+                            $
+                            {item?.qty *
+                              parseInt(
+                                item?.product?.discount === true
+                                  ? item?.product?.discountPrice
+                                  : item?.product?.price
+                              )}
                           </div>
                         </td>
                       </tr>
@@ -152,6 +165,11 @@ const CartInner = () => {
                       <h4 className="subtotal-title">Subtotals:</h4>
                       <p className="subtotal-value">${subTotal}</p>
                     </div>
+
+                    <div className="subtotal-item shipping-box">
+                      <h4 className="subtotal-title">Vat ({subTotal} x 5%):</h4>
+                      <p className="subtotal-value">${(subTotal * 5) / 100}</p>
+                    </div>
                     <div className="subtotal-item shipping-box">
                       <h4 className="subtotal-title">Shipping:</h4>
                       <p className="subtotal-value">$75</p>
@@ -165,12 +183,13 @@ const CartInner = () => {
                       Shipping &amp; taxes calculated at checkout
                     </p>
                     <div className="d-flex justify-content-center mt-4">
-                      <span
+                      <Link
                         onClick={checkoutControl}
+                        to="#"
                         className="position-relative btn-primary text-uppercase"
                       >
-                        Proceed to checkout
-                      </span>
+                        Procced to checkout
+                      </Link>
                     </div>
                   </div>
                 </div>

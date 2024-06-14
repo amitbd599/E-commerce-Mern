@@ -280,10 +280,14 @@ const ProductDetailsInner = () => {
                   </div>
                   <div className="product-price-wrapper mb-4">
                     <span className="product-price regular-price">
-                      ${ProductDetails?.price}
+                      {ProductDetails?.discount === true
+                        ? ProductDetails?.discountPrice
+                        : ProductDetails?.price}
                     </span>
                     <del className="product-price compare-price ms-2">
-                      ${ProductDetails?.discountPrice}
+                      {ProductDetails?.discount === false
+                        ? ""
+                        : "$" + ProductDetails?.price}
                     </del>
                   </div>
                   <div className="product-sku product-meta mb-1">

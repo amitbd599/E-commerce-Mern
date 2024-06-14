@@ -338,10 +338,15 @@ const Products = () => {
                             </h3>
                             <div className="product-card-price">
                               <span className="card-price-regular">
-                                ${item?.price}
+                                $
+                                {item?.discount === true
+                                  ? item?.discountPrice
+                                  : item?.price}
                               </span>
                               <span className="card-price-compare text-decoration-line-through">
-                                ${item?.discountPrice}
+                                {item?.discount === false
+                                  ? ""
+                                  : "$" + item?.price}
                               </span>
                             </div>
                           </div>

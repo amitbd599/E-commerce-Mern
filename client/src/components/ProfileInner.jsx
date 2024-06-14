@@ -4,6 +4,13 @@ import UserStore from "../store/UserStore";
 import { ErrorToast, SuccessToast } from "../helper/helper";
 import CartStore from "../store/CartStore";
 import { Link } from "react-router-dom";
+import {
+  FaDownload,
+  FaExpand,
+  FaPenToSquare,
+  FaPrint,
+  FaTrashCan,
+} from "react-icons/fa6";
 const OrderInner = () => {
   let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
     UserStore();
@@ -41,7 +48,7 @@ const OrderInner = () => {
     {
       name: "Invoice ID",
       selector: (row) => row._id,
-      width: "150px",
+      width: "250px",
     },
     {
       name: "Customer Name",
@@ -62,47 +69,31 @@ const OrderInner = () => {
       selector: (row) => row?.deliver_status,
       sortable: true,
       wrap: true,
-      width: "200px",
+      width: "150px",
     },
     {
       name: "payment_status",
       selector: (row) => row?.payment_status,
       sortable: true,
       wrap: true,
-      width: "200px",
+      width: "150px",
     },
     {
       name: "Total",
       selector: (row) => row?.total,
       sortable: true,
       wrap: true,
-      width: "200px",
+      width: "100px",
     },
     {
       name: "Action",
-      with: "500px",
+      with: "200px",
 
       selector: (row) => (
-        <div className="flex gap-4 ">
-          <FaDownload
-            className="p-1 cursor-pointer text-[25px]"
-            // onClick={() => downloadPdf(row.invoiceID)}
-          />
-          <Link to={`/update?id=${row.invoiceID}`}>
-            <FaPenToSquare className="p-1 cursor-pointer text-[25px]" />
-          </Link>
-
+        <div className="d-flex gap-2 ">
           <FaExpand
-            className="p-1 cursor-pointer text-[25px]"
+            className="p-1 cursor-pointer f-25"
             // onClick={() => viewPdf(row.invoiceID)}
-          />
-          <FaPrint
-            className="p-1 cursor-pointer text-[25px]"
-            // onClick={() => printPdf(row.invoiceID)}
-          />
-          <FaTrashCan
-            className="p-1 cursor-pointer text-[25px]"
-            // onClick={() => deleteItem(row.invoiceID)}
           />
         </div>
       ),

@@ -54,8 +54,9 @@ const CreateInvoiceService = async (req) => {
       });
 
       let vat = totalAmount * 0.05; // 5% vat
+      let shipping = 75;
 
-      let totalPayable = totalAmount + vat;
+      let totalPayable = totalAmount + vat + shipping;
 
       // =========== Step-2: Prepare customer details & shipping details =============
 

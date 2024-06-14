@@ -444,7 +444,13 @@ const Header = () => {
                         </div>
                         <div className="product-remove-area d-flex flex-column align-items-end">
                           <div className="product-price">
-                            ${item?.qty * parseInt(item?.product?.price)}
+                            $
+                            {item?.qty *
+                              parseInt(
+                                item?.product?.discount === true
+                                  ? item?.product?.discountPrice
+                                  : item?.product?.price
+                              )}
                           </div>
                           <Link
                             to="#"
@@ -473,7 +479,13 @@ const Header = () => {
                     $
                     {CartList?.reduce(
                       (sum, item) =>
-                        sum + item?.qty * parseInt(item?.product?.price),
+                        sum +
+                        item?.qty *
+                          parseInt(
+                            item?.product?.discount === true
+                              ? item?.product?.discountPrice
+                              : item?.product?.price
+                          ),
                       0
                     )}
                   </span>
