@@ -269,7 +269,8 @@ const Products = () => {
                       >
                         <div className="product-card">
                           <div className="product-card-img">
-                            <a
+                            <Link
+                              to={`/product-details/${item?._id}`}
                               className="hover-switch"
                               href="collection-left-sidebar.html"
                             >
@@ -283,7 +284,7 @@ const Products = () => {
                                 src={item?.img2}
                                 alt="product-img"
                               />
-                            </a>
+                            </Link>
                             <div className="product-badge">
                               <span className="badge-label badge-percentage rounded">
                                 {item?.brandDetails?.brandName}
