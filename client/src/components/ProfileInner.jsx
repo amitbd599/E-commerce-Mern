@@ -4,14 +4,7 @@ import UserStore from "../store/UserStore";
 import { ErrorToast, SuccessToast } from "../helper/helper";
 import CartStore from "../store/CartStore";
 import { Link } from "react-router-dom";
-import {
-  FaDownload,
-  FaExpand,
-  FaPenToSquare,
-  FaPrint,
-  FaTrashCan,
-} from "react-icons/fa6";
-import pdfScriptData from "../pdf_template/pdf_script";
+import { FaExpand } from "react-icons/fa6";
 const OrderInner = () => {
   let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
     UserStore();
@@ -24,11 +17,6 @@ const OrderInner = () => {
       await InvoiceListGetRequest();
     })();
   }, []);
-
-  let viewPdf = (row) => {
-    console.log(row);
-    pdfScriptData.template(row);
-  };
 
   let {
     cus_addRef,
@@ -104,10 +92,9 @@ const OrderInner = () => {
 
       selector: (row) => (
         <div className="d-flex gap-2 ">
-          <FaExpand
-            className="p-1 cursor-pointer f-25"
-            onClick={() => viewPdf(row)}
-          />
+          <div className="view_invoice">
+            <Link to={`/invoice/${row?._id}`}>View Invoice</Link>
+          </div>
         </div>
       ),
     },

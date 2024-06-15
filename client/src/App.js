@@ -19,6 +19,7 @@ import Error from "./pages/Error";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
+import Invoice from "./pages/Invoice";
 function App() {
   useEffect(() => {
     AOS.init();
@@ -93,6 +94,15 @@ function App() {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/invoice/:id"
+          element={
+            <PrivateRoute>
+              <Invoice />
             </PrivateRoute>
           }
         />

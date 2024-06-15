@@ -105,9 +105,10 @@ const CreateInvoiceService = async (req) => {
           productID: item?.productID,
           invoiceID: invoice_id,
           qty: item?.qty,
-          price: item.product.discountPrice
-            ? item.product.discountPrice
-            : item.product.price,
+          price:
+            item.product.discount === true
+              ? item.product.discountPrice
+              : item.product.price,
           color: item?.color,
           size: item?.size,
         });
@@ -271,6 +272,18 @@ const InvoiceProductListService = async (req) => {
         as: "product",
       },
     };
+    let projectionStage = {
+      $project: {
+        productID: 1,
+        qty: 1,
+        price: 1,
+        color: 1,
+        size: 1,
+        invoiceID: 1,
+
+        "product.title": 1,
+      },
+    };
 
     let unwindStage = { $unwind: "$product" };
 
@@ -278,6 +291,7 @@ const InvoiceProductListService = async (req) => {
       matchStage,
       joinStageWithProduct,
       unwindStage,
+      projectionStage,
     ]);
 
     return { status: true, data: products };
