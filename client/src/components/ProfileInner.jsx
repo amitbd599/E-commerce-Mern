@@ -11,6 +11,7 @@ import {
   FaPrint,
   FaTrashCan,
 } from "react-icons/fa6";
+import pdfScriptData from "../pdf_template/pdf_script";
 const OrderInner = () => {
   let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
     UserStore();
@@ -24,7 +25,10 @@ const OrderInner = () => {
     })();
   }, []);
 
-  console.log(InvoiceList);
+  let viewPdf = (row) => {
+    console.log(row);
+    pdfScriptData.template(row);
+  };
 
   let {
     cus_addRef,
@@ -46,10 +50,13 @@ const OrderInner = () => {
 
   const columns = [
     {
-      name: "Invoice ID",
-      selector: (row) => row._id,
-      width: "250px",
+      name: "Tran id",
+      selector: (row) => row?.tran_id,
+      sortable: true,
+      wrap: true,
+      width: "200px",
     },
+
     {
       name: "Customer Name",
       selector: (row) => row?.cus_details?.[0]?.Name,
@@ -57,13 +64,7 @@ const OrderInner = () => {
       wrap: true,
       width: "200px",
     },
-    {
-      name: "Tran id",
-      selector: (row) => row?.tran_id,
-      sortable: true,
-      wrap: true,
-      width: "200px",
-    },
+
     {
       name: "deliver_status",
       selector: (row) => row?.deliver_status,
@@ -73,14 +74,26 @@ const OrderInner = () => {
     },
     {
       name: "payment_status",
-      selector: (row) => row?.payment_status,
+      selector: (row) => (
+        <span
+          className={
+            row?.payment_status === "success"
+              ? "green_badge"
+              : row?.payment_status === "pending"
+              ? "yellow_badge"
+              : "red_badge"
+          }
+        >
+          {row?.payment_status}
+        </span>
+      ),
       sortable: true,
       wrap: true,
       width: "150px",
     },
     {
       name: "Total",
-      selector: (row) => row?.total,
+      selector: (row) => row?.payable,
       sortable: true,
       wrap: true,
       width: "100px",
@@ -93,7 +106,7 @@ const OrderInner = () => {
         <div className="d-flex gap-2 ">
           <FaExpand
             className="p-1 cursor-pointer f-25"
-            // onClick={() => viewPdf(row.invoiceID)}
+            onClick={() => viewPdf(row)}
           />
         </div>
       ),

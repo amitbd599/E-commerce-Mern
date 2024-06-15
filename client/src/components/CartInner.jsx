@@ -177,7 +177,9 @@ const CartInner = () => {
                     <hr />
                     <div className="subtotal-item discount-box">
                       <h4 className="subtotal-title">Total:</h4>
-                      <p className="subtotal-value">${subTotal + 75}</p>
+                      <p className="subtotal-value">
+                        ${subTotal + (subTotal * 5) / 100 + 75}
+                      </p>
                     </div>
                     <p className="shipping_text">
                       Shipping &amp; taxes calculated at checkout

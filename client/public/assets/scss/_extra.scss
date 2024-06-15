@@ -478,3 +478,22 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.green_badge {
+  background: #dcfce7;
+  padding: 2px 5px;
+  border-radius: 10px;
+  color: #22c55e;
+}
+.red_badge {
+  background: #fee2e2;
+  padding: 2px 5px;
+  border-radius: 10px;
+  color: #ef4444;
+}
+.yellow_badge {
+  background: #fefce8;
+  padding: 2px 5px;
+  border-radius: 10px;
+  color: #ca8a04;
+}
