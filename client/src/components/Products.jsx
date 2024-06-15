@@ -80,8 +80,9 @@ const Products = () => {
     }
   }, []);
 
-  let [selectedOptionColor, setSelectedOptionColor] = useState("");
-  let [selectedOptionSize, setSelectedOptionSize] = useState("");
+  const defaultOption = { label: "Select", value: "" };
+  let [selectedOptionColor, setSelectedOptionColor] = useState(defaultOption);
+  let [selectedOptionSize, setSelectedOptionSize] = useState(defaultOption);
   let [qty, setQty] = useState(1);
   let options_color = ProductDetails?.color.split(",").map((item, i) => {
     return { value: item, label: item };
@@ -92,8 +93,8 @@ const Products = () => {
   });
 
   let submitCartData = async () => {
-    let color = selectedOptionColor;
-    let size = selectedOptionSize;
+    let color = selectedOptionColor?.value;
+    let size = selectedOptionSize?.value;
     let productID = ProductDetails?._id;
 
     if (IsEmpty(color)) {
@@ -116,6 +117,9 @@ const Products = () => {
       await CartListRequest(reqBody).then(async (res) => {
         if (res) {
           await CartListGetRequest();
+          setSelectedOptionColor(defaultOption);
+          setSelectedOptionSize(defaultOption);
+          setQty(1);
           SuccessToast("Product add success!");
         } else {
           ErrorToast("Something went wrong!");
@@ -941,9 +945,9 @@ const Products = () => {
                       <div className="product-variant product-variant-color">
                         <strong className="label mb-1 d-block">Color:</strong>
                         <Select
-                          defaultValue={selectedOptionColor}
+                          value={selectedOptionColor}
                           onChange={(selectedOption) =>
-                            setSelectedOptionColor(selectedOption.value)
+                            setSelectedOptionColor(selectedOption)
                           }
                           options={options_color}
                         />
@@ -951,9 +955,9 @@ const Products = () => {
                       <div className="product-variant product-variant-color">
                         <strong className="label mb-1 d-block">Size:</strong>
                         <Select
-                          defaultValue={selectedOptionSize}
+                          value={selectedOptionSize}
                           onChange={(selectedOption) =>
-                            setSelectedOptionSize(selectedOption.value)
+                            setSelectedOptionSize(selectedOption)
                           }
                           options={options_size}
                         />
@@ -964,7 +968,7 @@ const Products = () => {
                         <button
                           className="qty-btn dec-qty"
                           onClick={() => {
-                            if (qty > 0) {
+                            if (qty > 1) {
                               setQty((qty) => qty - 1);
                             }
                           }}
@@ -1013,6 +1017,7 @@ const Products = () => {
                       </div>
                       <div className="buy-it-now-btn mt-2">
                         <button
+                          onClick={() => handelWishList(ProductDetails?._id)}
                           type="submit"
                           className="position-relative btn-atc btn-buyit-now"
                         >

@@ -22,9 +22,6 @@ const InvoiceInner = () => {
 
   let rootInvoiceLayer = InvoiceList?.filter((item) => item._id === id);
 
-  console.log(InvoiceSingle[0]);
-  console.log(rootInvoiceLayer[0]);
-
   return (
     <section className="invoice">
       <div className="container-fluid invoice-container ">

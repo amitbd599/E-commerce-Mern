@@ -4,7 +4,13 @@ import UserStore from "../store/UserStore";
 import { ErrorToast, SuccessToast } from "../helper/helper";
 import CartStore from "../store/CartStore";
 import { Link } from "react-router-dom";
-import { FaExpand } from "react-icons/fa6";
+import {
+  FaExpand,
+  FaFeather,
+  FaGg,
+  FaRegSun,
+  FaUserCheck,
+} from "react-icons/fa6";
 const OrderInner = () => {
   let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
     UserStore();
@@ -93,7 +99,9 @@ const OrderInner = () => {
       selector: (row) => (
         <div className="d-flex gap-2 ">
           <div className="view_invoice">
-            <Link to={`/invoice/${row?._id}`}>View Invoice</Link>
+            <Link target="_blank" to={`/invoice/${row?._id}`}>
+              View Invoice
+            </Link>
           </div>
         </div>
       ),
@@ -146,7 +154,7 @@ const OrderInner = () => {
     <section className="profile">
       <div className="container">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="tab__btn">
               <div
                 className="nav flex-column nav-pills me-3"
@@ -164,6 +172,8 @@ const OrderInner = () => {
                   aria-controls="v-pills-Dashboard"
                   aria-selected="true"
                 >
+                  {" "}
+                  <FaFeather className="me-2" />
                   Dashboard
                 </button>
                 <button
@@ -176,6 +186,8 @@ const OrderInner = () => {
                   aria-controls="v-pills-Order"
                   aria-selected="false"
                 >
+                  {" "}
+                  <FaGg className="me-2" />
                   Order
                 </button>
                 <button
@@ -188,7 +200,9 @@ const OrderInner = () => {
                   aria-controls="v-pills-information"
                   aria-selected="false"
                 >
-                  Edit profile information
+                  {" "}
+                  <FaUserCheck className="me-2" />
+                  Edit profile
                 </button>
                 <button
                   className="nav-link"
@@ -200,6 +214,8 @@ const OrderInner = () => {
                   aria-controls="v-pills-settings"
                   aria-selected="false"
                 >
+                  {" "}
+                  <FaRegSun className="me-2" />
                   Settings
                 </button>
               </div>
