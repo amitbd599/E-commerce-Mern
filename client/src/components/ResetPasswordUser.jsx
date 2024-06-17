@@ -1,34 +1,42 @@
 import React, { useRef } from "react";
 import UserStore from "../store/UserStore";
-import { ErrorToast, IsEmail, IsEmpty, SuccessToast } from "../helper/helper";
-import { useNavigate } from "react-router-dom";
+import {
+  ErrorToast,
+  IsEmail,
+  IsEmpty,
+  SuccessToast,
+  setEmail,
+} from "../helper/helper";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "./Spinner";
 
-const RegisterInner = () => {
-  let { RegisterUserRequest, isSubmit } = UserStore();
-  let { emailRef, passwordRef } = useRef();
+const ResetPasswordUser = () => {
+  let { ResetPasswordRequest, isSubmit } = UserStore();
+  let { passwordRef, rePasswordRef } = useRef();
+  let { email, code } = useParams();
 
   let navigate = useNavigate();
 
   let submitRegistration = async () => {
-    let email = emailRef.value;
     let password = passwordRef.value;
-    if (IsEmail(email)) {
-      ErrorToast("Please enter a valid email address");
-      return;
-    } else if (IsEmpty(email)) {
-      ErrorToast("Please enter email address");
-      return;
-    } else if (IsEmpty(password)) {
+    let rePassword = rePasswordRef.value;
+
+    if (IsEmpty(password)) {
       ErrorToast("Please enter password");
       return;
+    } else if (IsEmpty(rePassword)) {
+      ErrorToast("Please re-enter password");
+      return;
+    } else if (password !== rePassword) {
+      ErrorToast("Password not match!");
+      return;
     } else {
-      await RegisterUserRequest({ email, password }).then((res) => {
+      await ResetPasswordRequest(email, code, password).then((res) => {
         if (res) {
-          SuccessToast("Registration successful!");
+          SuccessToast("Password change successful!");
           navigate("/login");
         } else {
-          ErrorToast("Registration failed!");
+          ErrorToast("Password change unsuccessful!");
         }
       });
     }
@@ -38,27 +46,24 @@ const RegisterInner = () => {
       <div className="container">
         <div action="#" className="login-form common-form mx-auto">
           <div className="section-header mb-3">
-            <h2 className="section-heading text-center">Register</h2>
+            <h2 className=" text-center">Enter your email</h2>
           </div>
           <div className="row">
             <div className="col-12">
               <fieldset>
-                <label className="label">Email address</label>
-                <input type="email" ref={(input) => (emailRef = input)} />
+                <label className="label">Enter new password</label>
+                <input type="email" ref={(input) => (passwordRef = input)} />
               </fieldset>
             </div>
             <div className="col-12">
               <fieldset>
-                <label className="label">Password</label>
-                <input type="password" ref={(input) => (passwordRef = input)} />
+                <label className="label">Re-enter this password</label>
+                <input type="email" ref={(input) => (rePasswordRef = input)} />
               </fieldset>
             </div>
             <div className="col-12 mt-3">
               {isSubmit === true ? (
-                <button
-                  className="btn-primary d-block mt-3 btn-signin"
-                  disabled
-                >
+                <button className="btn-primary d-block mt-3 btn-signin">
                   <Spinner />
                 </button>
               ) : (
@@ -67,7 +72,7 @@ const RegisterInner = () => {
                   type="submit"
                   className="btn-primary d-block mt-3 btn-signin"
                 >
-                  CREATE
+                  Send OTP Code
                 </button>
               )}
             </div>
@@ -78,4 +83,4 @@ const RegisterInner = () => {
   );
 };
 
-export default RegisterInner;
+export default ResetPasswordUser;

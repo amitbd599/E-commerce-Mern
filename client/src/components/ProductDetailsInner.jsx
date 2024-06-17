@@ -18,15 +18,12 @@ import SkeletonBar from "../skeleton/SkeletonBar";
 import ImgSkeleton from "../skeleton/ImgSkeleton";
 import Select from "react-select";
 import CartStore from "../store/CartStore";
+import ReviewStore from "../store/ReviewStore";
 import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
 const ProductDetailsInner = () => {
   let { isCartSubmit, CartListRequest, CartListGetRequest } = CartStore();
-  let {
-    ReviewsListRequest,
-    ReviewsList,
-    ProductDetails,
-    ProductDetailsRequest,
-  } = ProductStore();
+  let { GetAllReviewByProductRequest, reviewList } = ReviewStore();
+  let { ProductDetails, ProductDetailsRequest } = ProductStore();
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const defaultOption = { label: "Select", value: "" };
@@ -37,7 +34,7 @@ const ProductDetailsInner = () => {
   useEffect(() => {
     (async () => {
       await ProductDetailsRequest(id);
-      await ReviewsListRequest(id);
+      await GetAllReviewByProductRequest(id);
     })();
   }, []);
 
@@ -226,6 +223,8 @@ const ProductDetailsInner = () => {
       });
     }
   };
+
+  console.log(reviewList.length);
 
   return (
     <>
@@ -474,67 +473,63 @@ const ProductDetailsInner = () => {
               )}
             </div>
             <div id="pshipping" className="tab-pane fade">
-              {ProductDetails !== null ? (
-                <div className="desc-content">
-                  <h4 className="heading_18 mb-3">
-                    Returns within the European Union
-                  </h4>
-                  <p className="text_16 mb-4">
-                    The European law states that when an order is being
-                    returned, it is mandatory for the company to refund the
-                    product price and shipping costs charged for the original
-                    shipment. Meaning: one shipping fee is paid by us.
-                  </p>
-                  <p className="text_16 mb-4">
-                    Standard Shipping: If you placed an order using "standard
-                    shipping" and you want to return it, you will be refunded
-                    the product price and initial shipping costs. However, the
-                    return shipping costs will be paid by you.
-                  </p>
-                  <p className="text_16">
-                    Free Shipping: If you placed an order using "free shipping"
-                    and you want to return it, you will be refunded the product
-                    price, but since we paid for the initial shipping, you will
-                    pay for the return.
-                  </p>
-                </div>
-              ) : (
-                <SkeletonBar count={15} />
-              )}
+              <div className="desc-content">
+                <h4 className="heading_18 mb-3">
+                  Returns within the European Union
+                </h4>
+                <p className="text_16 mb-4">
+                  The European law states that when an order is being returned,
+                  it is mandatory for the company to refund the product price
+                  and shipping costs charged for the original shipment. Meaning:
+                  one shipping fee is paid by us.
+                </p>
+                <p className="text_16 mb-4">
+                  Standard Shipping: If you placed an order using "standard
+                  shipping" and you want to return it, you will be refunded the
+                  product price and initial shipping costs. However, the return
+                  shipping costs will be paid by you.
+                </p>
+                <p className="text_16">
+                  Free Shipping: If you placed an order using "free shipping"
+                  and you want to return it, you will be refunded the product
+                  price, but since we paid for the initial shipping, you will
+                  pay for the return.
+                </p>
+              </div>
             </div>
 
             <div id="review" className="tab-pane fade ">
               <div className="review-area accordion-parent">
                 <h4 className="heading_18 mb-3">Customer Reviews</h4>
               </div>
-              <div className="review">
-                <ul>
-                  {ReviewsList?.map((item, index) => (
-                    <li key={index}>
-                      <div className="inner__review">
-                        <div className="inner__text">
-                          <h3>Alex Johan</h3>
-                          <div className="d-flex review__star">
-                            <p className="time">
-                              {moment(item?.createdAt).format("DD-MM-YYYY")}
-                            </p>
-                            <div className="star">
-                              <StarRating star={item?.rating} />
+              {reviewList.length > 0 ? (
+                <div className="review">
+                  <ul>
+                    {reviewList?.map((item, index) => (
+                      <li key={index}>
+                        <div className="inner__review">
+                          <div className="inner__text">
+                            <h3>{item?.profiles?.cus_name}</h3>
+                            <div className="d-flex review__star">
+                              <p className="time">
+                                {moment(item?.createdAt).format("DD-MM-YYYY")}
+                              </p>
+                              <div className="star">
+                                <StarRating star={item?.rating} />
+                              </div>
                             </div>
+                            <p className="review__text">{item?.des}</p>
                           </div>
-                          <p className="review__text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Delectus, suscipit exercitationem accusantium
-                            obcaecati quos voluptate nesciunt facilis itaque
-                            modi commodi dignissimos sequi repudiandae minus ab
-                            deleniti totam officia id incidunt
-                          </p>
                         </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <div>
+                  <p>No review found! 😢</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

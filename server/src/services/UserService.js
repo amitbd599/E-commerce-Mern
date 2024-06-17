@@ -188,9 +188,9 @@ const RecoverVerifyEmailUserService = async (req) => {
         "Your PIN Code is =" + otp,
         "Task Manager PIN Verification"
       );
-      return { status: "success", data: SendEmail };
+      return { status: true, data: SendEmail };
     } else {
-      return { status: "error", data: "No User Found" };
+      return { status: false, data: "No User Found" };
     }
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -219,9 +219,9 @@ const RecoverVerifyOTPUserService = async (req) => {
           status: 1,
         }
       );
-      return { status: "success", data: OTPUpdate };
+      return { status: true, data: OTPUpdate };
     } else {
-      return { status: "error", data: "Invalid OTP Code" };
+      return { status: false, data: "Invalid OTP Code" };
     }
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -254,9 +254,9 @@ const ResetPasswordUserService = async (req) => {
           status: 0,
         }
       );
-      return { status: "success", data: PassUpdate };
+      return { status: true, data: PassUpdate };
     } else {
-      return { status: "error", data: "Something is Wrong!" };
+      return { status: false, data: "Something is Wrong!" };
     }
   } catch (error) {
     return { status: false, error: error.toString() };

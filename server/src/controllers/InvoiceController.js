@@ -6,6 +6,7 @@ const {
   PaymentSuccessService,
   InvoiceListService,
   InvoiceProductListService,
+  OrderListService,
 } = require("../services/InvoiceService.js");
 
 //! Invoice List Controller
@@ -36,6 +37,11 @@ exports.PaymentSuccess = async (req, res) => {
 
 exports.InvoiceList = async (req, res) => {
   let result = await InvoiceListService(req);
+  return res.status(200).json(result);
+};
+
+exports.OrderList = async (req, res) => {
+  let result = await OrderListService(req);
   return res.status(200).json(result);
 };
 

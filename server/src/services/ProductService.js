@@ -1209,9 +1209,20 @@ const ReadSingleReviewService = async (req) => {
 };
 
 const CreateReviewService = async (req) => {
+  console.log(req);
   try {
+    let user_id = new ObjectId(req.headers.user_id);
     let ReqBody = req.body;
-    const data = await ReviewModel.create(ReqBody);
+    ReqBody.userID = user_id;
+    ReqBody.productID = new ObjectId(ReqBody.productID);
+    ReqBody.invoiceID = new ObjectId(ReqBody.invoiceID);
+
+    const data = await ReviewModel.updateOne(
+      { productID: ReqBody.productID, invoiceID: ReqBody.invoiceID },
+      { $set: ReqBody },
+      { upsert: true }
+    );
+    // const data = await ReviewModel.create(ReqBody);
     return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };

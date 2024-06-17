@@ -182,7 +182,7 @@ router.get(
 //! Product review routes
 router.post(
   "/create-review-list",
-  AuthVerificationAdmin,
+  AuthVerificationUser,
   ProductController.CreateReview
 );
 router.get("/read-review-list", ProductController.ReadReview);
@@ -263,6 +263,7 @@ router.get(
   AuthVerificationUser,
   InvoiceController.InvoiceList
 );
+router.get("/order-list", AuthVerificationUser, InvoiceController.OrderList);
 router.get(
   "/invoice-product-list/:invoiceID",
   AuthVerificationUser,

@@ -5,6 +5,80 @@ import Cookies from "js-cookie";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const UserStore = create((set) => ({
+  isSubmit: false,
+
+  // Register-user api
+  RegisterUserRequest: async (reqBody) => {
+    set({ isSubmit: true });
+    let res = await axios.post(apiUrl + "/register-user", reqBody, {
+      withCredentials: true,
+    });
+    if (res.data.status === true) {
+      set({ isSubmit: false });
+      return true;
+    } else {
+      set({ isSubmit: false });
+      return false;
+    }
+  },
+
+  // forgot-password-user api
+  ForgotPasswordUserRequest: async (email) => {
+    set({ isSubmit: true });
+    let res = await axios.post(
+      apiUrl + "/forgot-password-user/" + email,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    if (res.data.status === true) {
+      set({ isSubmit: false });
+      return true;
+    } else {
+      set({ isSubmit: false });
+      return false;
+    }
+  },
+
+  // otp-verify-user api
+  OTPVerifyUserRequest: async (email, code) => {
+    set({ isSubmit: true });
+    let res = await axios.post(
+      apiUrl + "/otp-verify-user/" + email + "/" + code,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    if (res.data.status === true) {
+      set({ isSubmit: false });
+      return true;
+    } else {
+      set({ isSubmit: false });
+      return false;
+    }
+  },
+
+  // otp-verify-user api
+  ResetPasswordRequest: async (email, code, password) => {
+    set({ isSubmit: true });
+    let res = await axios.post(
+      apiUrl + "/reset-password-user/" + email + "/" + code,
+      { password },
+      {
+        withCredentials: true,
+      }
+    );
+    if (res.data.status === true) {
+      set({ isSubmit: false });
+      return true;
+    } else {
+      set({ isSubmit: false });
+      return false;
+    }
+  },
+
   // is login
   isLogin: () => {
     return !!Cookies.get("token_user");

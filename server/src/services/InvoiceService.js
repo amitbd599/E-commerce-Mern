@@ -300,6 +300,47 @@ const InvoiceProductListService = async (req) => {
   }
 };
 
+const OrderListService = async (req) => {
+  try {
+    let user_id = new ObjectId(req.headers.user_id);
+    let matchStage = {
+      $match: { userID: user_id },
+    };
+    let joinStageWithProduct = {
+      $lookup: {
+        from: "products",
+        localField: "productID",
+        foreignField: "_id",
+        as: "product",
+      },
+    };
+
+    let projectionStage = {
+      $project: {
+        productID: 1,
+        qty: 1,
+        price: 1,
+        color: 1,
+        size: 1,
+        invoiceID: 1,
+
+        "product.title": 1,
+        "product.img1": 1,
+      },
+    };
+
+    let product = await InvoiceProductModel.aggregate([
+      matchStage,
+      joinStageWithProduct,
+      projectionStage,
+    ]);
+
+    return { status: true, data: product };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
 module.exports = {
   CreateInvoiceService,
   PaymentFailService,
@@ -308,4 +349,5 @@ module.exports = {
   PaymentSuccessService,
   InvoiceListService,
   InvoiceProductListService,
+  OrderListService,
 };

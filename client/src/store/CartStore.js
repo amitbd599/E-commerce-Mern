@@ -8,6 +8,7 @@ const CartStore = create((set) => ({
   CartList: null,
   InvoiceList: [],
   InvoiceSingle: [],
+  allOrder: [],
 
   //! create-cart-list
   CartListRequest: async (reqBody) => {
@@ -117,6 +118,20 @@ const CartStore = create((set) => ({
       });
       if (res?.data?.status === true) {
         set({ InvoiceSingle: res?.data?.data });
+      }
+    } catch (e) {
+      unAuthorize(e.response.status);
+    }
+  },
+
+  // get all orders
+  GetAllOrderRequest: async () => {
+    try {
+      let res = await axios.get(apiUrl + "/order-list", {
+        withCredentials: true,
+      });
+      if (res?.data?.status === true) {
+        set({ allOrder: res?.data?.data });
       }
     } catch (e) {
       unAuthorize(e.response.status);

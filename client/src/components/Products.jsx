@@ -5,8 +5,6 @@ import {
   FaLinkedinIn,
   FaMinus,
   FaPlus,
-  FaRegStar,
-  FaStar,
   FaTwitter,
 } from "react-icons/fa";
 import ProductStore from "../store/ProductStore";
@@ -276,7 +274,6 @@ const Products = () => {
                             <Link
                               to={`/product-details/${item?._id}`}
                               className="hover-switch"
-                              href="collection-left-sidebar.html"
                             >
                               <img
                                 className="secondary-img"

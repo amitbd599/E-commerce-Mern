@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import UserStore from "../store/UserStore";
 import { ErrorToast, SuccessToast, getEmail } from "../helper/helper";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LoginInner = () => {
   const navigate = useNavigate();
@@ -50,18 +50,18 @@ const LoginInner = () => {
               </fieldset>
             </div>
             <div className="col-12 mt-3">
-              <a href="#" className="text_14 d-block">
+              <Link to="/forgot-password" className="text_14 d-block">
                 Forgot your password?
-              </a>
+              </Link>
               <button
                 type="submit"
                 className="btn-primary d-block mt-4 btn-signin"
               >
                 SIGN IN
               </button>
-              <a href="register.html" className="btn-secondary mt-2 btn-signin">
+              <Link to="/register" className="btn-secondary mt-2 btn-signin">
                 CREATE AN ACCOUNT
-              </a>
+              </Link>
             </div>
           </div>
         </form>

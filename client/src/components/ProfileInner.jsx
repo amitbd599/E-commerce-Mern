@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DataTable from "react-data-table-component";
 import UserStore from "../store/UserStore";
-import { ErrorToast, SuccessToast } from "../helper/helper";
+import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
 import CartStore from "../store/CartStore";
 import { Link } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
+import { IoMdClose } from "react-icons/io";
+import { FaTimes } from "react-icons/fa";
 import {
   FaExpand,
   FaFeather,
@@ -11,16 +14,33 @@ import {
   FaRegSun,
   FaUserCheck,
 } from "react-icons/fa6";
+import ProductStore from "../store/ProductStore";
+import ReviewStore from "../store/ReviewStore";
 const OrderInner = () => {
   let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
     UserStore();
 
-  let { InvoiceListGetRequest, InvoiceList } = CartStore();
+  let { ReviewListCreateRequest } = ReviewStore();
+  let { ProductDetailsRequest } = ProductStore();
+  let [active, setActive] = useState(false);
+  let [id, setId] = useState("");
+  let [rating, setRating] = useState(4);
+  let [invoiceID, setInvoiceID] = useState("");
+
+  let {
+    InvoiceListGetRequest,
+    InvoiceList,
+    InvoiceSingleGetRequest,
+    InvoiceSingle,
+    GetAllOrderRequest,
+    allOrder,
+  } = CartStore();
 
   useEffect(() => {
     (async () => {
       await ProfileDetailsRequest();
       await InvoiceListGetRequest();
+      await GetAllOrderRequest();
     })();
   }, []);
 
@@ -40,6 +60,7 @@ const OrderInner = () => {
     ship_phoneRef,
     ship_postcodeRef,
     ship_stateRef,
+    reviewRef,
   } = useRef();
 
   const columns = [
@@ -108,6 +129,70 @@ const OrderInner = () => {
     },
   ];
 
+  const columns_order = [
+    {
+      name: "Title",
+      selector: (row) => row?.product?.[0]?.title,
+      sortable: true,
+      wrap: true,
+      width: "400px",
+    },
+
+    {
+      name: "Color",
+      selector: (row) => row?.color,
+      sortable: true,
+      wrap: true,
+      width: "80px",
+    },
+    {
+      name: "Image",
+      selector: (row) => (
+        <div className="order__img">
+          <img src={row?.product?.[0]?.img1} alt="" />
+        </div>
+      ),
+      sortable: true,
+      wrap: true,
+      width: "100px",
+    },
+
+    {
+      name: "Price",
+      selector: (row) => row?.price,
+      sortable: true,
+      wrap: true,
+      width: "80px",
+    },
+    {
+      name: "QTY",
+      selector: (row) => row?.qty,
+      sortable: true,
+      wrap: true,
+      width: "80px",
+    },
+
+    {
+      name: "Action",
+      with: "100px",
+
+      selector: (row) => (
+        <div className="d-flex gap-2 ">
+          <div className="view_invoice">
+            <Link
+              onClick={() => {
+                openPopup(row?.productID);
+                setInvoiceID(row?.invoiceID);
+              }}
+            >
+              Give review
+            </Link>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
   let submitProfile = () => {
     let cus_add = cus_addRef.value;
     let cus_city = cus_cityRef.value;
@@ -150,11 +235,42 @@ const OrderInner = () => {
     });
   };
 
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
+  };
+
+  let openPopup = async (productID) => {
+    await ProductDetailsRequest(productID);
+    setActive(true);
+    setId(productID);
+  };
+  let reviewSubmit = async () => {
+    let des = reviewRef.value;
+    let productID = id;
+    if (IsEmpty(des)) {
+      ErrorToast("Please give review");
+      return;
+    } else {
+      await ReviewListCreateRequest({ des, rating, productID, invoiceID }).then(
+        (res) => {
+          if (res) {
+            SuccessToast("Review add successfully!");
+            setRating(4);
+            reviewRef.value = "";
+            setActive(false);
+          }
+        }
+      );
+    }
+  };
+
+  console.log(invoiceID);
+
   return (
     <section className="profile">
       <div className="container">
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-3">
             <div className="tab__btn">
               <div
                 className="nav flex-column nav-pills me-3"
@@ -178,6 +294,20 @@ const OrderInner = () => {
                 </button>
                 <button
                   className="nav-link"
+                  id="v-pills-Invoice-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-Invoice"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-Invoice"
+                  aria-selected="false"
+                >
+                  {" "}
+                  <FaGg className="me-2" />
+                  All Invoice
+                </button>
+                <button
+                  className="nav-link"
                   id="v-pills-Order-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-Order"
@@ -188,7 +318,7 @@ const OrderInner = () => {
                 >
                   {" "}
                   <FaGg className="me-2" />
-                  Order
+                  All ordered products
                 </button>
                 <button
                   className="nav-link"
@@ -245,10 +375,13 @@ const OrderInner = () => {
                 </div>
                 <div
                   className="tab-pane fade"
-                  id="v-pills-Order"
+                  id="v-pills-Invoice"
                   role="tabpanel"
-                  aria-labelledby="v-pills-Order-tab"
+                  aria-labelledby="v-pills-Invoice-tab"
                 >
+                  <div className="title__invoice">
+                    <h2>All invoice data</h2>
+                  </div>
                   <div className="view order">
                     <div className="wrapper">
                       <DataTable
@@ -261,10 +394,32 @@ const OrderInner = () => {
                 </div>
                 <div
                   className="tab-pane fade"
+                  id="v-pills-Order"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-Order-tab"
+                >
+                  <div className="title__invoice">
+                    <h2>All ordered products</h2>
+                  </div>
+                  <div className="view order">
+                    <div className="wrapper">
+                      <DataTable
+                        columns={columns_order}
+                        data={allOrder}
+                        pagination
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="tab-pane fade"
                   id="v-pills-information"
                   role="tabpanel"
                   aria-labelledby="v-pills-information-tab"
                 >
+                  <div className="title__invoice">
+                    <h2>Update customer details and shipping details</h2>
+                  </div>
                   <div className="view information">
                     <div className="wrapper">
                       <h3>Customer details:</h3>
@@ -471,6 +626,43 @@ const OrderInner = () => {
                   ...
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Review given */}
+      <div className={`review__inner  ${active && "active"}`}>
+        <div className="wrap">
+          <div className="product">
+            <div className="pt-2">
+              <img
+                className="img-fluid"
+                src="https://spreethemesprevious.github.io/bisum/html/assets/img/products/furniture/2.jpg"
+                alt=""
+              />
+            </div>
+            <div className="right">
+              <p>Product title</p>
+              <textarea
+                name=""
+                id=""
+                className="input_text"
+                ref={(input) => (reviewRef = input)}
+              ></textarea>
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={30}
+                activeColor="#ffd700"
+                classNames={"input_rate"}
+                value={rating}
+              />
+
+              <button onClick={reviewSubmit}>Submit Review</button>
+            </div>
+            <div className="close__btn" onClick={() => setActive(false)}>
+              <IoMdClose />
             </div>
           </div>
         </div>
