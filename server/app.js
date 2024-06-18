@@ -49,7 +49,7 @@ app.use("/api/v1", router);
 
 // Add React Front End Routing
 app.get("*", function (req, res) {
-  res.sendFile("Not Found");
+  res.status(200).json("Not Found");
 });
 
 module.exports = app;
