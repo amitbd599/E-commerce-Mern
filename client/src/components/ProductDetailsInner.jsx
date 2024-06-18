@@ -4,26 +4,33 @@ import parse from "html-react-parser";
 import moment from "moment";
 import ProductStore from "../store/ProductStore";
 import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
   FaMinus,
   FaPlus,
   FaRegStar,
   FaStar,
-  FaTwitter,
+  FaStarHalfAlt,
 } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SkeletonBar from "../skeleton/SkeletonBar";
 import ImgSkeleton from "../skeleton/ImgSkeleton";
 import Select from "react-select";
 import CartStore from "../store/CartStore";
 import ReviewStore from "../store/ReviewStore";
 import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
+import ShareButton from "./ShareButton";
+import WishListStore from "../store/WishListStore";
 const ProductDetailsInner = () => {
+  let navigate = useNavigate();
   let { isCartSubmit, CartListRequest, CartListGetRequest } = CartStore();
   let { GetAllReviewByProductRequest, reviewList } = ReviewStore();
-  let { ProductDetails, ProductDetailsRequest } = ProductStore();
+  let {
+    ProductList,
+    ProductListRequest_Feature,
+    ProductDetails,
+    ProductDetailsRequest,
+  } = ProductStore();
+  let { WishListRequest, WishListGetRequest } = WishListStore();
+
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const defaultOption = { label: "Select", value: "" };
@@ -35,6 +42,7 @@ const ProductDetailsInner = () => {
     (async () => {
       await ProductDetailsRequest(id);
       await GetAllReviewByProductRequest(id);
+      await ProductListRequest_Feature(12, 1);
     })();
   }, []);
 
@@ -224,7 +232,36 @@ const ProductDetailsInner = () => {
     }
   };
 
-  console.log(reviewList.length);
+  let ratings = reviewList?.map((item) => item?.rating);
+  let sum = ratings?.reduce((item, rating) => item + rating, 0);
+  let average = sum / ratings?.length;
+
+  const Rating = ({ average }) => {
+    const fullStars = Math.floor(average || 0);
+    const halfStar = average % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    return (
+      <div className="single__rate">
+        {[...Array(fullStars)].fill(<FaStar />)}
+        {halfStar && <FaStarHalfAlt />}
+        {[...Array(emptyStars)].fill(<FaRegStar />)}
+      </div>
+    );
+  };
+
+  let handelWishList = async (productID) => {
+    await WishListRequest({ productID }).then(async (res) => {
+      if (res) {
+        SuccessToast("Wishlist Product add success!");
+        await WishListGetRequest();
+      }
+    });
+  };
+
+  let pageClick = async (id) => {
+    await ProductDetailsRequest(id);
+    navigate(`/product-details/${id}`);
+  };
 
   return (
     <>
@@ -276,9 +313,8 @@ const ProductDetailsInner = () => {
                     {ProductDetails?.title}
                   </h2>
                   <div className="product-rating d-flex align-items-center mb-3">
-                    <span className="star-rating">{/* <StarRating /> */}</span>
-                    <span className="rating-count ms-2">
-                      ({ProductDetails?.star})
+                    <span className="rating-count product  d-flex">
+                      <Rating average={average} /> ({average || 0})
                     </span>
                   </div>
                   <div className="product-price-wrapper mb-4">
@@ -370,14 +406,20 @@ const ProductDetailsInner = () => {
                         <button
                           onClick={submitCartData}
                           type="submit"
-                          className="position-relative btn-atc btn-add-to-cart loader"
+                          className="position-relative btn-atc btn-add-to-cart loader out_stock"
+                          disabled={
+                            ProductDetails?.stock === false ? true : false
+                          }
                         >
-                          ADD TO CART
+                          {ProductDetails?.stock === false
+                            ? "OUT OF STOCK"
+                            : " ADD TO CART"}
                         </button>
                       )}
                     </div>
                     <div className="buy-it-now-btn mt-2">
                       <button
+                        onClick={() => handelWishList(ProductDetails?._id)}
                         type="submit"
                         className="position-relative btn-atc btn-buyit-now"
                       >
@@ -388,20 +430,9 @@ const ProductDetailsInner = () => {
 
                   <div className="share-area mt-4 d-flex align-items-center">
                     <strong className="label mb-1 d-block">Share:</strong>
-                    <ul className="list-unstyled share-list d-flex align-items-center mb-1 flex-wrap">
-                      <li className="share-item">
-                        <FaFacebookF />
-                      </li>
-                      <li className="share-item">
-                        <FaTwitter />
-                      </li>
-                      <li className="share-item">
-                        <FaInstagram />
-                      </li>
-                      <li className="share-item">
-                        <FaLinkedinIn />
-                      </li>
-                    </ul>
+                    <ShareButton
+                      shareUrl={`/product-details/${ProductDetails?._id}`}
+                    />
                   </div>
                 </div>
               </div>
@@ -544,7 +575,7 @@ const ProductDetailsInner = () => {
           <div className="product-container position-relative">
             <div className="common-slider">
               <Slider {...settings}>
-                {[...Array(6)].map((item, index) => (
+                {ProductList?.products?.map((item, index) => (
                   <div
                     className="new-item px-3"
                     data-aos="fade-up"
@@ -553,63 +584,38 @@ const ProductDetailsInner = () => {
                   >
                     <div className="product-card">
                       <div className="product-card-img">
-                        <a
+                        <Link
+                          to={"#"}
                           className="hover-switch"
-                          href="collection-left-sidebar.html"
+                          onClick={() => pageClick(item?._id)}
                         >
                           <img
                             className="secondary-img"
-                            src="https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/4.jpg"
+                            src={item?.img1}
                             alt="product-img"
                           />
                           <img
                             className="primary-img"
-                            src="https://spreethemesprevious.github.io/bisum/html/assets/img/products/bags/26.jpg"
+                            src={item?.img2}
                             alt="product-img"
                           />
-                        </a>
-                        <div className="product-card-action product-card-action-2">
-                          <a
-                            href="#quickview-modal"
-                            className="quickview-btn btn-primary"
-                            data-bs-toggle="modal"
-                          >
-                            QUICKVIEW
-                          </a>
-                          <Link to="#" className="addtocart-btn btn-primary">
-                            ADD TO CART
-                          </Link>
-                        </div>
-                        <a
-                          href="wishlist.html"
-                          className="wishlist-btn card-wishlist"
-                        >
-                          <svg
-                            className="icon icon-wishlist"
-                            width={26}
-                            height={22}
-                            viewBox="0 0 26 22"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6.96429 0.000183105C3.12305 0.000183105 0 3.10686 0 6.84843C0 8.15388 0.602121 9.28455 1.16071 10.1014C1.71931 10.9181 2.29241 11.4425 2.29241 11.4425L12.3326 21.3439L13 22.0002L13.6674 21.3439L23.7076 11.4425C23.7076 11.4425 26 9.45576 26 6.84843C26 3.10686 22.877 0.000183105 19.0357 0.000183105C15.8474 0.000183105 13.7944 1.88702 13 2.68241C12.2056 1.88702 10.1526 0.000183105 6.96429 0.000183105ZM6.96429 1.82638C9.73912 1.82638 12.3036 4.48008 12.3036 4.48008L13 5.25051L13.6964 4.48008C13.6964 4.48008 16.2609 1.82638 19.0357 1.82638C21.8613 1.82638 24.1429 4.10557 24.1429 6.84843C24.1429 8.25732 22.4018 10.1584 22.4018 10.1584L13 19.4036L3.59821 10.1584C3.59821 10.1584 3.14844 9.73397 2.69866 9.07411C2.24888 8.41426 1.85714 7.55466 1.85714 6.84843C1.85714 4.10557 4.13867 1.82638 6.96429 1.82638Z"
-                              fill="black"
-                            />
-                          </svg>
-                        </a>
+                        </Link>
                       </div>
                       <div className="product-card-details text-center">
                         <h3 className="product-card-title">
-                          <a href="collection-left-sidebar.html">
-                            black backpack
-                          </a>
+                          <Link to={"#"} onClick={() => pageClick(item?._id)}>
+                            {item?.title}
+                          </Link>
                         </h3>
                         <div className="product-card-price">
-                          <span className="card-price-regular">$1529</span>
-                          <span className="card-price-compare text-decoration-line-through">
-                            $1759
+                          <span className="product-price regular-price">
+                            {item?.discount === true
+                              ? item?.discountPrice
+                              : item?.price}
                           </span>
+                          <del className="product-price compare-price ms-2">
+                            {item?.discount === false ? "" : "$" + item?.price}
+                          </del>
                         </div>
                       </div>
                     </div>
@@ -621,7 +627,6 @@ const ProductDetailsInner = () => {
         </div>
       </div>
       {/* you may also lik end */}
-      {/* <Quickview /> */}
     </>
   );
 };

@@ -88,7 +88,9 @@ const CartStore = create((set) => ({
           withCredentials: true,
         }
       );
-      window.location.href = res?.data?.data?.GatewayPageURL;
+      if (res?.data?.status === true) {
+        window.location.href = res?.data?.data?.GatewayPageURL;
+      }
     } catch (e) {
       unAuthorize(e.response.status);
     } finally {

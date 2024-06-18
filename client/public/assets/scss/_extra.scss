@@ -1178,3 +1178,34 @@
     }
   }
 }
+
+.rating-count.product {
+  display: flex !important;
+  gap: 10px;
+  align-items: center;
+  .single__rate {
+    display: flex;
+    gap: 4px;
+    svg {
+      font-size: 18px;
+      color: #ff8220;
+    }
+  }
+}
+
+.share__icon {
+  margin-left: 8px;
+  display: flex;
+  gap: 10px;
+  .share-item {
+    margin-left: 0;
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.out_stock {
+  cursor: not-allowed;
+}

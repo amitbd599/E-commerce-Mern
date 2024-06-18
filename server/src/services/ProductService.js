@@ -1209,7 +1209,6 @@ const ReadSingleReviewService = async (req) => {
 };
 
 const CreateReviewService = async (req) => {
-  console.log(req);
   try {
     let user_id = new ObjectId(req.headers.user_id);
     let ReqBody = req.body;

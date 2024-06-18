@@ -5,6 +5,9 @@ import {
   FaLinkedinIn,
   FaMinus,
   FaPlus,
+  FaRegStar,
+  FaStar,
+  FaStarHalfAlt,
   FaTwitter,
 } from "react-icons/fa";
 import ProductStore from "../store/ProductStore";
@@ -17,6 +20,8 @@ import SkeletonBar from "../skeleton/SkeletonBar";
 import CartStore from "../store/CartStore";
 import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
 import WishListStore from "../store/WishListStore";
+import ShareButton from "./ShareButton";
+import ReviewStore from "../store/ReviewStore";
 const Products = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -37,6 +42,7 @@ const Products = () => {
   } = ProductStore();
   let { isCartSubmit, CartListRequest, CartListGetRequest } = CartStore();
   let { WishListRequest, WishListGetRequest } = WishListStore();
+  let { GetAllReviewByProductRequest, reviewList } = ReviewStore();
 
   let [title, setTitle] = useState("All Products");
   useEffect(() => {
@@ -164,6 +170,7 @@ const Products = () => {
 
   let handelClick = async (id) => {
     await ProductDetailsRequest(id);
+    await GetAllReviewByProductRequest(id);
   };
 
   let handelWishList = async (productID) => {
@@ -244,6 +251,23 @@ const Products = () => {
     ProductDetails?.img7,
     ProductDetails?.img8,
   ].filter((img) => img && img.trim() !== "");
+
+  let ratings = reviewList?.map((item) => item?.rating);
+  let sum = ratings?.reduce((item, rating) => item + rating, 0);
+  let average = sum / ratings?.length;
+
+  const Rating = ({ average }) => {
+    const fullStars = Math.floor(average || 0);
+    const halfStar = average % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    return (
+      <div className="single__rate">
+        {[...Array(fullStars)].fill(<FaStar />)}
+        {halfStar && <FaStarHalfAlt />}
+        {[...Array(emptyStars)].fill(<FaRegStar />)}
+      </div>
+    );
+  };
 
   return (
     <div className="collection mt-100">
@@ -917,16 +941,20 @@ const Products = () => {
                       <span className="star-rating">
                         {/* <StarRating /> */}
                       </span>
-                      <span className="rating-count ms-2">
-                        ({ProductDetails?.star})
+                      <span className="rating-count product  d-flex">
+                        <Rating average={average} /> ({average || 0})
                       </span>
                     </div>
                     <div className="product-price-wrapper mb-4">
                       <span className="product-price regular-price">
-                        ${ProductDetails?.price}
+                        {ProductDetails?.discount === true
+                          ? ProductDetails?.discountPrice
+                          : ProductDetails?.price}
                       </span>
                       <del className="product-price compare-price ms-2">
-                        ${ProductDetails?.discountPrice}
+                        {ProductDetails?.discount === false
+                          ? ""
+                          : "$" + ProductDetails?.price}
                       </del>
                     </div>
                     <div className="product-sku product-meta mb-1">
@@ -1006,9 +1034,14 @@ const Products = () => {
                           <button
                             onClick={submitCartData}
                             type="submit"
-                            className="position-relative btn-atc btn-add-to-cart loader"
+                            className="position-relative btn-atc btn-add-to-cart loader out_stock"
+                            disabled={
+                              ProductDetails?.stock === false ? true : false
+                            }
                           >
-                            ADD TO CART
+                            {ProductDetails?.stock === false
+                              ? "OUT OF STOCK"
+                              : " ADD TO CART"}
                           </button>
                         )}
                       </div>
@@ -1025,20 +1058,9 @@ const Products = () => {
 
                     <div className="share-area mt-4 d-flex align-items-center">
                       <strong className="label mb-1 d-block">Share:</strong>
-                      <ul className="list-unstyled share-list d-flex align-items-center mb-1 flex-wrap">
-                        <li className="share-item">
-                          <FaFacebookF />
-                        </li>
-                        <li className="share-item">
-                          <FaTwitter />
-                        </li>
-                        <li className="share-item">
-                          <FaInstagram />
-                        </li>
-                        <li className="share-item">
-                          <FaLinkedinIn />
-                        </li>
-                      </ul>
+                      <ShareButton
+                        shareUrl={`/product-details/${ProductDetails?._id}`}
+                      />
                     </div>
                   </div>
                 </div>

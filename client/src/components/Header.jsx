@@ -501,9 +501,9 @@ const Header = () => {
                 <Link to="/cart" className="minicart-btn btn-secondary">
                   View Cart
                 </Link>
-                <a href="checkout.html" className="minicart-btn btn-primary">
-                  Checkout
-                </a>
+                <Link to="/profile" className="minicart-btn btn-primary">
+                  User Profile
+                </Link>
               </div>
             </div>
           </div>
