@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import DataTable from "react-data-table-component";
 import UserStore from "../store/UserStore";
-import { ErrorToast, IsEmpty, SuccessToast } from "../helper/helper";
+import {
+  ErrorToast,
+  IsEmpty,
+  SuccessToast,
+  unAuthorize,
+} from "../helper/helper";
 import CartStore from "../store/CartStore";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
@@ -17,7 +22,7 @@ import {
 import ProductStore from "../store/ProductStore";
 import ReviewStore from "../store/ReviewStore";
 const OrderInner = () => {
-  let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest } =
+  let { ProfileDetailsRequest, ProfileDetails, ProfileUpdateRequest, logout } =
     UserStore();
 
   let { ReviewListCreateRequest } = ReviewStore();
@@ -61,6 +66,8 @@ const OrderInner = () => {
     ship_postcodeRef,
     ship_stateRef,
     reviewRef,
+    passwordRef,
+    conPasswordRef,
   } = useRef();
 
   const columns = [
@@ -193,7 +200,7 @@ const OrderInner = () => {
     },
   ];
 
-  let submitProfile = () => {
+  let submitProfile = async () => {
     let cus_add = cus_addRef.value;
     let cus_city = cus_cityRef.value;
     let cus_country = cus_countryRef.value;
@@ -210,7 +217,7 @@ const OrderInner = () => {
     let ship_postcode = ship_postcodeRef.value;
     let ship_state = ship_stateRef.value;
 
-    ProfileUpdateRequest({
+    await ProfileUpdateRequest({
       cus_add,
       cus_city,
       cus_country,
@@ -264,7 +271,32 @@ const OrderInner = () => {
     }
   };
 
-  console.log(invoiceID);
+  let changePassword = async () => {
+    let password = passwordRef.value;
+    let conPassword = conPasswordRef.value;
+    if (IsEmpty(password)) {
+      ErrorToast("Please enter new password");
+      return;
+    }
+    if (IsEmpty(conPassword)) {
+      ErrorToast("Please enter confirm password");
+      return;
+    }
+    if (password !== conPassword) {
+      ErrorToast("Password and confirm password not match");
+      return;
+    }
+    await ProfileUpdateRequest({ password }).then(async (res) => {
+      if (res) {
+        SuccessToast("Password change successfully");
+        passwordRef.value = "";
+        conPasswordRef.value = "";
+        unAuthorize(401);
+      } else {
+        ErrorToast("Password change failed");
+      }
+    });
+  };
 
   return (
     <section className="profile">
@@ -623,7 +655,38 @@ const OrderInner = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-settings-tab"
                 >
-                  ...
+                  <div className="title__invoice">
+                    <h2>Update Password & root information</h2>
+                  </div>
+                  <div className="view information">
+                    <div className="wrapper">
+                      <h3>Root details:</h3>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <fieldset>
+                            <label className="label">Password</label>
+                            <input
+                              type="text"
+                              ref={(input) => (passwordRef = input)}
+                            />
+                          </fieldset>
+                        </div>
+                        <div className="col-md-6">
+                          <fieldset>
+                            <label className="label">Re-enter Password</label>
+                            <input
+                              type="text"
+                              ref={(input) => (conPasswordRef = input)}
+                            />
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button className="btn-primary" onClick={changePassword}>
+                      Update root info
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
