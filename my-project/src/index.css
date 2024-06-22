@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    html{
+        @apply   overflow-x-hidden
+    }
+    p{
+        @apply   font-normal text-[15px]   text-gray-500 
+    }
+}
+
+
+@layer components{
+    .link_item{
+        @apply   font-normal text-[15px] px-[14px] py-[5px]   text-gray-500 hover:text-[#188AE2]  transition-all duration-300 flex gap-[10px] items-center
+    }
+    .link_item.active{
+        @apply   font-normal px-[14px] py-[5px]      text-[#188AE2]
+    }
+}
