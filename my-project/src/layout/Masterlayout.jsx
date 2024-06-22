@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { FaBlackberry, FaSlidersH, FaSortAlphaDown, FaUncharted } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
@@ -100,23 +101,34 @@ const Masterlayout = ({ children }) => {
 
       {/* Inner data */}
       <div className="bg-[#EBEFF2] ml-[250px] min-h-screen">
-        <div className="top bg-white px-[20px] py-[10px]">
-          <div className="flex justify-between items-center">
-            <p className="text-[20px]">Inner Dashboard</p>
-            <div className="user_profile  flex items-start gap-[10px] cursor-pointer">
-              <img src="/Img/avater.png" alt="" className="w-[50px]" />
-              <div>
-                <p className="font-medium text-gray-700">Alex Johan</p>
-                <p>amit@demo.com</p>
+        <div className="px-[20px] pt-[10px] ">
+          <div className="top bg-white px-[20px] py-[10px] rounded-md ">
+            <div className="flex justify-between items-center">
+              <p className="text-[20px]">Inner Dashboard</p>
+              <div className="user_profile  flex items-start gap-[10px] cursor-pointer">
+                <img src="/Img/avater.png" alt="" className="w-[50px]" />
+                <div>
+                  <p className="font-medium text-gray-700">Alex Johan</p>
+                  <p>amit@demo.com</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {children}
+        <div className="p-[20px]">
+          {children}
+        </div>
       </div>
 
       {/* Footer */}
-      <footer>
+      <footer className="ml-[250px] bg-[#EBEFF2]">
+        <div className="mx-[20px] ">
+          <div className=" bg-white px-[20px] py-[20px] rounded-md ">
+           <div className="flex justify-center items-center">
+           <p>Lorem ipsum dolor sit amet.</p>
+           </div>
+          </div>
+        </div>
 
       </footer>
     </section>
