@@ -137,7 +137,7 @@ const Masterlayout = ({ children }) => {
           <p className="text-sm text-gray-500 font-medium pb-[5px]">Review</p>
           <ul className="pt-[10px]">
             <li className="pb-[2px]">
-              <NavLink to="/" className={(navData) =>
+              <NavLink to="/all-review" className={(navData) =>
                 navData.isActive
                   ? "link_item active"
                   : "link_item"
@@ -146,7 +146,7 @@ const Masterlayout = ({ children }) => {
           </ul>
         </div>
         <div className="px-[10px] pt-[10px] pb-[10px] border-b border-gray-200">
-          <p className="text-sm text-gray-500 font-medium pb-[5px]">Invoice</p>
+          <p className="text-sm text-gray-500 font-medium pb-[5px]">Invoice & Order</p>
           <ul className="pt-[10px]">
             <li className="pb-[2px]">
               <NavLink to="/" className={(navData) =>
@@ -154,6 +154,13 @@ const Masterlayout = ({ children }) => {
                   ? "link_item active"
                   : "link_item"
               }>All Invoice</NavLink>
+            </li>
+            <li className="pb-[2px]">
+              <NavLink to="/" className={(navData) =>
+                navData.isActive
+                  ? "link_item active"
+                  : "link_item"
+              }>All Order</NavLink>
             </li>
           </ul>
         </div>

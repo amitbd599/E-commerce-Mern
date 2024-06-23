@@ -17,6 +17,7 @@ import CreateCategory from './pages/CreateCategory'
 import UpdateBrand from './pages/UpdateBrand'
 import UpdateCategory from './pages/UpdateCategory'
 import AllCategory from './pages/AllCategory'
+import AllReview from './pages/AllReview'
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Route exact path='/create-category' element={<CreateCategory />} />
           <Route exact path='/all-category' element={<AllCategory />} />
           <Route exact path='/update-category/:id' element={<UpdateCategory />} />
+          <Route exact path='/all-review' element={<AllReview />} />
 
         </Routes>
 
