@@ -102,7 +102,7 @@ const DashboardInner = () => {
       <div className="col-span-6">
         <div className="bg-white p-[20px] rounded-lg">
           <div id="chart">
-            <ReactApexChart options={options_1} series={series_1} type="bar" height={450} />
+            <ReactApexChart options={options_1} series={series_1} type="bar" height={400} />
           </div>
           <div id="html-dist"></div>
         </div>
@@ -110,7 +110,7 @@ const DashboardInner = () => {
       <div className="col-span-6">
         <div className="bg-white p-[20px] rounded-lg">
           <div id="chart">
-            <ReactApexChart options={options_2} series={series_2} type="bar" height={450} />
+            <ReactApexChart options={options_2} series={series_2} type="bar" height={400} />
           </div>
           <div id="html-dist"></div>
         </div>

@@ -14,9 +14,15 @@
 
 @layer components{
     .link_item{
-        @apply   font-normal text-[15px] px-[14px] py-[5px]   text-gray-500 hover:text-[#188AE2]  transition-all duration-300 flex gap-[10px] items-center
+        @apply    text-[15px] px-[14px] py-[5px]   text-gray-500 hover:text-purple-500 transition-all font-medium duration-300 flex gap-[10px] items-center
     }
     .link_item.active{
-        @apply   font-normal px-[14px] py-[5px]   font-medium   text-[#188AE2]
+        @apply    px-[14px] py-[5px]   font-medium   text-purple-500
+    }
+    .my_btn{
+        @apply px-6 py-[18px] mb-5  leading-none text-white transition duration-300  rounded-md hover:bg-purple-700 focus:ring-4 focus:ring-purple-100 bg-purple-500
+    }
+    .input_inner{
+        @apply flex items-center w-full px-5 py-4 mr-2 text-sm font-normal border border-gray-300 outline-none    text-gray-700 rounded
     }
 }
