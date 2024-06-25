@@ -28,12 +28,14 @@ let DeleteFileUploadService = async (req, res) => {
     let ImageName = req.body?.filename;
     const filePath = path.join(__dirname, `../../uploads/${ImageName}`);
     fs.unlink(filePath, (err) => {
-      return;
+      if (err) {
+        console.log(err);
+      }
     });
 
 
     const data = await FileModel.deleteOne(
-      { _id: id }
+      { _id: id, filename: ImageName }
     );
     return { status: true, data: data };
 
@@ -43,6 +45,50 @@ let DeleteFileUploadService = async (req, res) => {
     return { status: false, error: error.toString() };
   }
 }
+const AllFileService = async (req) => {
+  try {
+    const limit = parseInt(req.params.item); // Number of items per page
+    const pageNo = parseInt(req.params.pageNo); // Current page number
+
+    if (isNaN(limit) || isNaN(pageNo)) {
+      return res.status(400).json({ message: "Invalid parameters" });
+    }
+
+    const skip = (pageNo - 1) * limit; // Calculate the number of documents to skip
+
+    const aggregatePipeline = [
+
+
+      {
+        $facet: {
+          data: [
+            { $skip: skip },
+            { $limit: limit },
+
+          ],
+          totalCount: [{ $count: "count" }],
+        },
+      },
+
+    ];
+
+    const results = await FileModel.aggregate(aggregatePipeline);
+    console.log(results[0]?.totalCount?.count);
+    const file = results[0].data;
+    const totalDocuments = results[0]?.totalCount;
+    const totalPages = Math.ceil(totalDocuments / limit);
+
+    return {
+      status: true,
+      totalDocuments: totalDocuments,
+      currentPage: pageNo,
+      totalPages: totalPages,
+      file: file,
+    };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
 
 //! Admin Service
 const RegisterAdminService = async (req) => {
@@ -248,6 +294,7 @@ const ResetPasswordAdminService = async (req) => {
 module.exports = {
   FileUploadService,
   DeleteFileUploadService,
+  AllFileService,
   RegisterAdminService,
   LoginAdminService,
   AdminReadService,
