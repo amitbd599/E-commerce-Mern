@@ -26,3 +26,55 @@
         @apply flex items-center w-full px-5 py-4 mr-2 text-sm font-normal border border-gray-300 outline-none    text-gray-700 rounded
     }
 }
+
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #e2e8f0; /* bg-gray-200 */
+    border-radius: 0.125rem; /* rounded-sm */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.file-label:hover {
+    background-color: #cbd5e0; /* hover:bg-gray-300 */
+}
+
+.file-label:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6); /* focus:shadow-outline */
+}
+
+.hidden {
+    display: none;
+  }
+  
+  .file-label {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #e2e8f0; /* bg-gray-200 */
+    border-radius: 0.125rem; /* rounded-sm */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-label:hover {
+    background-color: #cbd5e0; /* hover:bg-gray-300 */
+  }
+  
+  .file-label:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6); /* focus:shadow-outline */
+  }
+  
+  .file-list {
+    margin-top: 1rem;
+  }
+  

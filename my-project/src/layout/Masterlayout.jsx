@@ -27,6 +27,25 @@ const Masterlayout = ({ children }) => {
           </ul>
         </div>
         <div className="px-[10px]  pt-[10px] pb-[10px] border-b border-gray-200">
+          <p className="text-sm text-gray-500 font-medium pb-[5px]">Media</p>
+          <ul className="pt-[10px]">
+            <li className="pb-[2px]">
+              <NavLink to="/create-file" className={(navData) =>
+                navData.isActive
+                  ? "link_item active"
+                  : "link_item"
+              }><FaSlidersH /> Upload Media</NavLink>
+            </li>
+            <li className="pb-[2px]">
+              <NavLink to="/all-file" className={(navData) =>
+                navData.isActive
+                  ? "link_item active"
+                  : "link_item"
+              }><FaBity /> All Media</NavLink>
+            </li>
+          </ul>
+        </div>
+        <div className="px-[10px]  pt-[10px] pb-[10px] border-b border-gray-200">
           <p className="text-sm text-gray-500 font-medium pb-[5px]">Slider</p>
           <ul className="pt-[10px]">
             <li className="pb-[2px]">
@@ -149,14 +168,14 @@ const Masterlayout = ({ children }) => {
           <p className="text-sm text-gray-500 font-medium pb-[5px]">Invoice & Order</p>
           <ul className="pt-[10px]">
             <li className="pb-[2px]">
-              <NavLink to="/" className={(navData) =>
+              <NavLink to="/all-invoice" className={(navData) =>
                 navData.isActive
                   ? "link_item active"
                   : "link_item"
               }>All Invoice</NavLink>
             </li>
             <li className="pb-[2px]">
-              <NavLink to="/" className={(navData) =>
+              <NavLink to="/all-order" className={(navData) =>
                 navData.isActive
                   ? "link_item active"
                   : "link_item"

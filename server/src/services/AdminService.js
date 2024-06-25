@@ -1,8 +1,48 @@
+const path = require('path');
 const md5 = require("md5");
+const fs = require("fs");
 const AdminModel = require("../models/AdminModel");
 const OTPModel = require("../models/OTPModel");
 const EmailSend = require("../utility/EmailHelper");
 const { EncodeToken } = require("../utility/TokenHelper");
+const FileModel = require('../models/FileModel');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
+//! File upload service
+let FileUploadService = async (req, res) => {
+  try {
+    let reqBody = {
+      filename: req?.files[0]?.filename
+    }
+    let data = await FileModel.create(reqBody);
+    return { status: true, data: data };
+
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+}
+
+let DeleteFileUploadService = async (req, res) => {
+  try {
+    let id = new ObjectId(req.body._id);
+    let ImageName = req.body?.filename;
+    const filePath = path.join(__dirname, `../../uploads/${ImageName}`);
+    fs.unlink(filePath, (err) => {
+      return;
+    });
+
+
+    const data = await FileModel.deleteOne(
+      { _id: id }
+    );
+    return { status: true, data: data };
+
+
+
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+}
 
 //! Admin Service
 const RegisterAdminService = async (req) => {
@@ -206,6 +246,8 @@ const ResetPasswordAdminService = async (req) => {
 };
 
 module.exports = {
+  FileUploadService,
+  DeleteFileUploadService,
   RegisterAdminService,
   LoginAdminService,
   AdminReadService,

@@ -8,7 +8,16 @@ const InvoiceController = require("../controllers/InvoiceController");
 const FeaturesController = require("../controllers/FeaturesController");
 const AuthVerificationUser = require("../middlewares/AuthVerificationUser");
 const AuthVerificationAdmin = require("../middlewares/AuthVerificationAdmin");
+const { upload } = require("../utility/FileUpload");
 const router = express.Router();
+
+
+
+// ! File Uploads
+router.post("/upload", upload.array("img", 5), AdminController.FileUpload);
+
+// ! Remove Upload File
+router.delete("/remove", AdminController.DeleteFileUpload);
 
 //! Admin routes
 router.post("/register-admin", AdminController.RegisterAdmin);

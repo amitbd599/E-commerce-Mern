@@ -1,5 +1,16 @@
-const { RegisterAdminService, LoginAdminService, AdminReadService, LogoutAdminService, EmailVerifyAdminService, RecoverVerifyEmailAdminService, RecoverVerifyOTPAdminService, ResetPasswordAdminService, AdminUpdateService } = require("../services/AdminService");
+const { RegisterAdminService, LoginAdminService, AdminReadService, LogoutAdminService, EmailVerifyAdminService, RecoverVerifyEmailAdminService, RecoverVerifyOTPAdminService, ResetPasswordAdminService, AdminUpdateService, FileUploadService, DeleteFileUploadService } = require("../services/AdminService");
 
+
+//! file upload
+exports.FileUpload = async (req, res) => {
+  let result = await FileUploadService(req, res);
+  return res.status(200).json(result);
+};
+
+exports.DeleteFileUpload = async (req, res) => {
+  let result = await DeleteFileUploadService(req, res);
+  return res.status(200).json(result);
+};
 
 //! Admin Control
 exports.RegisterAdmin = async (req, res) => {

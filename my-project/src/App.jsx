@@ -18,6 +18,10 @@ import UpdateBrand from './pages/UpdateBrand'
 import UpdateCategory from './pages/UpdateCategory'
 import AllCategory from './pages/AllCategory'
 import AllReview from './pages/AllReview'
+import AllInvoice from './pages/AllInvoice'
+import AllOrder from './pages/AllOrder'
+import File from './pages/File'
+import CreateFile from './pages/CreateFile'
 
 
 function App() {
@@ -46,6 +50,10 @@ function App() {
           <Route exact path='/all-category' element={<AllCategory />} />
           <Route exact path='/update-category/:id' element={<UpdateCategory />} />
           <Route exact path='/all-review' element={<AllReview />} />
+          <Route exact path='/all-invoice' element={<AllInvoice />} />
+          <Route exact path='/all-order' element={<AllOrder />} />
+          <Route exact path='/all-file' element={<File />} />
+          <Route exact path='/create-file' element={<CreateFile />} />
 
         </Routes>
 

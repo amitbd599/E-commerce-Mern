@@ -1,7 +1,7 @@
 const express = require("express");
 const router = require("./src/routes/api");
 const app = new express();
-
+const multer = require("multer");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -11,7 +11,6 @@ const hpp = require("hpp");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const path = require("path");
 const dotENV = require("dotenv");
 dotENV.config();
 
@@ -44,6 +43,17 @@ app.use(express.urlencoded({ limit: "50mb" }));
 
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 3000 });
 app.use(limiter);
+
+
+
+
+
+
+// File Upload
+app.use("/uploads", express.static("uploads"));
+
+
+
 
 app.use("/api/v1", router);
 
