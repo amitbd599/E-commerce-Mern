@@ -5,6 +5,8 @@ exports.EncodeToken = (data) => {
   let expire = process.env.JWT_Expire_Time;
   let payload = { email: data.email, user_id: data._id };
 
+  console.log(payload);
+
   return jwt.sign(payload, key, { expiresIn: expire });
 };
 exports.DecodeToken = (token) => {

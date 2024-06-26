@@ -13,6 +13,9 @@ const DataSchema = mongoose.Schema(
       },
     },
     password: { type: String, required: true },
+    name: { type: String, default: "Alex" },
+    img: { type: String, default: "" },
+
   },
   {
     timestamps: true,

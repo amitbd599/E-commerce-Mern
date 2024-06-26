@@ -25,7 +25,6 @@ const LoginInner = () => {
     });
   };
 
-  console.log(getEmail("email"));
   return (
     <div className="login-page mt-100">
       <div className="container">

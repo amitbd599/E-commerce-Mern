@@ -25,6 +25,12 @@
     .input_inner{
         @apply flex items-center w-full px-5 py-4 mr-2 text-sm font-normal border border-gray-300 outline-none    text-gray-700 rounded
     }
+    .page_link{
+        @apply w-[40px] h-[40px] flex justify-center items-center rounded-lg  font-semibold   bg-purple-50 text-purple-600 
+    }
+    .active_link{
+        @apply w-[40px] h-[40px] flex justify-center items-center rounded-lg  font-semibold   bg-purple-600 text-white
+    }
 }
 
 

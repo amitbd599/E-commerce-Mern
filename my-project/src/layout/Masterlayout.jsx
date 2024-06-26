@@ -2,8 +2,19 @@
 import { FaBity, FaBlackberry, FaSlidersH, FaSortAlphaDown, FaUncharted, FaVenusMars, FaVine } from "react-icons/fa"
 import { FaUserGroup } from "react-icons/fa6"
 import { NavLink } from "react-router-dom"
+import UserStore from "../store/UserStore"
+import { useEffect } from "react"
 
 const Masterlayout = ({ children }) => {
+
+  let { AdminDetailsRequest, AdminDetails } = UserStore()
+
+  useEffect(() => {
+    (async () => {
+      await AdminDetailsRequest()
+    })()
+  }, [])
+
   return (
     <section className="layout">
       {/* sidebar */}
@@ -37,7 +48,7 @@ const Masterlayout = ({ children }) => {
               }><FaSlidersH /> Upload Media</NavLink>
             </li>
             <li className="pb-[2px]">
-              <NavLink to="/all-file" className={(navData) =>
+              <NavLink to="/all-file/24/1" className={(navData) =>
                 navData.isActive
                   ? "link_item active"
                   : "link_item"
@@ -193,10 +204,10 @@ const Masterlayout = ({ children }) => {
             <div className="flex justify-between items-center">
               <p className="text-[20px]">Inner Dashboard</p>
               <div className="user_profile  flex items-start gap-[10px] cursor-pointer">
-                <img src="/Img/avater.png" alt="" className="w-[50px]" />
+                <img src={AdminDetails?.img} alt="" className="w-[50px]" />
                 <div>
-                  <p className="font-medium text-gray-700">Alex Johan</p>
-                  <p>amit@demo.com</p>
+                  <p className="font-medium text-gray-700">{AdminDetails?.name}</p>
+                  <p>{AdminDetails?.email}</p>
                 </div>
               </div>
             </div>

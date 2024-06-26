@@ -6,12 +6,12 @@ const FileStore = create((set) => ({
     fileList: [],
 
     // get all file
-    GetAllReviewByProductRequest: async (item, pageNo) => {
-        let res = await axios.get("api/all-file/" + item + "/" + pageNo, {
+    GetFileRequest: async (item, pageNo) => {
+        let res = await axios.get("/api/all-file/" + item + "/" + pageNo, {
             withCredentials: true,
         });
         if (res?.data?.status === true) {
-            set({ fileList: res?.data?.file });
+            set({ fileList: res?.data });
         }
     },
 }));

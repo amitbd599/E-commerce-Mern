@@ -138,8 +138,10 @@ const LoginAdminService = async (req, res) => {
       { $project: { _id: 1, email: 1 } },
     ]);
 
+
+
     if (data.length > 0) {
-      let token_admin = EncodeToken(data[0]["email"]);
+      let token_admin = EncodeToken(data[0]);
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
@@ -177,7 +179,7 @@ const AdminUpdateService = async (req) => {
       }
     );
 
-    return { status: "success", data: data };
+    return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
@@ -195,10 +197,12 @@ const AdminReadService = async (req) => {
     let Project = {
       $project: {
         email: 1,
+        name: 1,
+        img: 1,
       },
     };
     let data = await AdminModel.aggregate([MatchStage, Project]);
-    return { status: "success", data: data };
+    return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
   }
