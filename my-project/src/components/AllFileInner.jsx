@@ -1,26 +1,39 @@
 import { IconButton, SpeedDial, SpeedDialAction, SpeedDialContent, SpeedDialHandler } from "@material-tailwind/react"
 import { FaHome, FaPlus } from "react-icons/fa"
-
+import FileStore from "../store/FileStore"
+import { useEffect } from "react"
+const apiUrl = import.meta.env.VITE_APP_API_FILE_URL;
 const AllFileInner = () => {
 
+  let { GetAllReviewByProductRequest, fileList } = FileStore()
+
+  useEffect(() => {
+    (async () => {
+      await GetAllReviewByProductRequest(30, 1)
+    })()
+  }, [])
 
 
+  console.log(fileList);
 
 
   return (
     <div className="bg-white p-[20px] rounded-lg min-h-screen">
       <div className="grid grid-cols-12 gap-[30px] ">
         {
-          [...Array(4)].map((item, index) =>
-            <div className="col-span-3" key={index}>
+          fileList?.map((item, index) =>
+            <div className="col-span-2" key={index}>
               <div className=" p-[20px] shadow-lg rounded-lg">
                 <div className="h-full w-full">
                   <div className="relative w-full">
-                    <img
-                      src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/Nft3.3b3e6a4b3ada7618de6c.png"
-                      className="mb-3 h-full w-full rounded-xl 3xl:h-full 3xl:w-full"
-                      alt=""
-                    />
+                    <div className="image-item  relative overflow-hidden p-[30px]  rounded-lg  w-full h-[250px]">
+                      <img
+                        src={'api/uploads/' + item?.filename}
+                        className="w-full h-full object-cover"
+                        alt=""
+                      />
+                    </div>
+
 
                     <div>
                       <div className="absolute bottom-[10px] right-[15px]">

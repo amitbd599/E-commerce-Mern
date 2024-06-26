@@ -52,8 +52,8 @@ function App() {
           <Route exact path='/all-review' element={<AllReview />} />
           <Route exact path='/all-invoice' element={<AllInvoice />} />
           <Route exact path='/all-order' element={<AllOrder />} />
-          <Route exact path='/all-file' element={<File />} />
           <Route exact path='/create-file' element={<CreateFile />} />
+          <Route exact path='/all-file' element={<File />} />
 
         </Routes>
 

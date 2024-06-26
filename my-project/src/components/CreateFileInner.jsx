@@ -1,10 +1,12 @@
+import axios from "axios";
 import { useState } from "react";
-
+const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const CreateFileInner = () => {
     const [images, setImages] = useState([]);
-
+    const [files, setFiles] = useState([]);
     const handleFileChange = (event) => {
+        setFiles(event.target.files);
         const selectedFiles = Array.from(event.target.files);
         const newImages = selectedFiles.map((file) => ({
             id: URL.createObjectURL(file),
@@ -20,6 +22,35 @@ const CreateFileInner = () => {
 
     const handleRemoveAllImages = () => {
         setImages([]);
+    };
+    const onSubmit = async () => {
+
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('img', files[i]);
+        }
+        try {
+            let res = await axios.post('api/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                withCredentials: true
+            },
+            );
+
+            if (res.data.status === true) {
+                setImages([]);
+                setFiles([]);
+            }
+
+
+        } catch (err) {
+            if (err.response.status === 500) {
+                console.log('There was a problem with the server');
+            } else {
+                console.log(err.response.data.message);
+            }
+        }
     };
 
 
@@ -71,9 +102,9 @@ const CreateFileInner = () => {
                                         </button>
                                         <ul className="grid grid-cols-12 gap-4 mt-4">
                                             {images.map((image) => (
-                                                <li key={image.id} className="image-item col-span-3 relative">
-                                                    <img src={image.url} alt={image.name} className="w-full h-auto" />
-                                                    <p className="mt-2 text-center">{image.name}</p>
+                                                <li key={image.id} className="image-item col-span-2 relative overflow-hidden p-[30px]  rounded-lg shadow-lg w-[230px] h-[250px]">
+                                                    <img src={image.url} alt={image.name} className="w-full h-full object-cover" />
+
                                                     <button
                                                         onClick={() => handleRemoveImage(image.id)}
                                                         className="absolute top-0 right-0 mt-2 mr-2 rounded-full bg-red-500 text-white w-6 h-6 flex items-center justify-center"
@@ -102,7 +133,7 @@ const CreateFileInner = () => {
                     </section>
                     {/* sticky footer */}
                     <footer className="flex justify-end px-8 pb-8 pt-4">
-                        <button
+                        <button onClick={onSubmit}
                             id="submit"
                             className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                         >

@@ -14,9 +14,11 @@ const router = express.Router();
 
 
 // ! File Uploads
-router.post("/upload", upload.array("img", 5), AdminController.FileUpload);
+router.post("/upload", upload.array("img", 500), AdminController.FileUpload);
 router.delete("/remove", AdminController.DeleteFileUpload);
 router.get("/all-file/:item/:pageNo", AdminController.AllFile);
+
+
 
 //! Admin routes
 router.post("/register-admin", AdminController.RegisterAdmin);

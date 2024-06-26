@@ -9,18 +9,40 @@ const FileModel = require('../models/FileModel');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 //! File upload service
+// let FileUploadService = async (req, res) => {
+//   try {
+//     let reqBody = {
+//       filename: req?.files[0]?.filename
+//     }
+//     let data = await FileModel.create(reqBody);
+//     return { status: true, data: data };
+
+//   } catch (error) {
+//     return { status: false, error: error.toString() };
+//   }
+// }
+
 let FileUploadService = async (req, res) => {
   try {
-    let reqBody = {
-      filename: req?.files[0]?.filename
+    // Array to hold the data of all inserted files
+    let data = [];
+
+    // Loop through each file and insert its data into the FileModel
+    for (let i = 0; i < req.files.length; i++) {
+      let reqBody = {
+        filename: req.files[i].filename
+      };
+      let fileData = await FileModel.create(reqBody);
+      data.push(fileData);
     }
-    let data = await FileModel.create(reqBody);
+
     return { status: true, data: data };
 
   } catch (error) {
     return { status: false, error: error.toString() };
   }
-}
+};
+
 
 let DeleteFileUploadService = async (req, res) => {
   try {

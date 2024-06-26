@@ -47,7 +47,9 @@ app.use(limiter);
 
 
 
-
+router.get('/uploads/:filename', (req, res) => {
+  res.sendFile(__dirname + '/uploads/' + req.params.filename);
+});
 
 // File Upload
 app.use("/uploads", express.static("uploads"));
