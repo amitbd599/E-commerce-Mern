@@ -56,8 +56,8 @@ class FormHelper {
     }
   }
 
-  DeleteAlert(apiFun, id) {
-    console.log(apiFun, id);
+  DeleteAlert(apiFun, reqBody) {
+    console.log(apiFun, reqBody);
     return Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -68,7 +68,7 @@ class FormHelper {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        return apiFun(id).then((result) => {
+        return apiFun(reqBody).then((result) => {
           return result;
         });
       }

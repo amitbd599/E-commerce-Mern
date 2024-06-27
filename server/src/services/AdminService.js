@@ -8,20 +8,9 @@ const { EncodeToken } = require("../utility/TokenHelper");
 const FileModel = require('../models/FileModel');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
+
+
 //! File upload service
-// let FileUploadService = async (req, res) => {
-//   try {
-//     let reqBody = {
-//       filename: req?.files[0]?.filename
-//     }
-//     let data = await FileModel.create(reqBody);
-//     return { status: true, data: data };
-
-//   } catch (error) {
-//     return { status: false, error: error.toString() };
-//   }
-// }
-
 let FileUploadService = async (req, res) => {
   try {
     // Array to hold the data of all inserted files

@@ -1,9 +1,8 @@
-import { IconButton, SpeedDial, SpeedDialAction, SpeedDialContent, SpeedDialHandler } from "@material-tailwind/react"
-import { FaHome, FaPlus } from "react-icons/fa"
 import FileStore from "../store/FileStore"
 import { useEffect } from "react"
 import ReactPaginate from "react-paginate";
 import { useNavigate, useParams } from "react-router-dom";
+import ImageSpeedCall from "./ImageSpeedCall";
 const AllFileInner = () => {
   const navigate = useNavigate();
   let { GetFileRequest, fileList } = FileStore()
@@ -22,12 +21,15 @@ const AllFileInner = () => {
     navigate(`/all-file/${limit}/${pageNo + 1}`);
   };
 
-  console.log(TotalData);
+
+
+
 
 
   return (
     <div className="bg-white p-[20px] rounded-lg min-h-screen">
-      <div className="grid grid-cols-12 gap-[30px] ">
+
+      <div className="grid grid-cols-12 gap-[20px] ">
         {
           fileList?.file?.map((item, index) =>
             <div className="col-span-2" key={index}>
@@ -44,33 +46,13 @@ const AllFileInner = () => {
 
 
                     <div>
-                      <div className="absolute bottom-[10px] right-[15px]">
-                        <SpeedDial>
-                          <SpeedDialHandler>
-                            <IconButton size="lg" className="rounded-full">
-                              <FaPlus className="h-5 w-5 transition-transform group-hover:rotate-45" />
-                            </IconButton>
-                          </SpeedDialHandler>
-                          <SpeedDialContent>
-                            <SpeedDialAction>
-                              <FaHome className="h-5 w-5" />
-                            </SpeedDialAction>
-
-                          </SpeedDialContent>
-                        </SpeedDial>
+                      <div className="absolute bottom-[-5px] right-[-5px]">
+                        <ImageSpeedCall id={item?._id} filename={item?.filename} />
                       </div>
                     </div>
 
                   </div>
-                  <div className="mb-3 flex items-center justify-between px-1 md:items-start">
-                    <div className="mb-2">
-                      <p className="text-lg font-bold text-navy-700"> Abstract Colors </p>
-                      <p className="mt-1 text-sm font-medium text-gray-600 md:mt-2">
-                        By Esthera Jackson{" "}
-                      </p>
-                    </div>
 
-                  </div>
 
                 </div>
 
