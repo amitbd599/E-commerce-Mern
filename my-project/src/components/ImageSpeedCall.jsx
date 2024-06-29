@@ -10,11 +10,11 @@ import {
 } from "@material-tailwind/react";
 import { FaPlus, FaRegCopy, FaRegTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { DeleteAlert } from "../helper/Helper";
 import FileStore from "../store/FileStore";
+import Swal from "sweetalert2";
 
 const ImageSpeedCall = ({ filename, id }) => {
-    let { FileDeleteRequest } = FileStore()
+    let { FileDeleteRequest, GetFileRequest } = FileStore()
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     const copyToClipboard = () => {
@@ -29,7 +29,26 @@ const ImageSpeedCall = ({ filename, id }) => {
 
 
     const deleteFile = async (reqBody) => {
-        await DeleteAlert(FileDeleteRequest, reqBody)
+        console.log(reqBody);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                return await FileDeleteRequest(reqBody).then(async (result) => {
+                    toast.success("File delete file successful!");
+                    await GetFileRequest(24, 1)
+                    return result;
+                });
+            }
+        });
+
+
     }
 
 

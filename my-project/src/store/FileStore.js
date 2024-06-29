@@ -18,9 +18,8 @@ const FileStore = create((set) => ({
 
     //! delete cart list
     FileDeleteRequest: async (reqBody) => {
-        console.log(reqBody);
         try {
-            let res = await axios.delete("/api/remove", reqBody, {
+            let res = await axios.post("/api/remove", reqBody, {
                 withCredentials: true,
             });
 

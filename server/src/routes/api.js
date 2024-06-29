@@ -15,7 +15,7 @@ const router = express.Router();
 
 // ! File Uploads
 router.post("/upload", AuthVerificationAdmin, upload.array("img", 500), AdminController.FileUpload);
-router.delete("/remove", AuthVerificationAdmin, AdminController.DeleteFileUpload);
+router.post("/remove", AuthVerificationAdmin, AdminController.DeleteFileUpload);
 router.get("/all-file/:item/:pageNo", AdminController.AllFile);
 
 

@@ -34,10 +34,12 @@ let FileUploadService = async (req, res) => {
 
 
 let DeleteFileUploadService = async (req, res) => {
+  console.log(req.body?.filename);
+  console.log(req.body?._id);
   try {
-    let id = new ObjectId(req.body._id);
-    let ImageName = req.body?.filename;
-    const filePath = path.join(__dirname, `../../uploads/${ImageName}`);
+    let _id = new ObjectId(req.body._id);
+    let filename = req.body?.filename;
+    const filePath = path.join(__dirname, `../../uploads/${filename}`);
     fs.unlink(filePath, (err) => {
       if (err) {
         console.log(err);
@@ -46,9 +48,9 @@ let DeleteFileUploadService = async (req, res) => {
 
 
     const data = await FileModel.deleteOne(
-      { _id: id, filename: ImageName }
+      { _id, filename }
     );
-    return { status: true, data: data };
+    return { status: true, data: data, item: { _id, filename } };
 
 
 
