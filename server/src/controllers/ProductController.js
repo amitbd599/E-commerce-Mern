@@ -29,6 +29,7 @@ const {
   ProductListBySimilarBrandService,
   ProductListByStockService,
   ProductListByColorService,
+  ReadSingleSliderListService,
 } = require('../services/ProductService');
 
 //! ProductList
@@ -108,6 +109,11 @@ exports.CreateSliderList = async (req, res) => {
 };
 exports.ReadSliderList = async (req, res) => {
   let result = await ReadSliderListService();
+  return res.status(200).json(result);
+};
+
+exports.ReadSingleSlider = async (req, res) => {
+  let result = await ReadSingleSliderListService(req);
   return res.status(200).json(result);
 };
 exports.UpdateSliderList = async (req, res) => {

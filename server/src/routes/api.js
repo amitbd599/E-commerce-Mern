@@ -142,6 +142,7 @@ router.post(
   ProductController.CreateSliderList
 );
 router.get("/read-slider-list", ProductController.ReadSliderList);
+router.get("/read-single-slider-list/:sliderID", ProductController.ReadSingleSlider);
 router.post(
   "/update-slider-list/:sliderID",
   AuthVerificationAdmin,

@@ -410,6 +410,19 @@ const ReadSliderListService = async () => {
     return { status: false, error: error.toString() };
   }
 };
+const ReadSingleSliderListService = async (req) => {
+  try {
+    let sliderID = new ObjectId(req.params.sliderID);
+    const data = await ProductSliderModel.aggregate(
+      [
+        { $match: { _id: sliderID } }
+      ]
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
 
 const UpdateSliderListService = async (req) => {
   try {
@@ -431,6 +444,8 @@ const DeleteSliderListService = async (req) => {
     return { status: false, error: error.toString() };
   }
 };
+
+//! ProductListBySimilarCategoryService
 
 const ProductListBySimilarCategoryService = async (req) => {
   try {
@@ -1271,6 +1286,7 @@ module.exports = {
   ProductListByCategoryService,
   CreateSliderListService,
   ReadSliderListService,
+  ReadSingleSliderListService,
   UpdateSliderListService,
   DeleteSliderListService,
   ProductListBySimilarCategoryService,
