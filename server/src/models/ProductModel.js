@@ -14,7 +14,6 @@ const DataSchema = mongoose.Schema(
     img6: { type: String },
     img7: { type: String },
     img8: { type: String },
-    star: { type: String, required: true },
     stock: { type: Boolean, required: true },
     remark: { type: String, required: true },
     des: { type: String, required: true },

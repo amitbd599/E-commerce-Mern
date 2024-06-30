@@ -4,14 +4,28 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProductStore = create((set) => ({
   ProductList: null,
+  ProductDetails: null,
+  CategoryList: [],
+  BrandList: [],
+
+
+  CreateProductRequest: async (reqBody) => {
+    let res = await axios.post("/api/create-product", reqBody, {
+      withCredentials: true
+    });
+    return res?.data?.status === true
+
+
+  },
+
+
   ProductListRequest_Feature: async (item, pageNo) => {
-    let res = await axios.get(apiUrl + "/read-product/" + item + "/" + pageNo);
+    let res = await axios.get("/api/read-product/" + item + "/" + pageNo);
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
     }
   },
 
-  ProductDetails: null,
   ProductDetailsRequest: async (id) => {
     let res = await axios.get(apiUrl + "/product-details/" + id);
     if (res?.data?.status === true) {
@@ -19,17 +33,15 @@ const ProductStore = create((set) => ({
     }
   },
 
-  CategoryList: null,
   CategoryListRequest: async () => {
-    let res = await axios.get(apiUrl + "/read-category-list");
+    let res = await axios.get("/api/read-category-list");
     if (res?.data?.status === true) {
       set({ CategoryList: res?.data?.data });
     }
   },
 
-  BrandList: null,
   BrandListRequest: async () => {
-    let res = await axios.get(apiUrl + "/read-brand-list");
+    let res = await axios.get("/api/read-brand-list");
     if (res?.data?.status === true) {
       set({ BrandList: res?.data?.data });
     }
@@ -47,12 +59,12 @@ const ProductStore = create((set) => ({
   SimilarCategoryListRequest: async (id, item, pageNo) => {
     let res = await axios.get(
       apiUrl +
-        "/product-list-by-similar-category/" +
-        id +
-        "/" +
-        item +
-        "/" +
-        pageNo
+      "/product-list-by-similar-category/" +
+      id +
+      "/" +
+      item +
+      "/" +
+      pageNo
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
@@ -62,12 +74,12 @@ const ProductStore = create((set) => ({
   SimilarBrandsListRequest: async (id, item, pageNo) => {
     let res = await axios.get(
       apiUrl +
-        "/product-list-by-similar-brand/" +
-        id +
-        "/" +
-        item +
-        "/" +
-        pageNo
+      "/product-list-by-similar-brand/" +
+      id +
+      "/" +
+      item +
+      "/" +
+      pageNo
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
