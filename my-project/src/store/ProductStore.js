@@ -1,6 +1,5 @@
 import axios from "axios";
 import create from "zustand";
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProductStore = create((set) => ({
   ProductList: null,
@@ -18,6 +17,15 @@ const ProductStore = create((set) => ({
 
   },
 
+  UpdateProductRequest: async (reqBody, id) => {
+    let res = await axios.post("/api/update-product/" + id, reqBody, {
+      withCredentials: true
+    });
+    return res?.data?.status === true
+
+
+  },
+
 
   ProductListRequest_Feature: async (item, pageNo) => {
     let res = await axios.get("/api/read-product/" + item + "/" + pageNo);
@@ -26,10 +34,17 @@ const ProductStore = create((set) => ({
     }
   },
 
+  ProductDeleteRequest: async (id) => {
+    let res = await axios.delete("/api/delete-product/" + id);
+    return res?.data?.status === true
+  },
+
   ProductDetailsRequest: async (id) => {
-    let res = await axios.get(apiUrl + "/product-details/" + id);
+    let res = await axios.get("/api/product-details/" + id, {
+      withCredentials: true,
+    });
     if (res?.data?.status === true) {
-      set({ ProductDetails: res?.data?.data[0] });
+      return res?.data?.data[0]
     }
   },
 

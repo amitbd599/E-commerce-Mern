@@ -163,12 +163,6 @@ const ProductDetailsService = async (req) => {
 
     let projectionStage = {
       $project: {
-        "brand._id": 0,
-        "category._id": 0,
-        "category.createdAt": 0,
-        "category.updatedAt": 0,
-        "brand.createdAt": 0,
-        "brand.updatedAt": 0,
         categoryID: 0,
         brandID: 0,
         createdAt: 0,

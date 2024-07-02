@@ -3,10 +3,13 @@
 import DataTable from "react-data-table-component"
 import ProductStore from "../store/ProductStore";
 import { useEffect } from "react";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import { DeleteAlert, SuccessToast } from "../helper/Helper";
+import { Link } from "react-router-dom";
 
 const AllProductInner = () => {
 
-    let { ProductListRequest_Feature, ProductList } = ProductStore()
+    let { ProductListRequest_Feature, ProductList, ProductDeleteRequest } = ProductStore()
 
     useEffect(() => {
         (async () => {
@@ -15,6 +18,15 @@ const AllProductInner = () => {
     }, [])
 
     console.log(ProductList?.products);
+
+    let deleteProduct = async (id) => {
+        DeleteAlert(ProductDeleteRequest, id).then(async (res) => {
+            if (res) {
+                SuccessToast('Product deleted successfully!')
+                await ProductListRequest_Feature(5000, 1)
+            }
+        })
+    }
 
     const columns = [
         {
@@ -99,6 +111,16 @@ const AllProductInner = () => {
             name: 'Size',
             selector: row => row?.size,
             width: '100px',
+        },
+        {
+            name: 'Action',
+            selector: row => (
+                <div className="flex gap-2">
+                    <button onClick={() => deleteProduct(row?._id)} className="p-2"><FaRegTrashAlt className="text-[20px]" /></button>
+                    <Link to={"/update-product/" + row?._id} className="p-2"><FaEdit className="text-[20px]" /></Link>
+                </div>
+            ),
+            width: '200px',
         },
     ];
 

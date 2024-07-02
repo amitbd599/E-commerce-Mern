@@ -68,6 +68,23 @@ const UserStore = create((set) => ({
       unAuthorize(e.response.status);
     }
   },
+
+  // get all users
+  AllUser: [],
+  UserAllRequest: async () => {
+    try {
+      let res = await axios.get("/api/read-all-user", {
+        withCredentials: true,
+      });
+      if (res.data.status === true) {
+        set({ AllUser: res?.data?.data });
+      } else {
+        return false;
+      }
+    } catch (e) {
+      // unAuthorize(e.response.status);
+    }
+  },
 }));
 
 export default UserStore;

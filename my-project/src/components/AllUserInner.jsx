@@ -1,31 +1,47 @@
 /* eslint-disable react/no-unknown-property */
 
 import DataTable from "react-data-table-component"
+import UserStore from "../store/UserStore";
+import { useEffect } from "react";
 
 const AllUserInner = () => {
+    let { UserAllRequest, AllUser } = UserStore()
+
+    useEffect(() => {
+        (async () => {
+            await UserAllRequest()
+        })()
+    }, [])
+
+    console.log(AllUser);
     const columns = [
         {
-            name: 'Title',
-            selector: row => row.title,
+            name: 'Email',
+            selector: row => row.email,
         },
         {
-            name: 'Year',
-            selector: row => row.year,
+            name: 'Name',
+            selector: row => row.profile?.[0]?.cus_name,
+        },
+        {
+            name: 'Address',
+            selector: row => row.profile?.[0]?.cus_add,
+        },
+        {
+            name: 'City',
+            selector: row => row.profile?.[0]?.cus_city,
+        },
+        {
+            name: 'Phone',
+            selector: row => row.profile?.[0]?.cus_phone,
+        },
+        {
+            name: 'Country',
+            selector: row => row.profile?.[0]?.cus_country,
         },
     ];
 
-    const data = [
-        {
-            id: 1,
-            title: 'Beetlejuice',
-            year: '1988',
-        },
-        {
-            id: 2,
-            title: 'Ghostbusters',
-            year: '1984',
-        },
-    ]
+
     return (
         <div className=" bg-white p-[20px] rounded-lg">
             <div>
@@ -34,7 +50,7 @@ const AllUserInner = () => {
 
             {/* All slider table */}
             <div>
-                <DataTable title="Users list data" columns={columns} data={data} pagination />
+                <DataTable title="Users list data" columns={columns} data={AllUser} pagination />
 
             </div>
 

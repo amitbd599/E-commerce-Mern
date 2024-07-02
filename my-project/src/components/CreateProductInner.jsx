@@ -41,7 +41,7 @@ const CreateProductInner = () => {
         setRemark(value);
     }
 
-    console.log(brand?.brandName);
+    console.log(category);
 
     let CreateProduct = async () => {
         let title = titleRef.value
@@ -349,14 +349,14 @@ const CreateProductInner = () => {
                         </label>
                         <div >
                             <Select onChange={handleRemark} value={remark} label="Select Version" className="h-[55px] flex items-center">
-                                <Option value="new">New</Option>
-                                <Option value="old">Old</Option>
-                                <Option value="new arrival">New Arrival</Option>
-                                <Option value="latest model">Latest Model</Option>
-                                <Option value="limited edition">Limited Edition</Option>
-                                <Option value="vintage">Vintage</Option>
-                                <Option value="classic">Classic</Option>
-                                <Option value="reconditioned">Reconditioned</Option>
+                                <Option value="New">New</Option>
+                                <Option value="Old">Old</Option>
+                                <Option value="New Arrival">New Arrival</Option>
+                                <Option value="Latest Model">Latest Model</Option>
+                                <Option value="Limited Edition">Limited Edition</Option>
+                                <Option value="Vintage">Vintage</Option>
+                                <Option value="Classic">Classic</Option>
+                                <Option value="Reconditioned">Reconditioned</Option>
                             </Select>
                         </div>
                     </div>

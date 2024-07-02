@@ -25,6 +25,7 @@ router.post("/register-admin", AdminController.RegisterAdmin);
 router.post("/login-admin", AdminController.LoginAdmin);
 router.get("/logout-admin", AdminController.LogoutAdmin);
 router.get("/read-admin", AuthVerificationAdmin, AdminController.AdminRead);
+router.get("/read-all-user", AuthVerificationAdmin, AdminController.ReadAllUser);
 router.post(
   "/update-admin",
   AuthVerificationAdmin,

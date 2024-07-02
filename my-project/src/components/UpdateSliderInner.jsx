@@ -13,7 +13,6 @@ const UpdateSliderInner = () => {
         (async () => {
             await SliderSingleRequest(id).then((res) => {
                 if (res) {
-                    console.log(res);
                     titleRef.value = res.title
                     desRef.value = res.des
                     imgRef.value = res.img
@@ -84,7 +83,7 @@ const UpdateSliderInner = () => {
 
             </div>
             <div className="mt-[20px]">
-                <button onClick={UpdateSlider} className="my_btn">Create slider</button>
+                <button onClick={UpdateSlider} className="my_btn">Update slider</button>
             </div>
 
         </div>

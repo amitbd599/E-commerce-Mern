@@ -7,6 +7,7 @@ const EmailSend = require("../utility/EmailHelper");
 const { EncodeToken } = require("../utility/TokenHelper");
 const FileModel = require('../models/FileModel');
 const mongoose = require("mongoose");
+const UserModel = require('../models/UserModel');
 const ObjectId = mongoose.Types.ObjectId;
 
 
@@ -308,6 +309,45 @@ const ResetPasswordAdminService = async (req) => {
   }
 };
 
+
+const ReadAllUserService = async () => {
+
+  try {
+    // let MatchStage = {
+    //   $match: {
+    //     email,
+    //   },
+    // };
+    let JoinWithProfileStage = {
+      $lookup: {
+        from: "profiles",
+        localField: "_id",
+        foreignField: "userID",
+        as: "profile",
+      },
+    };
+
+    let Project = {
+      $project: {
+        email: 1,
+        "profile.cus_name": 1,
+        "profile.cus_add": 1,
+        "profile.cus_city": 1,
+        "profile.cus_country": 1,
+        "profile.cus_phone": 1,
+      },
+    };
+    let data = await UserModel.aggregate([
+
+      JoinWithProfileStage,
+      Project,
+    ]);
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
 module.exports = {
   FileUploadService,
   DeleteFileUploadService,
@@ -321,4 +361,5 @@ module.exports = {
   RecoverVerifyOTPAdminService,
   ResetPasswordAdminService,
   AdminUpdateService,
+  ReadAllUserService,
 };
