@@ -1,6 +1,51 @@
+import { useEffect, useRef } from "react"
+import ProductStore from "../store/ProductStore"
+import { useNavigate, useParams } from "react-router-dom"
+import { ErrorToast, IsEmpty, SuccessToast } from "../helper/Helper"
 
 
 const UpdateBrandInner = () => {
+    let { brandNameRef, brandImgRef } = useRef()
+    let { UpdateBrandRequest, BrandSingleRequest } = ProductStore()
+    let navigate = useNavigate()
+    let { id } = useParams()
+
+    useEffect(() => {
+        (async () => {
+            await BrandSingleRequest(id).then((res) => {
+                if (res) {
+                    brandNameRef.value = res.brandName
+                    brandImgRef.value = res.brandImg
+                } else {
+                    ErrorToast("Something went wrong!")
+                }
+
+            })
+        })()
+    }, [])
+
+    let UpdateBrandFun = async () => {
+        let brandName = brandNameRef.value;
+        let brandImg = brandImgRef.value;
+        if (IsEmpty(brandName)) {
+            ErrorToast("Brand Name is required!")
+            return true
+        }
+        else if ((IsEmpty(brandImg))) {
+            ErrorToast("Sub title is required!")
+            return true
+        }
+        else {
+            await UpdateBrandRequest({ brandName, brandImg }, id).then((res) => {
+                if (res) {
+                    SuccessToast("Feature created successfully!")
+                    navigate("/all-brand")
+                } else {
+                    ErrorToast("Something went wrong!")
+                }
+            })
+        }
+    }
     return (
         <div className=" bg-white p-[20px] rounded-lg">
             <div>
@@ -10,9 +55,10 @@ const UpdateBrandInner = () => {
                 <div className="col-span-6">
                     <div className="grid gap-2">
                         <label className="mb-2 text-sm text-start text-grey-900">
-                            Update brand name*
+                            Brand name*
                         </label>
                         <input
+                            ref={(input) => brandNameRef = input}
                             type="text"
                             className="input_inner"
                         />
@@ -21,9 +67,10 @@ const UpdateBrandInner = () => {
                 <div className="col-span-6">
                     <div className="grid gap-2">
                         <label className="mb-2 text-sm text-start text-grey-900">
-                            Update brand image CDN*
+                            Brand image CDN*
                         </label>
                         <input
+                            ref={(input) => brandImgRef = input}
                             type="text"
                             className="input_inner"
                         />
@@ -31,7 +78,7 @@ const UpdateBrandInner = () => {
                 </div>
             </div>
             <div className="mt-[60px]">
-                <button className="my_btn">Create new brand</button>
+                <button className="my_btn" onClick={UpdateBrandFun}>Update brand</button>
             </div>
 
         </div>

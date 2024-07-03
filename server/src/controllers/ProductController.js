@@ -30,6 +30,8 @@ const {
   ProductListByStockService,
   ProductListByColorService,
   ReadSingleSliderListService,
+  ReadBrandSingleService,
+  ReadCategorySingleService,
 } = require('../services/ProductService');
 
 //! ProductList
@@ -64,6 +66,10 @@ exports.ReadProductBrandList = async (req, res) => {
   let result = await ReadBrandListService();
   return res.status(200).json(result);
 };
+exports.ReadBrandSingle = async (req, res) => {
+  let result = await ReadBrandSingleService(req);
+  return res.status(200).json(result);
+};
 exports.UpdateProductBrandList = async (req, res) => {
   let result = await UpdateBrandListService(req);
   return res.status(200).json(result);
@@ -85,6 +91,10 @@ exports.CreateCategoryList = async (req, res) => {
 };
 exports.ReadCategoryList = async (req, res) => {
   let result = await ReadCategoryListService();
+  return res.status(200).json(result);
+};
+exports.ReadCategorySingle = async (req, res) => {
+  let result = await ReadCategorySingleService(req);
   return res.status(200).json(result);
 };
 exports.UpdateCategoryList = async (req, res) => {

@@ -203,6 +203,19 @@ const ReadBrandListService = async () => {
     return { status: false, error: error.toString() };
   }
 };
+const ReadBrandSingleService = async (req) => {
+  try {
+    let brandID = new ObjectId(req.params.brandID);
+    const data = await BrandModel.aggregate(
+      [{
+        $match: { _id: brandID },
+      }]
+    );
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
 
 const UpdateBrandListService = async (req) => {
   try {
@@ -298,6 +311,20 @@ const CreateCategoryListService = async (req) => {
 const ReadCategoryListService = async () => {
   try {
     const data = await CategoryModel.find();
+    return { status: true, data: data };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
+const ReadCategorySingleService = async (req) => {
+  try {
+    let categoryID = new ObjectId(req.params.categoryID);
+    const data = await CategoryModel.aggregate(
+      [{
+        $match: { _id: categoryID },
+      }]
+    );
     return { status: true, data: data };
   } catch (error) {
     return { status: false, error: error.toString() };
@@ -1271,10 +1298,12 @@ module.exports = {
   CreateBrandListService,
   ReadBrandListService,
   UpdateBrandListService,
+  ReadBrandSingleService,
   DeleteBrandListService,
   ProductListByBrandService,
   CreateCategoryListService,
   ReadCategoryListService,
+  ReadCategorySingleService,
   UpdateCategoryListService,
   DeleteCategoryListService,
   ProductListByCategoryService,

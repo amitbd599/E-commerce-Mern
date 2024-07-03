@@ -393,8 +393,8 @@ const CreateProductInner = () => {
 
 
             </div>
-            <div className="mt-[60px]" onClick={CreateProduct}>
-                <button className="my_btn">Create new product</button>
+            <div className="mt-[60px]" >
+                <button className="my_btn" onClick={CreateProduct}>Create new product</button>
             </div>
 
         </div>

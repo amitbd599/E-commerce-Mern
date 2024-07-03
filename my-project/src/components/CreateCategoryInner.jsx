@@ -1,6 +1,36 @@
+import { useRef } from "react"
+import ProductStore from "../store/ProductStore"
+import { useNavigate } from "react-router-dom"
+import { ErrorToast, IsEmpty, SuccessToast } from "../helper/Helper"
 
 
 const CreateCategoryInner = () => {
+    let { categoryNameRef, categoryImgRef } = useRef()
+    let { CreateCategoryRequest } = ProductStore()
+    let navigate = useNavigate()
+
+    let CreateCategoryFun = async () => {
+        let categoryName = categoryNameRef.value;
+        let categoryImg = categoryImgRef.value;
+        if (IsEmpty(categoryName)) {
+            ErrorToast("Category Name is required!")
+            return true
+        }
+        else if ((IsEmpty(categoryImg))) {
+            ErrorToast("Image is required!")
+            return true
+        }
+        else {
+            await CreateCategoryRequest({ categoryName, categoryImg }).then((res) => {
+                if (res) {
+                    SuccessToast("Category created successfully!")
+                    navigate("/all-category")
+                } else {
+                    ErrorToast("Something went wrong!")
+                }
+            })
+        }
+    }
     return (
         <div className=" bg-white p-[20px] rounded-lg">
             <div>
@@ -13,6 +43,7 @@ const CreateCategoryInner = () => {
                             Category name*
                         </label>
                         <input
+                            ref={(ref) => categoryNameRef = ref}
                             type="text"
                             className="input_inner"
                         />
@@ -24,6 +55,7 @@ const CreateCategoryInner = () => {
                             Category image CDN*
                         </label>
                         <input
+                            ref={(ref) => categoryImgRef = ref}
                             type="text"
                             className="input_inner"
                         />
@@ -31,7 +63,7 @@ const CreateCategoryInner = () => {
                 </div>
             </div>
             <div className="mt-[60px]">
-                <button className="my_btn">Create new category</button>
+                <button className="my_btn" onClick={CreateCategoryFun}>Create new category</button>
             </div>
 
         </div>

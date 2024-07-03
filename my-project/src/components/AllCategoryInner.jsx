@@ -1,31 +1,59 @@
 /* eslint-disable react/no-unknown-property */
 
 import DataTable from "react-data-table-component"
+import ProductStore from "../store/ProductStore";
+import { useEffect } from "react";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { DeleteAlert, SuccessToast } from "../helper/Helper";
 
 const AllCategoryInner = () => {
+    let { CategoryListRequest, CategoryList, DeleteCategoryRequest } = ProductStore()
+
+    useEffect(() => {
+        (async () => {
+            await CategoryListRequest()
+        })()
+    }, [])
+
+
+
+    let deleteProduct = async (id) => {
+        DeleteAlert(DeleteCategoryRequest, id).then(async (res) => {
+            if (res) {
+                SuccessToast('Product deleted successfully!')
+                await CategoryListRequest()
+            }
+        })
+    }
+
+
     const columns = [
         {
-            name: 'Title',
-            selector: row => row.title,
+            name: 'Category Name',
+            selector: row => row.categoryName,
         },
         {
-            name: 'Year',
-            selector: row => row.year,
+            name: 'Image',
+            selector: row => (
+                <div className="w-[50px] py-[10px]">
+                    <img src={row.categoryImg} alt="" />
+                </div>
+            ),
+        },
+        {
+            name: 'Action',
+            selector: row => (
+                <div className="flex gap-2">
+                    <button onClick={() => deleteProduct(row?._id)} className="p-2"><FaRegTrashAlt className="text-[20px]" /></button>
+                    <Link to={"/update-category/" + row?._id} className="p-2"><FaEdit className="text-[20px]" /></Link>
+                </div>
+            ),
+            width: '200px',
         },
     ];
 
-    const data = [
-        {
-            id: 1,
-            title: 'Beetlejuice',
-            year: '1988',
-        },
-        {
-            id: 2,
-            title: 'Ghostbusters',
-            year: '1984',
-        },
-    ]
+
     return (
         <div className=" bg-white p-[20px] rounded-lg">
             <div>
@@ -34,7 +62,7 @@ const AllCategoryInner = () => {
 
             {/* All slider table */}
             <div>
-                <DataTable title="Category list data" columns={columns} data={data} pagination />
+                <DataTable title="Category list data" columns={columns} data={CategoryList} pagination />
 
             </div>
 

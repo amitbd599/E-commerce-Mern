@@ -1,5 +1,5 @@
 
-const { CreateFeaturesService, UpdateFeaturesService, ReadFeaturesService, DeleteFeaturesService } = require("../services/FeaturesService.js");
+const { CreateFeaturesService, UpdateFeaturesService, ReadFeaturesService, DeleteFeaturesService, ReadSingleFeaturesService } = require("../services/FeaturesService.js");
 
 //! Wish List Controller
 exports.CreateFeatures = async (req, res) => {
@@ -8,6 +8,10 @@ exports.CreateFeatures = async (req, res) => {
 };
 exports.ReadFeatures = async (req, res) => {
     let result = await ReadFeaturesService(req);
+    return res.status(200).json(result);
+};
+exports.ReadSingleFeatures = async (req, res) => {
+    let result = await ReadSingleFeaturesService(req);
     return res.status(200).json(result);
 };
 exports.UpdateFeatures = async (req, res) => {

@@ -17,7 +17,6 @@ const AllProductInner = () => {
         })()
     }, [])
 
-    console.log(ProductList?.products);
 
     let deleteProduct = async (id) => {
         DeleteAlert(ProductDeleteRequest, id).then(async (res) => {

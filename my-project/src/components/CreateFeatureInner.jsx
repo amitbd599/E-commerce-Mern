@@ -1,6 +1,52 @@
+import { useRef } from "react"
+import FeatureStore from "../store/FeatureStore"
+import { ErrorToast, IsEmpty, SuccessToast } from "../helper/Helper"
+import { useNavigate } from "react-router-dom"
 
 
 const CreateFeatureInner = () => {
+    let { titleRef, sub_titleRef, button_titleRef, button_linkRef, imgRef } = useRef()
+    let { CreateFeatureRequest } = FeatureStore()
+    let navigate = useNavigate()
+
+    let CreateFeatureFun = async () => {
+        let title = titleRef.value;
+        let sub_title = sub_titleRef.value;
+        let button_title = button_titleRef.value;
+        let button_link = button_linkRef.value;
+        let img = imgRef.value;
+        if (IsEmpty(title)) {
+            ErrorToast("Title is required!")
+            return true
+        }
+        else if ((IsEmpty(sub_title))) {
+            ErrorToast("Sub title is required!")
+            return true
+        }
+        else if ((IsEmpty(button_title))) {
+            ErrorToast("Button title is required!")
+            return true
+        }
+        else if ((IsEmpty(button_link))) {
+            ErrorToast("Button link is required!")
+            return true
+        }
+        else if ((IsEmpty(img))) {
+            ErrorToast("Img is required!")
+            return true
+        } else {
+            await CreateFeatureRequest({ title, sub_title, button_title, button_link, img }).then((res) => {
+                if (res) {
+                    SuccessToast("Feature created successfully!")
+                    navigate("/all-feature")
+                } else {
+                    ErrorToast("Something went wrong!")
+                }
+            })
+        }
+    }
+
+
     return (
         <div className=" bg-white p-[20px] rounded-lg">
             <div>
@@ -13,6 +59,7 @@ const CreateFeatureInner = () => {
                             Title*
                         </label>
                         <input
+                            ref={(input => titleRef = input)}
                             type="text"
                             className="input_inner"
                         />
@@ -24,6 +71,7 @@ const CreateFeatureInner = () => {
                             Sub title*
                         </label>
                         <input
+                            ref={(input => sub_titleRef = input)}
                             type="text"
                             className="input_inner"
                         />
@@ -36,6 +84,7 @@ const CreateFeatureInner = () => {
                             Button title*
                         </label>
                         <input
+                            ref={(input => button_titleRef = input)}
                             type="text"
                             className="input_inner"
                         />
@@ -47,6 +96,7 @@ const CreateFeatureInner = () => {
                             Button link*
                         </label>
                         <input
+                            ref={(input => button_linkRef = input)}
                             type="text"
                             className="input_inner"
                         />
@@ -58,6 +108,7 @@ const CreateFeatureInner = () => {
                             Image CDN *
                         </label>
                         <input
+                            ref={(input => imgRef = input)}
                             type="text"
                             className="input_inner"
                         />
@@ -65,7 +116,7 @@ const CreateFeatureInner = () => {
                 </div>
             </div>
             <div className="mt-[60px]">
-                <button className="my_btn">Create new feature product</button>
+                <button className="my_btn" onClick={CreateFeatureFun}>Create new feature product</button>
             </div>
 
         </div>

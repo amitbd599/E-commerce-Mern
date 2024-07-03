@@ -38,6 +38,21 @@ const ReadFeaturesService = async (req) => {
         return { status: false, error: error.toString() };
     }
 };
+const ReadSingleFeaturesService = async (req) => {
+    try {
+        let featuresID = new ObjectId(req.params.featuresID);
+        const data = await FeaturesModel.aggregate(
+            [
+                {
+                    $match: { _id: featuresID }
+                }
+            ]
+        );
+        return { status: true, data: data };
+    } catch (error) {
+        return { status: false, error: error.toString() };
+    }
+};
 
 const DeleteFeaturesService = async (req) => {
     try {
@@ -53,5 +68,5 @@ const DeleteFeaturesService = async (req) => {
 
 
 module.exports = {
-    CreateFeaturesService, UpdateFeaturesService, ReadFeaturesService, DeleteFeaturesService
+    CreateFeaturesService, UpdateFeaturesService, ReadFeaturesService, DeleteFeaturesService, ReadSingleFeaturesService
 }

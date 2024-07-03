@@ -2,16 +2,46 @@
 
 import axios from 'axios';
 import create from "zustand"
-const apiUrl = process.env.REACT_APP_API_URL;
 
 
 const FeatureStore = create((set) => ({
-  FeatureList: null,
+  FeatureList: [],
+
+  // read-features-list
   FeatureListRequest: async () => {
-    let res = await axios.get(apiUrl + '/read-features-list');
+    let res = await axios.get('/api/read-features-list');
     if (res?.data?.status === true) {
       set({ FeatureList: res?.data?.data });
     }
+  },
+  // read-single-features
+  SingleFeatureRequest: async (id) => {
+    let res = await axios.get('/api/read-single-features/' + id);
+    if (res?.data?.status === true) {
+      return res?.data?.data[0]
+    }
+  },
+
+  // create-features-list
+  CreateFeatureRequest: async (reqBody) => {
+    let res = await axios.post('/api/create-features-list', reqBody, {
+      withCredentials: true,
+    });
+    return res?.data?.status === true
+  },
+
+  // update-features-list
+  UpdateFeatureRequest: async (reqBody, id) => {
+    let res = await axios.post('/api/update-features-list/' + id, reqBody, {
+      withCredentials: true,
+    });
+    return res?.data?.status === true
+  },
+
+  // delete-features-list
+  FeatureDeleteRequest: async (id) => {
+    let res = await axios.delete("/api/delete-features-list/" + id);
+    return res?.data?.status === true
   },
 }));
 

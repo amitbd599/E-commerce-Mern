@@ -97,6 +97,7 @@ router.post(
   ProductController.CreateProductBrandList
 );
 router.get("/read-brand-list", ProductController.ReadProductBrandList);
+router.get("/read-single-brand/:brandID", ProductController.ReadBrandSingle);
 router.post(
   "/update-brand-list/:brandID",
   AuthVerificationAdmin,
@@ -120,6 +121,7 @@ router.post(
   ProductController.CreateCategoryList
 );
 router.get("/read-category-list", ProductController.ReadCategoryList);
+router.get("/read-single-category/:categoryID", ProductController.ReadCategorySingle);
 router.post(
   "/update-category-list/:categoryID",
   AuthVerificationAdmin,
@@ -253,14 +255,15 @@ router.delete(
 );
 
 //! Features routes
-router.post("/create-features-list", FeaturesController.CreateFeatures);
+router.post("/create-features-list", AuthVerificationAdmin, FeaturesController.CreateFeatures);
 router.get("/read-features-list", FeaturesController.ReadFeatures);
+router.get("/read-single-features/:featuresID", FeaturesController.ReadSingleFeatures);
 router.post(
-  "/update-features-list/:featuresID",
+  "/update-features-list/:featuresID", AuthVerificationAdmin,
   FeaturesController.UpdateFeatures
 );
 router.delete(
-  "/delete-features-list/:featuresID",
+  "/delete-features-list/:featuresID", AuthVerificationAdmin,
   FeaturesController.DeleteFeatures
 );
 
