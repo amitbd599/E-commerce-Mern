@@ -1,31 +1,71 @@
 /* eslint-disable react/no-unknown-property */
 
 import DataTable from "react-data-table-component"
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import ReviewStore from "../store/ReviewStore";
+import { useEffect } from "react";
+import { DeleteAlert, SuccessToast } from "../helper/Helper";
 
 const AllReviewInner = () => {
+    let { GetAllReviewRequest, reviewList, ReviewDeleteRequest } = ReviewStore()
+
+    useEffect(() => {
+        (async () => {
+            await GetAllReviewRequest()
+        })();
+    }, [])
+
+    console.log(reviewList);
+
+
+    let deleteProduct = async (id) => {
+        DeleteAlert(ReviewDeleteRequest, id).then(async (res) => {
+            if (res) {
+                SuccessToast('Product deleted successfully!')
+                await GetAllReviewRequest()
+            }
+        })
+    }
     const columns = [
         {
-            name: 'Title',
-            selector: row => row.title,
+            name: 'Product ID',
+            selector: row => row.productID,
+            width: '250px',
         },
         {
-            name: 'Year',
-            selector: row => row.year,
+            name: 'Rating',
+            selector: row => row.rating,
+            width: '100px',
+        },
+        {
+            name: 'User ID',
+            selector: row => row.userID,
+            width: '250px',
+        },
+        {
+            name: 'Description',
+            selector: row => (
+                <div className=" py-[10px]">
+                    <span className="wrap-pre">{row.des}</span>
+                </div>
+            ),
+            width: '700px',
+        },
+
+        {
+            name: 'Action',
+            selector: row => (
+                <div className="flex gap-2">
+                    <button onClick={() => deleteProduct(row?._id)} className="p-2"><FaRegTrashAlt className="text-[20px]" /></button>
+                    <Link to={"/update-brand/" + row?._id} className="p-2"><FaEdit className="text-[20px]" /></Link>
+                </div>
+            ),
+            width: '200px',
         },
     ];
 
-    const data = [
-        {
-            id: 1,
-            title: 'Beetlejuice',
-            year: '1988',
-        },
-        {
-            id: 2,
-            title: 'Ghostbusters',
-            year: '1984',
-        },
-    ]
+
     return (
         <div className=" bg-white p-[20px] rounded-lg">
             <div>
@@ -34,7 +74,7 @@ const AllReviewInner = () => {
 
             {/* All slider table */}
             <div>
-                <DataTable title="Reviews list data" columns={columns} data={data} pagination />
+                <DataTable title="Reviews list data" columns={columns} data={reviewList} pagination />
 
             </div>
 
