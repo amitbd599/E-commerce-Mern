@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: process.env.Origin_HOST,
+    origin: [process.env.Origin_HOST_Site, process.env.Origin_HOST_dashboard],
   })
 );
 app.use(helmet());

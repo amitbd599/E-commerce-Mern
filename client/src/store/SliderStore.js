@@ -5,7 +5,9 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const SliderStore = create((set) => ({
   SliderList: null,
   SliderListRequest: async () => {
-    let res = await axios.get(apiUrl + '/read-slider-list');
+    let res = await axios.get(apiUrl + '/read-slider-list', {
+      withCredentials: true,
+    });
     if (res?.data?.status === true) {
       set({ SliderList: res?.data?.data });
     }

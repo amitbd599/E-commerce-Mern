@@ -5,7 +5,9 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const ProductStore = create((set) => ({
   ProductList: null,
   ProductListRequest_Feature: async (item, pageNo) => {
-    let res = await axios.get(apiUrl + "/read-product/" + item + "/" + pageNo);
+    let res = await axios.get(apiUrl + "/read-product/" + item + "/" + pageNo, {
+      withCredentials: true,
+    });
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
     }
@@ -13,7 +15,9 @@ const ProductStore = create((set) => ({
 
   ProductDetails: null,
   ProductDetailsRequest: async (id) => {
-    let res = await axios.get(apiUrl + "/product-details/" + id);
+    let res = await axios.get(apiUrl + "/product-details/" + id, {
+      withCredentials: true,
+    });
     if (res?.data?.status === true) {
       set({ ProductDetails: res?.data?.data[0] });
     }
@@ -21,7 +25,9 @@ const ProductStore = create((set) => ({
 
   CategoryList: null,
   CategoryListRequest: async () => {
-    let res = await axios.get(apiUrl + "/read-category-list");
+    let res = await axios.get(apiUrl + "/read-category-list", {
+      withCredentials: true,
+    });
     if (res?.data?.status === true) {
       set({ CategoryList: res?.data?.data });
     }
@@ -29,7 +35,9 @@ const ProductStore = create((set) => ({
 
   BrandList: null,
   BrandListRequest: async () => {
-    let res = await axios.get(apiUrl + "/read-brand-list");
+    let res = await axios.get(apiUrl + "/read-brand-list", {
+      withCredentials: true,
+    });
     if (res?.data?.status === true) {
       set({ BrandList: res?.data?.data });
     }
@@ -37,7 +45,9 @@ const ProductStore = create((set) => ({
 
   RemarkListRequest: async (remark, item, pageNo) => {
     let res = await axios.get(
-      apiUrl + "/product-list-by-remark/" + remark + "/" + item + "/" + pageNo
+      apiUrl + "/product-list-by-remark/" + remark + "/" + item + "/" + pageNo, {
+      withCredentials: true,
+    }
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
@@ -47,12 +57,14 @@ const ProductStore = create((set) => ({
   SimilarCategoryListRequest: async (id, item, pageNo) => {
     let res = await axios.get(
       apiUrl +
-        "/product-list-by-similar-category/" +
-        id +
-        "/" +
-        item +
-        "/" +
-        pageNo
+      "/product-list-by-similar-category/" +
+      id +
+      "/" +
+      item +
+      "/" +
+      pageNo, {
+      withCredentials: true,
+    }
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
@@ -62,12 +74,14 @@ const ProductStore = create((set) => ({
   SimilarBrandsListRequest: async (id, item, pageNo) => {
     let res = await axios.get(
       apiUrl +
-        "/product-list-by-similar-brand/" +
-        id +
-        "/" +
-        item +
-        "/" +
-        pageNo
+      "/product-list-by-similar-brand/" +
+      id +
+      "/" +
+      item +
+      "/" +
+      pageNo, {
+      withCredentials: true,
+    }
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
@@ -76,7 +90,9 @@ const ProductStore = create((set) => ({
 
   SimilarStockListRequest: async (bool, item, pageNo) => {
     let res = await axios.get(
-      apiUrl + "/product-list-by-stock/" + bool + "/" + item + "/" + pageNo
+      apiUrl + "/product-list-by-stock/" + bool + "/" + item + "/" + pageNo, {
+      withCredentials: true,
+    }
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
@@ -85,7 +101,9 @@ const ProductStore = create((set) => ({
 
   SimilarColorListRequest: async (value, item, pageNo) => {
     let res = await axios.get(
-      apiUrl + "/product-list-by-color/" + value + "/" + item + "/" + pageNo
+      apiUrl + "/product-list-by-color/" + value + "/" + item + "/" + pageNo, {
+      withCredentials: true,
+    }
     );
     if (res?.data?.status === true) {
       set({ ProductList: res?.data });
