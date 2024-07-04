@@ -1,8 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 
 import DataTable from "react-data-table-component"
-import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaRegTrashAlt } from "react-icons/fa";
 import ReviewStore from "../store/ReviewStore";
 import { useEffect } from "react";
 import { DeleteAlert, SuccessToast } from "../helper/Helper";
@@ -16,7 +15,7 @@ const AllReviewInner = () => {
         })();
     }, [])
 
-    console.log(reviewList);
+
 
 
     let deleteProduct = async (id) => {
@@ -58,7 +57,7 @@ const AllReviewInner = () => {
             selector: row => (
                 <div className="flex gap-2">
                     <button onClick={() => deleteProduct(row?._id)} className="p-2"><FaRegTrashAlt className="text-[20px]" /></button>
-                    <Link to={"/update-brand/" + row?._id} className="p-2"><FaEdit className="text-[20px]" /></Link>
+
                 </div>
             ),
             width: '200px',

@@ -1,6 +1,6 @@
 import axios from "axios";
 import create from "zustand";
-import { unAuthorize } from "../helper/helper";
+import { unAuthorize } from "../helper/Helper";
 const apiUrl = import.meta.env.REACT_APP_API_URL;
 
 const CartStore = create((set) => ({
@@ -101,7 +101,20 @@ const CartStore = create((set) => ({
   // get invoice list
   InvoiceListGetRequest: async () => {
     try {
-      let res = await axios.get(apiUrl + "/invoice-list", {
+      let res = await axios.get("/api/invoice-list", {
+        withCredentials: true,
+      });
+      if (res?.data?.status === true) {
+        set({ InvoiceList: res?.data?.data });
+      }
+    } catch (e) {
+      unAuthorize(e.response.status);
+    }
+  },
+  // get-all-invoice-list
+  GetAllInvoiceListGetRequest: async () => {
+    try {
+      let res = await axios.get("/api/get-all-invoice-list", {
         withCredentials: true,
       });
       if (res?.data?.status === true) {
@@ -115,7 +128,7 @@ const CartStore = create((set) => ({
   // get single invoice
   InvoiceSingleGetRequest: async (id) => {
     try {
-      let res = await axios.get(apiUrl + "/invoice-product-list/" + id, {
+      let res = await axios.get("/api/invoice-product-list/" + id, {
         withCredentials: true,
       });
       if (res?.data?.status === true) {
@@ -129,7 +142,7 @@ const CartStore = create((set) => ({
   // get all orders
   GetAllOrderRequest: async () => {
     try {
-      let res = await axios.get(apiUrl + "/order-list", {
+      let res = await axios.get("/api/all-order-list", {
         withCredentials: true,
       });
       if (res?.data?.status === true) {

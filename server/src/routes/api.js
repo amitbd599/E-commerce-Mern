@@ -278,7 +278,13 @@ router.get(
   AuthVerificationUser,
   InvoiceController.InvoiceList
 );
+router.get(
+  "/get-all-invoice-list",
+  AuthVerificationAdmin,
+  InvoiceController.GetAllInvoiceList
+);
 router.get("/order-list", AuthVerificationUser, InvoiceController.OrderList);
+router.get("/all-order-list", AuthVerificationAdmin, InvoiceController.AllOrderList);
 router.get(
   "/invoice-product-list/:invoiceID",
   AuthVerificationUser,

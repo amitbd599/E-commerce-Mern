@@ -19,9 +19,9 @@ import UpdateCategory from './pages/UpdateCategory'
 import AllCategory from './pages/AllCategory'
 import AllReview from './pages/AllReview'
 import AllInvoice from './pages/AllInvoice'
-import AllOrder from './pages/AllOrder'
 import File from './pages/File'
 import CreateFile from './pages/CreateFile'
+import Invoice from './pages/Invoice'
 
 
 function App() {
@@ -49,9 +49,15 @@ function App() {
           <Route exact path='/create-category' element={<CreateCategory />} />
           <Route exact path='/all-category' element={<AllCategory />} />
           <Route exact path='/update-category/:id' element={<UpdateCategory />} />
+          <Route
+            exact
+            path="/invoice/:id"
+            element={
+              <Invoice />
+            }
+          />
           <Route exact path='/all-review' element={<AllReview />} />
           <Route exact path='/all-invoice' element={<AllInvoice />} />
-          <Route exact path='/all-order' element={<AllOrder />} />
           <Route exact path='/create-file' element={<CreateFile />} />
           <Route exact path='/all-file/:limit/:pageNo' element={<File />} />
 

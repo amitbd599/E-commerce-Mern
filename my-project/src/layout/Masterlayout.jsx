@@ -185,13 +185,7 @@ const Masterlayout = ({ children }) => {
                   : "link_item"
               }>All Invoice</NavLink>
             </li>
-            <li className="pb-[2px]">
-              <NavLink to="/all-order" className={(navData) =>
-                navData.isActive
-                  ? "link_item active"
-                  : "link_item"
-              }>All Order</NavLink>
-            </li>
+
           </ul>
         </div>
 

@@ -56,7 +56,11 @@ const CreateInvoiceService = async (req) => {
       let vat = totalAmount * 0.05; // 5% vat
       let shipping = 75;
 
+      console.log(totalAmount, vat, shipping);
+
       let totalPayable = totalAmount + vat + shipping;
+
+      console.log(parseFloat(totalPayable).toFixed(2));
 
       // =========== Step-2: Prepare customer details & shipping details =============
 
@@ -85,7 +89,7 @@ const CreateInvoiceService = async (req) => {
 
       let createInvoice = await InvoiceModel.create({
         userID: user_id,
-        payable: totalPayable,
+        payable: parseFloat(totalPayable).toFixed(2),
         cus_details: cus_details,
         ship_details: ship_details,
         tran_id: tran_id,
@@ -252,6 +256,17 @@ const InvoiceListService = async (req) => {
   }
 };
 
+const GetAllInvoiceListService = async (req) => {
+  try {
+
+    let invoice = await InvoiceModel.find();
+
+    return { status: true, data: invoice };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
 const InvoiceProductListService = async (req) => {
   try {
     let user_id = new ObjectId(req.headers.user_id);
@@ -341,6 +356,42 @@ const OrderListService = async (req) => {
   }
 };
 
+const AllOrderListService = async () => {
+  try {
+    let joinStageWithProduct = {
+      $lookup: {
+        from: "products",
+        localField: "productID",
+        foreignField: "_id",
+        as: "product",
+      },
+    };
+
+    let projectionStage = {
+      $project: {
+        productID: 1,
+        qty: 1,
+        price: 1,
+        color: 1,
+        size: 1,
+        invoiceID: 1,
+
+        "product.title": 1,
+        "product.img1": 1,
+      },
+    };
+
+    let product = await InvoiceProductModel.aggregate([
+      joinStageWithProduct,
+      projectionStage,
+    ]);
+
+    return { status: true, data: product };
+  } catch (error) {
+    return { status: false, error: error.toString() };
+  }
+};
+
 module.exports = {
   CreateInvoiceService,
   PaymentFailService,
@@ -348,6 +399,8 @@ module.exports = {
   PaymentIPNService,
   PaymentSuccessService,
   InvoiceListService,
+  GetAllInvoiceListService,
   InvoiceProductListService,
   OrderListService,
+  AllOrderListService,
 };
