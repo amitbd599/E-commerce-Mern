@@ -80,15 +80,28 @@ const UserStore = create((set) => ({
   },
 
   // is login
+  login: false,
   isLogin: async () => {
-    let res = await axios.get(
-      apiUrl + "/verify-user",
-      {
-        withCredentials: true,
-      }
-    );
+    try {
+      let res = await axios.get(
+        apiUrl + "/verify-user",
+        {
+          withCredentials: true,
+        }
+      );
 
-    console.log(res);
+      if (res.data.status === true) {
+        set({ login: true })
+        return true
+      }
+    } catch (e) {
+      if (e.response.status === 401) {
+        set({ login: false })
+        return false
+      }
+    }
+
+
   },
 
   // logout

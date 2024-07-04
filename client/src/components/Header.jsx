@@ -12,14 +12,19 @@ const Header = () => {
     CartListDeleteRequest,
   } = CartStore();
   let { WishList, WishListGetRequest } = WishListStore();
-  let { isLogin } = UserStore();
+  let { isLogin, login } = UserStore();
+
 
   useEffect(() => {
     (async () => {
-      if (isLogin()) {
-        await CartListGetRequest();
-        await WishListGetRequest();
-      }
+      await isLogin().then(async (res) => {
+        if (res) {
+          await CartListGetRequest();
+          await WishListGetRequest();
+        }
+      })
+
+
     })();
   }, []);
 
@@ -39,7 +44,7 @@ const Header = () => {
     });
   };
 
-  console.log(WishList);
+
   return (
     <>
       {/* header start */}
@@ -152,7 +157,7 @@ const Header = () => {
                       />
                     </svg>
                     <span className="header-wishlist-count">
-                      {isLogin() ? WishList?.length : "0"}
+                      {login ? WishList?.length : "0"}
                     </span>
                   </Link>
                   <Link
@@ -174,7 +179,7 @@ const Header = () => {
                       />
                     </svg>
                     <span className="header-wishlist-count">
-                      {isLogin() ? CartList?.length : "0"}
+                      {login ? CartList?.length : "0"}
                     </span>
                   </Link>
                   <Link
@@ -481,11 +486,11 @@ const Header = () => {
                       (sum, item) =>
                         sum +
                         item?.qty *
-                          parseInt(
-                            item?.product?.discount === true
-                              ? item?.product?.discountPrice
-                              : item?.product?.price
-                          ),
+                        parseInt(
+                          item?.product?.discount === true
+                            ? item?.product?.discountPrice
+                            : item?.product?.price
+                        ),
                       0
                     )}
                   </span>

@@ -1,14 +1,30 @@
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserStore from "../store/UserStore";
 const PrivateRoute = ({ children }) => {
-  let { isLogin } = UserStore();
-  let location = useLocation();
+  let { login, isLogin } = UserStore();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  if (isLogin() === true) {
+  useEffect(() => {
+    if (
+      location.pathname === '/cart' ||
+      location.pathname === '/checkout' ||
+      location.pathname === '/profile' ||
+      location.pathname === '/invoice' ||
+      location.pathname === '/wishlist') {
+      (async () => {
+        await isLogin()
+      })()
+    }
+  }, []);
+
+  console.log(login);
+
+  if (login === true) {
     return children;
   } else {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return navigate('/login', { state: { from: location } });
   }
 };
 

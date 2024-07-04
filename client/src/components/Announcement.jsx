@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import UserStore from "../store/UserStore";
 
 const Announcement = () => {
-  let { isLogin, logout } = UserStore();
+  let { logout, login } = UserStore();
+
+
 
   let logOut = () => {
     logout();
@@ -38,7 +40,7 @@ const Announcement = () => {
             <div className="col-lg-3 d-lg-block d-none">
               <div className="announcement-meta-wrapper d-flex align-items-center justify-content-end">
                 <div className="announcement-meta d-flex align-items-center">
-                  {isLogin() === false ? (
+                  {login === false ? (
                     <Link
                       className="announcement-login announcement-text text-white"
                       to="/login"
