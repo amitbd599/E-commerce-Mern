@@ -81,6 +81,7 @@ const UserStore = create((set) => ({
 
   // is login
   isLogin: () => {
+    console.log(Cookies.get("token_user"));
     return !!Cookies.get("token_user");
   },
 
