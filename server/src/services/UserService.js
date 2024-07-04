@@ -41,7 +41,7 @@ const LoginUserService = async (req, res) => {
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
-        httpOnly: false,
+        httpOnly: true,
         sameSite: "none",
         secure: true,
       };
