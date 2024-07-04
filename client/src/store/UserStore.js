@@ -80,9 +80,15 @@ const UserStore = create((set) => ({
   },
 
   // is login
-  isLogin: () => {
-    console.log(Cookies.get("token_user"));
-    return !!Cookies.get("token_user");
+  isLogin: async () => {
+    let res = await axios.get(
+      apiUrl + "/verify-user",
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log(res);
   },
 
   // logout
@@ -143,3 +149,6 @@ const UserStore = create((set) => ({
 }));
 
 export default UserStore;
+
+
+

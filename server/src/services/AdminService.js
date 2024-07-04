@@ -153,6 +153,15 @@ const LoginAdminService = async (req, res) => {
   }
 };
 
+const VerifyAdminService = (res) => {
+  try {
+    return { status: true }
+
+  } catch (e) {
+    return { status: false, error: e.toString() };
+  }
+}
+
 const AdminUpdateService = async (req) => {
   let email = req.headers.email;
   // let password = md5(req.body.password);
@@ -362,4 +371,5 @@ module.exports = {
   ResetPasswordAdminService,
   AdminUpdateService,
   ReadAllUserService,
+  VerifyAdminService
 };

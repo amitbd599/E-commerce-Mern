@@ -57,6 +57,15 @@ const LoginUserService = async (req, res) => {
   }
 };
 
+const VerifyUserService = () => {
+  try {
+    return { status: true }
+
+  } catch (e) {
+    return { status: false, error: e.toString() };
+  }
+}
+
 const ProfileUpdateUserService = async (req) => {
   let email = req.headers.email;
   // let password = md5(req.body.password);
@@ -273,4 +282,5 @@ module.exports = {
   RecoverVerifyEmailUserService,
   RecoverVerifyOTPUserService,
   ResetPasswordUserService,
+  VerifyUserService
 };

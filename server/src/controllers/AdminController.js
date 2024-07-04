@@ -1,4 +1,4 @@
-const { RegisterAdminService, LoginAdminService, AdminReadService, LogoutAdminService, EmailVerifyAdminService, RecoverVerifyEmailAdminService, RecoverVerifyOTPAdminService, ResetPasswordAdminService, AdminUpdateService, FileUploadService, DeleteFileUploadService, AllFileService, ReadAllUserService } = require("../services/AdminService");
+const { RegisterAdminService, LoginAdminService, AdminReadService, LogoutAdminService, EmailVerifyAdminService, RecoverVerifyEmailAdminService, RecoverVerifyOTPAdminService, ResetPasswordAdminService, AdminUpdateService, FileUploadService, DeleteFileUploadService, AllFileService, ReadAllUserService, VerifyAdminService } = require("../services/AdminService");
 
 
 //! file upload
@@ -25,6 +25,10 @@ exports.RegisterAdmin = async (req, res) => {
 
 exports.LoginAdmin = async (req, res) => {
   let result = await LoginAdminService(req, res);
+  return res.status(200).json(result);
+};
+exports.VerifyAdmin = async (req, res) => {
+  let result = await VerifyAdminService();
   return res.status(200).json(result);
 };
 

@@ -1,4 +1,4 @@
-const { RegisterUserService, LoginUserService, ProfileUpdateUserService, ProfileReadUserService, LogoutUserService, EmailVerifyUserService, RecoverVerifyEmailUserService, RecoverVerifyOTPUserService, ResetPasswordUserService } = require("../services/UserService.js");
+const { RegisterUserService, LoginUserService, ProfileUpdateUserService, ProfileReadUserService, LogoutUserService, EmailVerifyUserService, RecoverVerifyEmailUserService, RecoverVerifyOTPUserService, ResetPasswordUserService, VerifyUserService } = require("../services/UserService.js");
 
 
 //! User Control
@@ -9,6 +9,10 @@ exports.RegisterUser = async (req, res) => {
 
 exports.LoginUser = async (req, res) => {
   let result = await LoginUserService(req, res);
+  return res.status(200).json(result);
+};
+exports.VerifyUser = async (req, res) => {
+  let result = await VerifyUserService(req, res);
   return res.status(200).json(result);
 };
 

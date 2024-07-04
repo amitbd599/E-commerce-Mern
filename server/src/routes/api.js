@@ -23,6 +23,7 @@ router.get("/all-file/:item/:pageNo", AdminController.AllFile);
 //! Admin routes
 router.post("/register-admin", AdminController.RegisterAdmin);
 router.post("/login-admin", AdminController.LoginAdmin);
+router.get("/verify-admin", AuthVerificationAdmin, AdminController.VerifyAdmin);
 router.get("/logout-admin", AdminController.LogoutAdmin);
 router.get("/read-admin", AuthVerificationAdmin, AdminController.AdminRead);
 router.get("/read-all-user", AuthVerificationAdmin, AdminController.ReadAllUser);
@@ -47,6 +48,7 @@ router.post(
 //! User routes
 router.post("/register-user", UserController.RegisterUser);
 router.post("/login-user", UserController.LoginUser);
+router.get("/verify-user", AuthVerificationUser, UserController.VerifyUser);
 router.get("/logout-user", UserController.LogoutUser);
 router.get(
   "/profile-read-user",
