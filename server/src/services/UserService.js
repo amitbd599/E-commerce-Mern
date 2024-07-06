@@ -155,7 +155,7 @@ const ProfileReadUserService = async (req) => {
 
 const LogoutUserService = async (res) => {
   try {
-    res.clearCookie("Token");
+    res.clearCookie('Token');
     return { status: true };
   } catch (error) {
     return { status: false, error: e.toString() };
