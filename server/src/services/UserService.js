@@ -37,7 +37,7 @@ const LoginUserService = async (req, res) => {
     ]);
 
     if (data.length > 0) {
-      let token_user = EncodeToken(data[0]);
+      let Token = EncodeToken(data[0]);
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
@@ -47,8 +47,8 @@ const LoginUserService = async (req, res) => {
       };
 
       // Set cookie
-      res.cookie("token_user", token_user, options);
-      return { status: true, token_user: token_user, data: data[0] };
+      res.cookie("Token", Token, options);
+      return { status: true, Token: Token, data: data[0] };
     } else {
       return { status: "unauthorized", data: data };
     }
@@ -155,7 +155,7 @@ const ProfileReadUserService = async (req) => {
 
 const LogoutUserService = async (res) => {
   try {
-    res.clearCookie("token_user");
+    res.clearCookie("Token");
     return { status: true };
   } catch (error) {
     return { status: false, error: e.toString() };

@@ -1,8 +1,8 @@
 const { DecodeToken } = require("../utility/TokenHelper");
 
 module.exports = async (req, res, next) => {
-  let token_user = await req?.cookies?.token_user;
-  let decoded = DecodeToken(token_user);
+  let Token = await req?.cookies?.Token;
+  let decoded = DecodeToken(Token);
   if (decoded === null) {
     return res.status(401).json({
       status: 401,

@@ -133,7 +133,7 @@ const LoginAdminService = async (req, res) => {
 
 
     if (data.length > 0) {
-      let token_admin = EncodeToken(data[0]);
+      let Token = EncodeToken(data[0]);
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
@@ -143,8 +143,8 @@ const LoginAdminService = async (req, res) => {
       };
 
       // Set cookie
-      res.cookie("token_admin", token_admin, options);
-      return { status: true, token_admin: token_admin, data: data[0] };
+      res.cookie("Token", Token, options);
+      return { status: true, Token: Token, data: data[0] };
     } else {
       return { status: "unauthorized", data: data };
     }
@@ -211,7 +211,7 @@ const AdminReadService = async (req) => {
 
 const LogoutAdminService = async (res) => {
   try {
-    res.clearCookie("token_admin");
+    res.clearCookie("Token");
     return { status: "success" };
   } catch (error) {
     return { status: false, error: e.toString() };

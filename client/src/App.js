@@ -36,24 +36,7 @@ function App() {
         <Route exact path="/about" element={<About />} />
         <Route exact path="/blog" element={<Blog />} />
         <Route exact path="/blog-details" element={<BlogDetails />} />
-        <Route
-          exact
-          path="/cart"
-          element={
-            <PrivateRoute>
-              <Cart />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          exact
-          path="/checkout"
-          element={
-            <PrivateRoute>
-              <Checkout />
-            </PrivateRoute>
-          }
-        />
+
         <Route exact path="/faq" element={<Faq />} />
         <Route exact path="/product-all/:pageNo" element={<Product />} />
         <Route
@@ -82,6 +65,38 @@ function App() {
           element={<Product />}
         />
         <Route exact path="/product-details/:id" element={<ProductDetails />} />
+
+        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/forgot-password" element={<ForgotPassword />} />
+        <Route exact path="/otp-verify/:email" element={<OTPVerify />} />
+        <Route
+          exact
+          path="/reset-password/:email/:code"
+          element={<ResetPassword />}
+        />
+
+
+        {/* Private route */}
+        <Route
+          exact
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
         <Route
           exact
           path="/wishlist"
@@ -109,18 +124,12 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route exact path="/contact" element={<Contact />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/forgot-password" element={<ForgotPassword />} />
-        <Route exact path="/otp-verify/:email" element={<OTPVerify />} />
-        <Route
-          exact
-          path="/reset-password/:email/:code"
-          element={<ResetPassword />}
-        />
+
+        {/* No page */}
         <Route path="*" element={<Error />} />
       </Routes>
+
+
     </BrowserRouter>
   );
 }

@@ -7,9 +7,13 @@ const Announcement = () => {
 
 
 
-  let logOut = () => {
-    logout();
-    window.location.reload();
+  let logOut = async () => {
+    await logout().then((res) => {
+      if (res) {
+        window.location.reload();
+      }
+    })
+
   };
 
   return (
