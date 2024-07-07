@@ -27,7 +27,7 @@ exports.ProfileReadUser = async (req, res) => {
 };
 
 exports.LogoutUser = async (req, res) => {
-  let result = await LogoutUserService(res);
+  let result = await LogoutUserService(req, res);
   return res.status(200).json(result);
 };
 
