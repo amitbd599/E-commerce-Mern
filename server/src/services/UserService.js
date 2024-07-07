@@ -159,11 +159,11 @@ const LogoutUserService = async (res) => {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
+      path: '/',
     };
 
-    // Clear the cookie with the same options
+    res.cookie('Token', '', { ...options, maxAge: 0 });
     res.clearCookie('Token', options);
-
     return { status: true };
   } catch (error) {
     return { status: false, error: e.toString() };
