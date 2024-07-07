@@ -106,12 +106,17 @@ const UserStore = create((set) => ({
 
   // logout
   logout: async () => {
-    let res = await axios.get(apiUrl + "/logout-user", {
-      withCredentials: true, credentials: "include"
-    });
-    if (res.data.status === true) {
-      return true;
-    } else {
+    try {
+      let res = await axios.get(apiUrl + "/logout-user", {
+        withCredentials: true, credentials: "include"
+      });
+      if (res.data.status === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      console.log(e)
       return false;
     }
   },
