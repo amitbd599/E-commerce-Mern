@@ -155,7 +155,14 @@ const ProfileReadUserService = async (req) => {
 
 const LogoutUserService = async (res) => {
   try {
-    res.clearCookie('Token');
+    let options = {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    };
+
+    // Clear the cookie with the same options
+    res.clearCookie('Token', options);
     return { status: true };
   } catch (error) {
     return { status: false, error: e.toString() };
