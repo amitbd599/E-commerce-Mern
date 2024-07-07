@@ -161,7 +161,6 @@ const LogoutUserService = async (req, res) => {
       secure: true,
       path: '/',
     };
-
     res.cookie('Token', '', { ...options, maxAge: 0 });
     res.clearCookie('Token', options);
     return { status: true };
