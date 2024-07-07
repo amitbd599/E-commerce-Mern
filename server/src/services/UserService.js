@@ -153,7 +153,7 @@ const ProfileReadUserService = async (req) => {
   }
 };
 
-const LogoutUserService = async (res) => {
+const LogoutUserService = async (req, res) => {
   try {
     let options = {
       httpOnly: true,
