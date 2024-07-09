@@ -44,7 +44,17 @@ const WishlistInner = () => {
                       {item?.product?.title}
                     </Link>
                   </td>
-                  <td className="price">{item?.product?.price}</td>
+                  <td className="price"><span className="card-price-regular">
+                    $
+                    {item?.product?.discount === true
+                      ? item?.product?.discountPrice
+                      : item?.product?.price}
+                  </span>
+                    <span className="card-price-compare text-decoration-line-through">
+                      {item?.product?.discount === false
+                        ? ""
+                        : "$" + item?.product?.price}
+                    </span></td>
                   <td className="img">
                     <span className="img__wrapper">
                       <img src={item?.product?.img1} alt="" />

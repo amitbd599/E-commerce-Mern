@@ -30,11 +30,11 @@ const CartInner = () => {
     (sum, item) =>
       sum +
       item?.qty *
-        parseInt(
-          item?.product?.discount === true
-            ? item?.product?.discountPrice
-            : item?.product?.price
-        ),
+      parseInt(
+        item?.product?.discount === true
+          ? item?.product?.discountPrice
+          : item?.product?.price
+      ),
     0
   );
 
@@ -92,6 +92,17 @@ const CartInner = () => {
                           <p className="product-vendor">Color: {item?.color}</p>
                           <p className="product-vendor">Size: {item?.size}</p>
                           <p className="product-vendor">Qty: {item?.qty}</p>
+                          <p className="product-vendor">Price: <span className="card-price-regular">
+                            $
+                            {item?.product?.discount === true
+                              ? item?.product?.discountPrice
+                              : item?.product?.price}
+                          </span>
+                            <span className="card-price-compare text-decoration-line-through">
+                              {item?.product?.discount === false
+                                ? ""
+                                : "$" + item?.product?.price}
+                            </span></p>
                         </td>
                         <td className="cart-item-quantity">
                           <div className="quantity d-flex align-items-center justify-content-between">
@@ -167,7 +178,7 @@ const CartInner = () => {
                     </div>
 
                     <div className="subtotal-item shipping-box">
-                      <h4 className="subtotal-title">Vat ({subTotal} x 5%):</h4>
+                      <h4 className="subtotal-title">Vat (${subTotal} x 5%):</h4>
                       <p className="subtotal-value">${(subTotal * 5) / 100}</p>
                     </div>
                     <div className="subtotal-item shipping-box">

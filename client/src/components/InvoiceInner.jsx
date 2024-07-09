@@ -14,6 +14,7 @@ const InvoiceInner = () => {
   let { id } = useParams();
 
   useEffect(() => {
+
     (async () => {
       await InvoiceSingleGetRequest(id);
       await InvoiceListGetRequest();

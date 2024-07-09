@@ -202,10 +202,10 @@ const CollectionProduct = ({ item }) => {
                 </li>
                 <li>
                   <button
-                    className={`${navActive === "Old" && "active"}`}
-                    onClick={() => remarkControl("Old")}
+                    className={`${navActive === "Classic" && "active"}`}
+                    onClick={() => remarkControl("Classic")}
                   >
-                    Old
+                    Classic
                   </button>
                 </li>
                 <li>
@@ -218,10 +218,10 @@ const CollectionProduct = ({ item }) => {
                 </li>
                 <li>
                   <button
-                    className={`${navActive === "Limited" && "active"}`}
-                    onClick={() => remarkControl("Limited")}
+                    className={`${navActive === "Limited Edition" && "active"}`}
+                    onClick={() => remarkControl("Limited Edition")}
                   >
-                    Limited
+                    Limited Edition
                   </button>
                 </li>
               </ul>
