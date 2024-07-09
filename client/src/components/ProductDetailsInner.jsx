@@ -488,7 +488,7 @@ const ProductDetailsInner = () => {
                 <div className="row">
                   <div className=" col-12">
                     <div className="desc-content">
-                      {parse(ProductDetails?.shortDes)}
+                      {parse(ProductDetails?.des)}
                     </div>
                   </div>
                 </div>
