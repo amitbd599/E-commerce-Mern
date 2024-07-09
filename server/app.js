@@ -15,8 +15,8 @@ const dotENV = require("dotenv");
 dotENV.config();
 
 let URL =
-  "mongodb+srv://<username>:<password>@cluster0.fsp0qs4.mongodb.net/e-commerce?retryWrites=true&w=majority";
-let option = { user: "admin", pass: "admin@123", autoIndex: true };
+  "mongodb+srv://amitbd591:<password>@cluster0.4kz14t4.mongodb.net/mern_ecom?retryWrites=true&w=majority&appName=Cluster0";
+let option = { user: process.env.DB_USER, pass: process.env.DB_PASS, autoIndex: true };
 mongoose
   .connect(URL, option)
   .then((res) => {

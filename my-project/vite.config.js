@@ -12,7 +12,7 @@ export default defineConfig({
     proxy: {
 
       '/api': {
-        target: 'http://localhost:5000/api/v1',
+        target: 'https://e-commerce-mern-blue.vercel.app/api/v1',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
