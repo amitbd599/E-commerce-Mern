@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const AboutInner = () => {
     return (
@@ -251,20 +252,73 @@ const AboutInner = () => {
                         </div>
                         <div className="team-wrapper">
                             <div className="row">
-                                {
-                                    [...Array(6)].map((item, index) =>
-                                        <div className="col-lg-4 col-md-6 col-12" key={index}>
-                                            <div className="team-item">
-                                                <img src="https://spreethemesprevious.github.io/bisum/html/assets/img/team/1.jpg" alt="img" />
-                                                <div className="member-absolute">
-                                                    <div className="member-details text-center">
-                                                        <h4 className="member-name">Javena Melo</h4>
-                                                        <p className="member-desig">Founder, Director</p>
-                                                    </div>
-                                                </div>
+                                <div className="col-lg-4 col-md-6 col-12" >
+                                    <div className="team-item">
+                                        <img src="https://res.cloudinary.com/amitjs/image/upload/v1720627636/MERN_ECom/users/image_38_gcsamp.png" alt="img" />
+                                        <div className="member-absolute">
+                                            <div className="member-details text-center">
+                                                <h4 className="member-name">Joshua K. McDonald</h4>
+                                                <p className="member-desig">Founder, Director</p>
                                             </div>
-                                        </div>)
-                                }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 col-md-6 col-12" >
+                                    <div className="team-item">
+                                        <img src="https://res.cloudinary.com/amitjs/image/upload/v1720627612/MERN_ECom/users/image_41_ya0ira.png" alt="img" />
+                                        <div className="member-absolute">
+                                            <div className="member-details text-center">
+                                                <h4 className="member-name">Daniel B. Rudd</h4>
+                                                <p className="member-desig">Product Manager</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 col-md-6 col-12" >
+                                    <div className="team-item">
+                                        <img src="https://res.cloudinary.com/amitjs/image/upload/v1720627613/MERN_ECom/users/image_42_hi9xz9.png" alt="img" />
+                                        <div className="member-absolute">
+                                            <div className="member-details text-center">
+                                                <h4 className="member-name">Millard T. Rencher</h4>
+                                                <p className="member-desig">Digital Marketing Specialist</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 col-md-6 col-12" >
+                                    <div className="team-item">
+                                        <img src="https://res.cloudinary.com/amitjs/image/upload/v1720627613/MERN_ECom/users/image_39_gxaxza.png" alt="img" />
+                                        <div className="member-absolute">
+                                            <div className="member-details text-center">
+                                                <h4 className="member-name">Michael H. Butts</h4>
+                                                <p className="member-desig">UX/UI Designer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-4 col-md-6 col-12" >
+                                    <div className="team-item">
+                                        <img src="https://res.cloudinary.com/amitjs/image/upload/v1720627613/MERN_ECom/users/image_43_wt8bcy.png" alt="img" />
+                                        <div className="member-absolute">
+                                            <div className="member-details text-center">
+                                                <h4 className="member-name">Bert S. Simmons</h4>
+                                                <p className="member-desig">Customer Support Representative</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 col-md-6 col-12" >
+                                    <div className="team-item">
+                                        <img src="https://res.cloudinary.com/amitjs/image/upload/v1720627612/MERN_ECom/users/image_40_zdjqyl.png" alt="img" />
+                                        <div className="member-absolute">
+                                            <div className="member-details text-center">
+                                                <h4 className="member-name">Karl L. Mize</h4>
+                                                <p className="member-desig">Logistics Coordinator</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -284,9 +338,9 @@ const AboutInner = () => {
                             <p className="about-banner-text heading_48">
                                 Get in touch with us for your service related query
                             </p>
-                            <a href="contact.html" className="about-banner-btn">
+                            <Link to="/" className="about-banner-btn">
                                 CONTACT US
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

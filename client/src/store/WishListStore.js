@@ -4,6 +4,7 @@ import { unAuthorize } from "../helper/helper";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const WishListStore = create((set) => ({
+  loading: false,
   isWishSubmit: false,
   WishList: null,
 
@@ -26,11 +27,13 @@ const WishListStore = create((set) => ({
   //! get Wish list
   WishListGetRequest: async () => {
     try {
+      set({ loading: true });
       let res = await axios.get(apiUrl + "/read-wish-list", {
         withCredentials: true,
       });
       if (res?.data?.status === true) {
         set({ WishList: res?.data?.data });
+        set({ loading: false });
       }
     } catch (e) {
       unAuthorize(e.response.status);

@@ -9,27 +9,36 @@ const BrandsInner = () => {
     dots: false,
     arrows: false,
     infinite: true,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     speed: 500,
     autoplaySpeed: 5000,
     cssEase: 'linear',
+    initialSlide: 0,
     responsive: [
       {
-        breakpoint: 992,
-        slidesToShow: 5,
+        breakpoint: 1200,
         settings: {
+          slidesToShow: 3,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
           arrows: false,
         },
       },
       {
         breakpoint: 768,
-        slidesToShow: 4,
         settings: {
+          slidesToShow: 2,
           arrows: false,
         },
       },
+
     ],
   };
 
@@ -45,7 +54,7 @@ const BrandsInner = () => {
           <div>
             <Slider {...settings}>
               {BrandList?.map((item, index) => (
-                <Link
+                <Link key={index}
                   className="wrap h-100 d-block"
                   to={`/product-by-brands/${item?._id}/1`}
                 >

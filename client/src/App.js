@@ -23,6 +23,7 @@ import Invoice from "./pages/Invoice";
 import ForgotPassword from "./pages/ForgotPassword";
 import OTPVerify from "./pages/OTPVerify";
 import ResetPassword from "./pages/ResetPassword";
+import RouteScrollToTop from "./helper/RouteScrollToTop";
 function App() {
   useEffect(() => {
     AOS.init();
@@ -31,11 +32,12 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTopButton />
+      <RouteScrollToTop />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/about" element={<About />} />
-        <Route exact path="/blog" element={<Blog />} />
-        <Route exact path="/blog-details" element={<BlogDetails />} />
+        {/* <Route exact path="/blog" element={<Blog />} />
+        <Route exact path="/blog-details" element={<BlogDetails />} /> */}
 
         <Route exact path="/faq" element={<Faq />} />
         <Route exact path="/product-all/:pageNo" element={<Product />} />
@@ -119,9 +121,9 @@ function App() {
           exact
           path="/invoice/:id"
           element={
-            <PrivateRoute>
+            <>
               <Invoice />
-            </PrivateRoute>
+            </>
           }
         />
 

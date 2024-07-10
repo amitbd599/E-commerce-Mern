@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -32,19 +33,19 @@ const Footer = () => {
                                         </h4>
                                         <ul className="footer-menu list-unstyled mb-0 d-md-block">
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">About us</a>
+                                                <Link to="/">About us</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Press center</a>
+                                                <Link to="/">Press center</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="blog.html">Our magazine</a>
+                                                <Link to="/">Our magazine</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Our group</a>
+                                                <Link to="/">Our group</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Work with us</a>
+                                                <Link to="/">Work with us</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -72,19 +73,19 @@ const Footer = () => {
                                         </h4>
                                         <ul className="footer-menu list-unstyled mb-0 d-md-block">
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Brand catalog</a>
+                                                <Link to="/">Brand catalog</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Discount codes</a>
+                                                <Link to="/">Discount codes</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="collection-left-sidebar.html">Furniture</a>
+                                                <Link to="/">Furniture</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="collection-left-sidebar.html">Sofa</a>
+                                                <Link to="/">Sofa</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="collection-left-sidebar.html">Chair</a>
+                                                <Link to="/">Chair</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -112,16 +113,16 @@ const Footer = () => {
                                         </h4>
                                         <ul className="footer-menu list-unstyled mb-0 d-md-block">
                                             <li className="footer-menu-item">
-                                                <a href="faq.html">FAQ</a>
+                                                <Link to="/">FAQ</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Privacy policy</a>
+                                                <Link to="/">Privacy policy</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="about-us.html">Support</a>
+                                                <Link to="/">Support</Link>
                                             </li>
                                             <li className="footer-menu-item">
-                                                <a href="contact.html">Contact</a>
+                                                <Link to="/">Contact</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -256,14 +257,14 @@ const Footer = () => {
                         <div className="footer-bottom-inner d-flex flex-wrap justify-content-md-between justify-content-center align-items-center">
                             <ul className="footer-bottom-menu list-unstyled d-flex flex-wrap align-items-center mb-0">
                                 <li className="footer-menu-item">
-                                    <a href="about-us.html">Privacy policy</a>
+                                    <Link to="/">Privacy policy</Link>
                                 </li>
                                 <li className="footer-menu-item">
-                                    <a href="about-us.html">Terms &amp; Conditions</a>
+                                    <Link to="/">Terms &amp; Conditions</Link>
                                 </li>
                             </ul>
                             <p className="copyright footer-text">
-                                ©<span className="current-year" /> Spree Themes.
+                                ©<span className="current-year" /> amitjs
                             </p>
                         </div>
                     </div>

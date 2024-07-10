@@ -102,8 +102,8 @@ const OrderInner = () => {
             row?.payment_status === "success"
               ? "green_badge"
               : row?.payment_status === "pending"
-              ? "yellow_badge"
-              : "red_badge"
+                ? "yellow_badge"
+                : "red_badge"
           }
         >
           {row?.payment_status}
@@ -302,7 +302,7 @@ const OrderInner = () => {
     <section className="profile">
       <div className="container">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-lg-3">
             <div className="tab__btn">
               <div
                 className="nav flex-column nav-pills me-3"
@@ -383,7 +383,7 @@ const OrderInner = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-9">
+          <div className="col-lg-9">
             <div className="inner__tab">
               <div className="tab-content" id="v-pills-tabContent">
                 <div

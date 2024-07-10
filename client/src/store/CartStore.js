@@ -4,6 +4,7 @@ import { unAuthorize } from "../helper/helper";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CartStore = create((set) => ({
+  loading: false,
   isCartSubmit: false,
   CartList: null,
   InvoiceList: [],
@@ -43,6 +44,7 @@ const CartStore = create((set) => ({
   //! update cart list
   CartListUpdateRequest: async (id, productID, qty) => {
     try {
+      set({ loading: true });
       set({ isCartSubmit: true });
       let res = await axios.post(
         apiUrl + "/update-cart-list/" + id,
@@ -52,7 +54,11 @@ const CartStore = create((set) => ({
         }
       );
 
-      return res?.data?.status === true;
+      if (res?.data?.status === true) {
+        set({ loading: false });
+        return res?.data?.status === true;
+      }
+
     } catch (e) {
       unAuthorize(e.response.status);
     } finally {
@@ -63,12 +69,16 @@ const CartStore = create((set) => ({
   //! delete cart list
   CartListDeleteRequest: async (id) => {
     try {
+      set({ loading: true });
       set({ isCartSubmit: true });
       let res = await axios.delete(apiUrl + "/delete-cart-list/" + id, {
         withCredentials: true,
       });
 
-      return res?.data?.status === true;
+      if (res?.data?.status === true) {
+        set({ loading: false });
+        return res?.data?.status === true;
+      }
     } catch (e) {
       unAuthorize(e.response.status);
     } finally {
@@ -80,6 +90,7 @@ const CartStore = create((set) => ({
 
   CreateInvoiceRequest: async () => {
     try {
+      set({ loading: true });
       set({ isCartSubmit: true });
       let res = await axios.post(
         apiUrl + "/create-invoice-list",
@@ -95,6 +106,7 @@ const CartStore = create((set) => ({
       unAuthorize(e.response.status);
     } finally {
       set({ isCartSubmit: false });
+      set({ loading: false });
     }
   },
 

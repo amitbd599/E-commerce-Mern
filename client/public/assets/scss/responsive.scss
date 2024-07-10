@@ -526,9 +526,21 @@
         padding: 40px 16px;
         margin-top: 48px;
     }
+    .profile .tab__btn .nav-pills {
+        margin-bottom: 30px;
+        display: block !important;
+      }
+      .profile .tab__btn .nav-pills .nav-link {
+
+        display: inline;
+        margin: 5px;
+      }
 }
 
 @media (max-width: 767px) {
+    .cart-item{
+        display: block !important;
+      }
     .slide-text {
         font-size: 24px;
     }
@@ -856,6 +868,15 @@
     .login-form {
         padding: 40px 20px;
     }
+    .item_nav__menu ul {
+        display: block;
+        li{
+            display: inline-block;
+            margin: 8px;
+        }
+      }
+
+     
 }
 
 @media (max-width: 601px) {

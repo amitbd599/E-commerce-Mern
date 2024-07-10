@@ -11,7 +11,6 @@ import {
 } from "react-share";
 
 const ShareButton = ({ shareUrl }) => {
-  console.log(shareUrl);
   const title = "Check out this awesome website!";
   return (
     <ul className="share__icon list-unstyled share-list d-flex align-items-center mb-1 flex-wrap">

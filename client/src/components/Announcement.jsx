@@ -9,9 +9,9 @@ const Announcement = () => {
 
   let logOut = async () => {
     await logout().then((res) => {
-      // if (res) {
-      //   window.location.reload();
-      // }
+      if (res) {
+        window.location.reload();
+      }
     })
 
   };

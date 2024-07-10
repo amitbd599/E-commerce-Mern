@@ -2,6 +2,7 @@ import React from 'react'
 import FeatureStore from '../store/FeatureStore';
 import ImgSkeleton from '../skeleton/ImgSkeleton';
 import SkeletonBar from '../skeleton/SkeletonBar';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
   let { FeatureList } = FeatureStore();
@@ -12,9 +13,9 @@ const Banner = () => {
         <div className="collection-tab-inner mt-0">
           <div className="container">
             <div className="grid-container-2">
-              <a
+              <Link
                 className="grid-item grid-item-1 position-relative rounded mt-0 d-flex"
-                href="collection-left-sidebar.html"
+                to="/product-all/1"
                 data-aos="fade-right"
                 data-aos-duration={700}
               >
@@ -55,10 +56,10 @@ const Banner = () => {
                     </div>
                   </div>
                 )}
-              </a>
-              <a
+              </Link>
+              <Link
                 className="grid-item grid-item-2 position-relative rounded mt-0 d-flex"
-                href="collection-left-sidebar.html"
+                to="/product-all/1"
                 data-aos="fade-right"
                 data-aos-duration={700}
               >
@@ -109,10 +110,10 @@ const Banner = () => {
                     </div>
                   </div>
                 )}
-              </a>
-              <a
+              </Link>
+              <Link
                 className="grid-item grid-item-3 position-relative rounded mt-0 d-flex"
-                href="collection-left-sidebar.html"
+                to="/product-all/1"
                 data-aos="fade-left"
                 data-aos-duration={700}
               >
@@ -148,7 +149,7 @@ const Banner = () => {
                         </p>
                         <span className="text_12 mt-4 link-underline d-block primary-color">
                           {FeatureList !== null ? (
-                            FeatureList[3]?.button_title
+                            FeatureList[2]?.button_title
                           ) : (
                             <SkeletonBar count={2} width={400} />
                           )}
@@ -163,7 +164,7 @@ const Banner = () => {
                     </div>
                   </div>
                 )}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

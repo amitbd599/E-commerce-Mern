@@ -11,7 +11,6 @@ const PrivateRoute = ({ children }) => {
       location.pathname === '/cart' ||
       location.pathname === '/checkout' ||
       location.pathname === '/profile' ||
-      location.pathname === '/invoice' ||
       location.pathname === '/wishlist') {
       (async () => {
         await isLogin()

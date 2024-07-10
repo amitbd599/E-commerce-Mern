@@ -3,9 +3,11 @@ import { Link, NavLink } from "react-router-dom";
 import CartStore from "../store/CartStore";
 import UserStore from "../store/UserStore";
 import WishListStore from "../store/WishListStore";
+import Loading from "../helper/loading/Loading";
 
 const Header = () => {
   let {
+    loading,
     CartList,
     CartListGetRequest,
     CartListUpdateRequest,
@@ -47,6 +49,9 @@ const Header = () => {
 
   return (
     <>
+      {
+        loading && <Loading />
+      }
       {/* header start */}
       <header className="sticky-header border-btm-black header-1">
         <div className="header-bottom">
@@ -55,7 +60,7 @@ const Header = () => {
               <div className="col-lg-3 col-md-4 col-4">
                 <div className="header-logo">
                   <NavLink to="/" className="logo-main">
-                    <img src="assets/img/logo.png" loading="lazy" alt="bisum" />
+                    <img src="/assets/img/logo.png" loading="lazy" alt="bisum" />
                   </NavLink>
                 </div>
               </div>
@@ -86,7 +91,7 @@ const Header = () => {
                         </NavLink>
                       </div>
                     </li>
-                    <li className="menu-list-item nav-item has-dropdown ">
+                    {/* <li className="menu-list-item nav-item has-dropdown ">
                       <div className="mega-menu-header">
                         <NavLink
                           className={(navData) =>
@@ -97,7 +102,7 @@ const Header = () => {
                           Blog
                         </NavLink>
                       </div>
-                    </li>
+                    </li> */}
                     <li className="menu-list-item nav-item has-dropdown ">
                       <div className="mega-menu-header">
                         <NavLink
@@ -254,7 +259,7 @@ const Header = () => {
                     </NavLink>
                   </div>
                 </li>
-                <li className="menu-list-item nav-item has-dropdown ">
+                {/* <li className="menu-list-item nav-item has-dropdown ">
                   <div className="mega-menu-header">
                     <NavLink
                       className={(navData) =>
@@ -265,7 +270,7 @@ const Header = () => {
                       Blog
                     </NavLink>
                   </div>
-                </li>
+                </li> */}
                 <li className="menu-list-item nav-item has-dropdown ">
                   <div className="mega-menu-header">
                     <NavLink
@@ -284,7 +289,7 @@ const Header = () => {
                       className={(navData) =>
                         navData.isActive ? "nav-link active" : "nav-link"
                       }
-                      to="/product/all"
+                      to="/product-all/1"
                     >
                       Collection
                     </NavLink>

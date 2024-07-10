@@ -94,13 +94,13 @@ const Hero = () => {
                   key={index}
                 >
                   <img
-                    className="slide-img d-none d-md-block"
+                    className="slide-img d-block"
                     src={item?.img}
                     alt="slide-1"
                   />
 
                   <div className="content-absolute content-slide">
-                    <div className="container height-inherit d-flex align-items-center justify-content-end">
+                    <div className="container height-inherit d-flex align-items-center justify-content-lg-center justify-content-end">
                       <div className="content-box slide-content slide-content-1 py-4">
                         <h2
                           className="slide-heading heading_72 animate__animated animate__fadeInUp"

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const BlogDetailsInner = () => {
     return (
@@ -79,8 +80,8 @@ const BlogDetailsInner = () => {
                                             />
                                         </svg>
                                     </span>
-                                    <a
-                                        href="article.html"
+                                    <Link
+                                        to="/"
                                         className="article-date d-none d-sm-flex align-items-center"
                                     >
                                         <span className="icon-tag">
@@ -98,7 +99,7 @@ const BlogDetailsInner = () => {
                                             </svg>
                                         </span>
                                         <span className="ms-2">Furniture</span>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="article-content">
@@ -216,18 +217,18 @@ const BlogDetailsInner = () => {
                                 </ul>
                             </div>
                             <div className="next-prev-article mt-5 d-flex align-items-center justify-content-between">
-                                <a
-                                    href="article.html"
+                                <Link
+                                    to="/"
                                     className="article-btn prev-article-btn mt-2"
                                 >
                                     PREV ARTICLE
-                                </a>
-                                <a
-                                    href="article.html"
+                                </Link>
+                                <Link
+                                    to="/"
                                     className="article-btn next-article-btn active mt-2"
                                 >
                                     NEXT ARTICLE
-                                </a>
+                                </Link>
                             </div>
                             <div className="comments-section mt-100 home-section overflow-hidden">
                                 <div className="section-header">
@@ -700,7 +701,7 @@ const BlogDetailsInner = () => {
                                         </div>
                                         <div className="related-product-info">
                                             <h2 className="related-heading text_14">
-                                                <a href="article.html">Modern furniture in velvet</a>
+                                                <a to="/">Modern furniture in velvet</a>
                                             </h2>
                                             <p className="article-card-published text_12 d-flex align-items-center mt-2">
                                                 <span className="article-date d-flex align-items-center">
@@ -733,7 +734,7 @@ const BlogDetailsInner = () => {
                                         </div>
                                         <div className="related-product-info">
                                             <h2 className="related-heading text_14">
-                                                <a href="article.html">Ultimate luxury furniture</a>
+                                                <a to="/">Ultimate luxury furniture</a>
                                             </h2>
                                             <p className="article-card-published text_12 d-flex align-items-center mt-2">
                                                 <span className="article-date d-flex align-items-center">
@@ -766,7 +767,7 @@ const BlogDetailsInner = () => {
                                         </div>
                                         <div className="related-product-info">
                                             <h2 className="related-heading text_14">
-                                                <a href="article.html">Small bedroom look bigger</a>
+                                                <a to="/">Small bedroom look bigger</a>
                                             </h2>
                                             <p className="article-card-published text_12 d-flex align-items-center mt-2">
                                                 <span className="article-date d-flex align-items-center">
@@ -799,7 +800,7 @@ const BlogDetailsInner = () => {
                                         </div>
                                         <div className="related-product-info">
                                             <h2 className="related-heading text_14">
-                                                <a href="article.html">Update your living room</a>
+                                                <a to="/">Update your living room</a>
                                             </h2>
                                             <p className="article-card-published text_12 d-flex align-items-center mt-2">
                                                 <span className="article-date d-flex align-items-center">
@@ -832,7 +833,7 @@ const BlogDetailsInner = () => {
                                         </div>
                                         <div className="related-product-info">
                                             <h2 className="related-heading text_14">
-                                                <a href="article.html">Choose the right fabric</a>
+                                                <a to="/">Choose the right fabric</a>
                                             </h2>
                                             <p className="article-card-published text_12 d-flex align-items-center mt-2">
                                                 <span className="article-date d-flex align-items-center">

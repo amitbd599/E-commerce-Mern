@@ -4,6 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProductStore = create((set) => ({
   ProductList: null,
+
   ProductListRequest_Feature: async (item, pageNo) => {
     let res = await axios.get(apiUrl + "/read-product/" + item + "/" + pageNo, {
       withCredentials: true,
@@ -20,6 +21,7 @@ const ProductStore = create((set) => ({
     });
     if (res?.data?.status === true) {
       set({ ProductDetails: res?.data?.data[0] });
+      return res?.data?.status === true
     }
   },
 
@@ -44,6 +46,7 @@ const ProductStore = create((set) => ({
   },
 
   RemarkListRequest: async (remark, item, pageNo) => {
+
     let res = await axios.get(
       apiUrl + "/product-list-by-remark/" + remark + "/" + item + "/" + pageNo, {
       withCredentials: true,

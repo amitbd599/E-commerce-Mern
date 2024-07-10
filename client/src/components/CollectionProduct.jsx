@@ -241,7 +241,7 @@ const CollectionProduct = ({ item }) => {
                         <Link
                           to={`/product-details/${item?._id}`}
                           className="hover-switch"
-                          href="collection-left-sidebar.html"
+
                         >
                           <img
                             className="secondary-img"

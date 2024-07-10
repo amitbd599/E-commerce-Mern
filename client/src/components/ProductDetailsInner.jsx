@@ -49,7 +49,7 @@ const ProductDetailsInner = () => {
   function SampleNextArrow(props) {
     const { onClick } = props;
     return (
-      <div className="testimonial-icon-prev">
+      <div className="single-product-icon-prev activate-arrows show-arrows-always arrows-white d-none d-md-flex justify-content-between mt-3">
         <span className="arrow-slider arrow-prev slick-arrow" onClick={onClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ const ProductDetailsInner = () => {
   function SamplePrevArrow(props) {
     const { onClick } = props;
     return (
-      <div className="testimonial-icon-next">
+      <div className="single-product-icon-next activate-arrows show-arrows-always arrows-white d-none d-md-flex justify-content-between mt-3">
         <span
           className="arrow-slider arrow-next slick-arrow "
           onClick={onClick}
@@ -99,16 +99,15 @@ const ProductDetailsInner = () => {
 
   let settings = {
     dots: false,
-    arrows: true,
+    arrows: false,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     speed: 500,
     autoplaySpeed: 5000,
     cssEase: "linear",
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+
     responsive: [
       {
         breakpoint: 1200,
@@ -124,7 +123,7 @@ const ProductDetailsInner = () => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           arrows: false,
         },
       },
@@ -135,16 +134,18 @@ const ProductDetailsInner = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     dots: false,
-    arrows: false,
+    arrows: true,
     asNavFor: nav2,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
 
   const thumbSliderSettings = {
     className: "thumbSliderSettings",
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: false,
     speed: 300,
     cssEase: "ease",
@@ -152,6 +153,8 @@ const ProductDetailsInner = () => {
     swipeToSlide: true,
     vertical: true,
     asNavFor: nav1,
+
+
     responsive: [
       {
         breakpoint: 768,
@@ -236,6 +239,8 @@ const ProductDetailsInner = () => {
   let sum = ratings?.reduce((item, rating) => item + rating, 0);
   let average = sum / ratings?.length;
 
+
+
   const Rating = ({ average }) => {
     const fullStars = Math.floor(average || 0);
     const halfStar = average % 1 >= 0.5;
@@ -259,8 +264,13 @@ const ProductDetailsInner = () => {
   };
 
   let pageClick = async (id) => {
-    await ProductDetailsRequest(id);
-    navigate(`/product-details/${id}`);
+    await ProductDetailsRequest(id).then(async (res) => {
+      if (res) {
+        navigate(`/product-details/${id}`)
+        await GetAllReviewByProductRequest(id);
+      }
+    })
+
   };
 
   return (
@@ -296,7 +306,7 @@ const ProductDetailsInner = () => {
                         </div>
                       ))}
                     </Slider>
-                    <div className="activate-arrows show-arrows-always arrows-white d-none d-lg-flex justify-content-between mt-3"></div>
+
                   </div>
                 </div>
               </div>
@@ -314,7 +324,7 @@ const ProductDetailsInner = () => {
                   </h2>
                   <div className="product-rating d-flex align-items-center mb-3">
                     <span className="rating-count product  d-flex">
-                      <Rating average={average} /> ({average || 0})
+                      <Rating average={average} /> ({!!average === true ? average.toFixed(2) : 0})
                     </span>
                   </div>
                   <div className="product-price-wrapper mb-4">
