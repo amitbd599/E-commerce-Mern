@@ -19,22 +19,22 @@ exports.CreateInvoice = async (req, res) => {
 
 exports.PaymentFail = async (req, res) => {
   let result = await PaymentFailService(req);
-  res.redirect(process.env.Origin_HOST + "/profile");
+  res.redirect(process.env.Origin_HOST_Site + "/profile");
 };
 
 exports.PaymentCancel = async (req, res) => {
   let result = await PaymentCancelService(req);
-  res.redirect(process.env.Origin_HOST + "/profile");
+  res.redirect(process.env.Origin_HOST_Site + "/profile");
 };
 
 exports.PaymentIPN = async (req, res) => {
   let result = await PaymentIPNService(req);
-  res.redirect(process.env.Origin_HOST + "/profile");
+  res.redirect(process.env.Origin_HOST_Site + "/profile");
 };
 
 exports.PaymentSuccess = async (req, res) => {
   let result = await PaymentSuccessService(req);
-  res.redirect(process.env.Origin_HOST + "/profile");
+  res.redirect(process.env.Origin_HOST_Site + "/profile");
 };
 
 exports.InvoiceList = async (req, res) => {
