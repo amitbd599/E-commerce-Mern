@@ -1512,3 +1512,34 @@ body {
   overflow: auto !important;
 }
 
+.wishlist__custom {
+  overflow-x: scroll !important;
+}
+
+.mini-img-wrapper {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 10px;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.cart-item-details{
+  min-width: 300px;
+}
+.cart-table thead tr th:nth-child(2) {
+  min-width: 300px;
+}
+
+.cart-item td {
+  vertical-align: middle;
+  padding-top: 20px;
+}
+
+.minicart-item {
+  padding: 0.5rem 1rem;
+  padding-bottom: 15px;
+}
