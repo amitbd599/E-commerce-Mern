@@ -1543,3 +1543,7 @@ body {
   padding: 0.5rem 1rem;
   padding-bottom: 15px;
 }
+
+.invoice .table td {
+  min-width: auto !important;
+}
