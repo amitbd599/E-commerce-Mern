@@ -1,7 +1,6 @@
 const express = require("express");
 const router = require("./src/routes/api");
 const app = new express();
-const multer = require("multer");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -30,8 +29,8 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    // origin: [process.env.Origin_HOST_Site, process.env.Origin_HOST_dashboard],
-    origin: process.env.Origin_HOST_Site,
+    origin: [process.env.Origin_HOST_Site, process.env.Origin_HOST_dashboard],
+    // origin: process.env.Origin_HOST_Site,
   })
 );
 app.use(helmet());

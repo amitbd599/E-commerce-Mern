@@ -128,10 +128,10 @@ const CreateInvoiceService = async (req) => {
         store_id: "theme664dfb04bfaf4",
         store_passwd: "theme664dfb04bfaf4@ssl",
         currency: "BDT",
-        success_url: "https://e-commerce-mern-blue.vercel.app/api/v1/payment-success",
-        fail_url: "https://e-commerce-mern-blue.vercel.app/api/v1/payment-fail",
-        cancel_url: "https://e-commerce-mern-blue.vercel.app/api/v1/payment-cancel",
-        ipn_url: "https://e-commerce-mern-blue.vercel.app/api/v1",
+        success_url: "https://mern-api.amitjs.com/api/v1/payment-success",
+        fail_url: "https://mern-api.amitjs.com/api/v1/payment-fail",
+        cancel_url: "https://mern-api.amitjs.com/api/v1/payment-cancel",
+        ipn_url: "https://mern-api.amitjs.com/api/v1",
         init_url: "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
       };
 

@@ -1,6 +1,7 @@
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 
+// eslint-disable-next-line react/prop-types
 function Editor({ data, onDataChange }) {
   let formats = [
     "header",
