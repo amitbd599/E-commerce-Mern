@@ -13,6 +13,9 @@ const mongoose = require("mongoose");
 const dotENV = require("dotenv");
 dotENV.config();
 
+
+
+
 let URL =
   "mongodb+srv://amitbd591:<password>@cluster0.4kz14t4.mongodb.net/mern_ecom?retryWrites=true&w=majority&appName=Cluster0";
 let option = { user: process.env.DB_USER, pass: process.env.DB_PASS, autoIndex: true };
@@ -24,6 +27,9 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+
+
 
 app.use(cookieParser());
 app.use(
